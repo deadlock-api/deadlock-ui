@@ -30,8 +30,7 @@
     "dev": "stencil build --dev --watch",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec",
-    "generate": "stencil generate",
-    "compress-assets": "node scripts/compress-assets.mjs"
+    "generate": "stencil generate"
   },
   "keywords": [
     "deadlock",
@@ -53,7 +52,6 @@
     "@stencil/core": "^4.22.0",
     "@stencil/react-output-target": "^1.0.0",
     "@stencil/vue-output-target": "^0.8.0",
-    "sharp": "^0.34.5",
     "typescript": "^5.7.0"
   }
 }
