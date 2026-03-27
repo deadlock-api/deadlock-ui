@@ -1,10 +1,4 @@
-import { getAssetPath } from '@stencil/core';
-
 const CDN_BASE = 'https://assets-bucket.deadlock-api.com/assets-api-res';
-
-function asset(path: string): string {
-  return getAssetPath(`assets/${path}`);
-}
 
 function cdn(path: string): string {
   return `${CDN_BASE}/${path}`;
@@ -27,10 +21,16 @@ export function shopBackground(slot: string): string {
   return cdn(`images/shop/catalog/catalog_shop_bg_${mapped}.webp`);
 }
 
-export function shopTabIcon(slot: string, active: boolean): string {
-  const mapped = slot === 'tech' ? 'spirit' : slot;
-  const suffix = active ? '_open' : '';
-  return asset(`images/shop/shop_tab_${mapped}${suffix}.png`);
+export function shopTabShape(): string {
+  return cdn('images/shop/catalog/catalog_shop_tab_shape.png');
+}
+
+export function shopTabIcon(slot: string): string {
+  return cdn(`images/shop/catalog/catalog_shop_tab_icon_${slot}.png`);
+}
+
+export function shopTabEdgeOverlay(): string {
+  return cdn('images/shop/catalog/catalog_shop_tab_edge_overlay.png');
 }
 
 export function soulIcon(): string {

@@ -2,12 +2,12 @@ import { Component, Prop, State, Watch, h } from '@stencil/core';
 import { Item, ItemSlotType } from '../../types';
 import { fetchItems } from '../../api/client';
 import { configState } from '../../store/config-store';
-import { shopBackground, shopTabIcon } from '../../utils/assets';
+import { shopBackground, shopTabShape, shopTabIcon, shopTabEdgeOverlay } from '../../utils/assets';
 
 const CATEGORIES: { label: string; slot: ItemSlotType; color: string }[] = [
-  { label: 'Weapon', slot: 'weapon', color: '#cc8932' },
-  { label: 'Vitality', slot: 'vitality', color: '#6dc04b' },
-  { label: 'Spirit', slot: 'spirit', color: '#c878f0' },
+  { label: 'Weapon', slot: 'weapon', color: '#e4b20c' },
+  { label: 'Vitality', slot: 'vitality', color: '#a5ce3c' },
+  { label: 'Spirit', slot: 'spirit', color: '#b866de' },
 ];
 
 const VALID_TABS = new Set<string>(CATEGORIES.map(c => c.slot));
@@ -84,10 +84,19 @@ export class DlShopPanel {
                 class={{ 'category-tab': true, [`is-${cat.slot}`]: true, 'active': isActive }}
                 onClick={() => this.handleTabClick(cat.slot)}
               >
-                <div class="category-icon-container">
+                <div class={{ 'category-icon-container': true, 'active': isActive }}>
                   <div
-                    class={{ 'category-icon': true, 'active': isActive }}
-                    style={{ backgroundImage: `url("${shopTabIcon(cat.slot, isActive)}")` }}
+                    class="tab-shape"
+                    style={{
+                      backgroundColor: cat.color,
+                      maskImage: `url("${shopTabShape()}")`,
+                      WebkitMaskImage: `url("${shopTabShape()}")`,
+                    }}
+                  ></div>
+                  <img class="tab-icon" src={shopTabIcon(cat.slot)} />
+                  <div
+                    class="tab-edge-overlay"
+                    style={{ backgroundImage: `url("${shopTabEdgeOverlay()}")` }}
                   ></div>
                 </div>
               </div>

@@ -27,10 +27,11 @@
     flex-direction: column;
     align-items: flex-end;
     flex-shrink: 0;
-    gap: 4px;
+    gap: 8px;
     position: sticky;
     top: 0;
     align-self: flex-start;
+    margin-right: -6px;
 }
 
 .category-tab {
@@ -43,30 +44,51 @@
 }
 
 .category-icon-container {
-    height: auto;
-    width: auto;
-}
-
-.category-icon,
-.category-icon-container {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.category-icon {
+    position: relative;
     width: 70px;
     height: 73px;
+    overflow: hidden;
+    border-radius: 8px 0 0 8px;
     transition:
-        width 0.2s ease,
         height 0.2s ease,
         margin-bottom 0.2s ease;
 }
 
-.category-icon.active {
-    width: 70px;
-    height: 200px;
-    margin-bottom: -10px;
+.category-icon-container.active {
+    height: 175px;
+    margin-bottom: 10px;
+}
+
+.tab-shape {
+    position: absolute;
+    inset: 0;
+    mask-size: cover;
+    mask-position: top center;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    -webkit-mask-position: top center;
+    -webkit-mask-repeat: no-repeat;
+}
+
+.tab-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.tab-edge-overlay {
+    position: absolute;
+    inset: 0;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: cover;
+    pointer-events: none;
+    opacity: 0.6;
 }
 
 /* Tiers 2x2 flex layout like Statlocker */
@@ -170,13 +192,19 @@
 }
 
 @media (max-width: 1119px) {
-    .category-icon {
+    .category-icon-container {
         width: 60px;
         height: 63px;
     }
 
-    .category-icon.active {
+    .category-icon-container.active {
         height: 170px;
+    }
+
+    .tab-icon {
+        top: 8px;
+        width: 42px;
+        height: 42px;
     }
 }
 
@@ -197,11 +225,17 @@
         flex-grow: 1;
     }
 
-    .category-icon,
-    .category-icon.active {
+    .category-icon-container,
+    .category-icon-container.active {
         width: 40px;
         height: 42px;
         margin-bottom: 0;
+    }
+
+    .tab-icon {
+        top: 5px;
+        width: 28px;
+        height: 28px;
     }
 
     .tiers {
