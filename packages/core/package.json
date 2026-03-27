@@ -42,6 +42,9 @@
     "ui"
   ],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@floating-ui/dom": "^1.6.0",
     "@stencil/store": "^2.0.16"

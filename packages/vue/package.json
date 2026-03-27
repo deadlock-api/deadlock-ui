@@ -18,6 +18,9 @@
     "build": "tsc -p tsconfig.json"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@deadlock-ui/core": "*"
   },
