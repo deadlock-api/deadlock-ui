@@ -11,7 +11,7 @@ function cdn(path: string): string {
 }
 
 export function cardBackground(slot: string, tier: number): string {
-  return asset(`images/cards/card_${slot}_${tier}.png`);
+  return cdn(`images/shop/catalog/cards/card_backer_${slot}_t${tier}.png`);
 }
 
 export function tooltipHeaderBg(slot: string): string {
