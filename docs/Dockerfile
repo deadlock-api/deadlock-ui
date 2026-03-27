@@ -2,7 +2,7 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Install dependencies
+# Install dependencies (cached unless package files change)
 COPY package.json package-lock.json ./
 COPY packages/core/package.json packages/core/
 COPY packages/react/package.json packages/react/
@@ -15,15 +15,14 @@ COPY packages/core/ packages/core/
 COPY docs/ docs/
 COPY scripts/ scripts/
 
-# Build core first, then docs
+# Build core once, then copy assets and build docs (without re-building core)
 RUN npm run build:core
-RUN npm run docs:build
+RUN npm -w docs run copy-core && npx -w docs docusaurus build
 
-# Serve with docusaurus
+# Serve static files with lightweight server
 FROM node:20-alpine
+RUN npm install -g serve@14
 WORKDIR /app
 COPY --from=build /app/docs/build ./build
-COPY --from=build /app/docs/package.json ./
-RUN npm install --production @docusaurus/core@3.9.2
 EXPOSE 3000
-CMD ["npx", "docusaurus", "serve", "--port", "3000", "--host", "0.0.0.0"]
+CMD ["serve", "-s", "build", "-l", "3000"]
