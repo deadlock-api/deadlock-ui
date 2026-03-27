@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'Retail Demo';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/retaildemo-regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Retail Demo';
+  font-style: italic;
+  font-weight: 400;
+  src: url('/assets/fonts/retaildemo-italic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Retail Demo';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/assets/fonts/retaildemo-semibold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Retail Demo';
+  font-style: italic;
+  font-weight: 600;
+  src: url('/assets/fonts/retaildemo-semibolditalic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Retail Demo';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/assets/fonts/retaildemo-bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Retail Demo';
+  font-style: italic;
+  font-weight: 700;
+  src: url('/assets/fonts/retaildemo-bolditalic.otf') format('opentype');
+}
+
+:root {
+  --dl-bg-primary: #1a1a2e;
+  --dl-bg-secondary: #16213e;
+  --dl-bg-tooltip: #0f0f1a;
+  --dl-text-primary: #e0e0e0;
+  --dl-text-secondary: #a0a0b0;
+  --dl-text-muted: #6a6a7a;
+  --dl-border: #2a2a4a;
+
+  --dl-weapon: #cc8932;
+  --dl-vitality: #6dc04b;
+  --dl-spirit: #c878f0;
+
+  --dl-tier-1: #8b9bae;
+  --dl-tier-2: #5a9e3e;
+  --dl-tier-3: #c076db;
+  --dl-tier-4: #e08b35;
+  --dl-tier-5: #e04545;
+
+  --dl-font-family: 'Retail Demo', sans-serif;
+  --dl-radius: 4px;
+  --dl-transition: 150ms ease;
+}

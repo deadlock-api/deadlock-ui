@@ -1,0 +1,35 @@
+---
+sidebar_position: 3
+---
+
+import LivePreview from '@site/src/components/LivePreview';
+
+# dl-shop-panel
+
+Displays the full item shop with category tabs (Weapon, Vitality, Spirit) and tier sections.
+
+## Live Preview
+
+<LivePreview style={{overflow: 'auto'}} html={`
+  <dl-shop-panel active-tab="weapon" hover-effect="scale"></dl-shop-panel>
+`} />
+
+## Usage
+
+```html
+<dl-shop-panel></dl-shop-panel>
+```
+
+## Properties
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `active-tab` | `"weapon"` \| `"vitality"` \| `"spirit"` | `"weapon"` | Initial active tab |
+| `hover-effect` | `"none"` \| `"scale"` | `"scale"` | Hover effect on item cards |
+
+## Setting the Initial Tab
+
+```html
+<!-- Opens on the Spirit tab -->
+<dl-shop-panel active-tab="spirit"></dl-shop-panel>
+```

@@ -1,0 +1,31 @@
+{
+  "name": "@deadlock-ui/vue",
+  "version": "0.1.0",
+  "description": "Vue bindings for Deadlock UI web components",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@deadlock-ui/core": "*"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "vue": "^3.5.0",
+    "typescript": "^5.7.0"
+  }
+}

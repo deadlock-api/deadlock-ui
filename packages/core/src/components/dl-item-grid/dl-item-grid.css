@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  font-family: var(--dl-font-family);
+  color: var(--dl-text-primary);
+  line-height: 1.4;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.empty {
+  color: var(--dl-text-muted);
+  font-size: 13px;
+  padding: 20px;
+  text-align: center;
+}
+
+.loading {
+  color: var(--dl-text-muted);
+  font-size: 13px;
+  padding: 20px;
+  text-align: center;
+}

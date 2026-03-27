@@ -1,0 +1,44 @@
+import { Config } from '@stencil/core';
+import { reactOutputTarget } from '@stencil/react-output-target';
+import { vueOutputTarget } from '@stencil/vue-output-target';
+
+export const config: Config = {
+  namespace: 'main',
+  globalStyle: 'src/global/global.css',
+  outputTargets: [
+    {
+      type: 'dist',
+      esmLoaderPath: '../loader',
+      copy: [
+        { src: 'assets', dest: 'assets' },
+      ],
+    },
+    {
+      type: 'dist-custom-elements',
+      customElementsExportBehavior: 'auto-define-custom-elements',
+      externalRuntime: false,
+    },
+    {
+      type: 'www',
+      serviceWorker: null,
+      copy: [
+        { src: 'assets', dest: 'assets' },
+      ],
+    },
+    {
+      type: 'docs-readme',
+      strict: true,
+    },
+    {
+      type: 'docs-vscode',
+      file: 'dist/vscode-data.json',
+    },
+    reactOutputTarget({
+      outDir: '../react/src/components',
+    }),
+    vueOutputTarget({
+      componentCorePackage: '@deadlock-ui/core',
+      proxiesFile: '../vue/src/components.ts',
+    }),
+  ],
+};

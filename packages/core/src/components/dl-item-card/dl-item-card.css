@@ -1,0 +1,213 @@
+:host {
+    display: block;
+    position: relative;
+    width: 73px;
+    aspect-ratio: 80 / 125;
+    font-family: var(--dl-font-family);
+    color: var(--dl-text-primary);
+    line-height: 1.4;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.mod-box {
+    aspect-ratio: 80 / 125;
+    border-radius: 5px;
+    box-sizing: border-box;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 73px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.15s ease;
+}
+
+.mod-box.clickable {
+    cursor: pointer;
+}
+
+:host([hover-effect="scale"]) .mod-box:hover {
+    transform: scale(1.15);
+    z-index: 10;
+}
+
+/* Loading skeleton */
+.mod-box.loading {
+    background: #1a1a2e;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
+
+/* Card background texture */
+.card-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Icon area */
+.mod-icon-container {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 2%;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+}
+
+.mod-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Tier number badge — visible only on hover */
+.tier-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 38%;
+    padding-top: 38%;
+    height: 0;
+    overflow: hidden;
+    z-index: 9;
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.mod-box:hover .tier-badge {
+    opacity: 1;
+}
+
+.tier-badge.weapon {
+    background-color: #cc8932;
+}
+.tier-badge.vitality {
+    background-color: #6dc04b;
+}
+.tier-badge.spirit {
+    background-color: #c878f0;
+}
+
+.tier-badge-number {
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    font-size: 9px;
+    font-weight: 800;
+    color: #1a1510;
+    z-index: 10;
+}
+
+/* Active / Imbue tags */
+.active-tag {
+    position: absolute;
+    top: 56%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    background-color: #181818;
+    color: rgba(255, 239, 215, 0.9);
+    font-size: 9px;
+    font-weight: 700;
+    min-width: 60%;
+    padding: 1px 3px;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+}
+
+.imbue-tag {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    background-color: #5a3a8a;
+    color: #d4b8f0;
+    font-size: 8px;
+    font-weight: 600;
+    width: 100%;
+    padding: 1px 3px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 2px;
+}
+
+/* Name label */
+.mod-name-container {
+    flex-shrink: 0;
+    height: 30%;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 3;
+}
+
+.mod-name {
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.1;
+    overflow-wrap: break-word;
+    white-space: normal;
+    user-select: none;
+    color: #1a1510;
+}
+
+/* Dark tier name colors */
+.mod-box.tier-4 .mod-name.weapon,
+.mod-box.tier-5 .mod-name.weapon {
+    color: #e4c5a1;
+}
+.mod-box.tier-4 .mod-name.vitality,
+.mod-box.tier-5 .mod-name.vitality {
+    color: #c2e7cd;
+}
+.mod-box.tier-4 .mod-name.spirit,
+.mod-box.tier-5 .mod-name.spirit {
+    color: #e3d4f2;
+}
+
+/* Tooltip positioning — managed by Floating UI */
+.tooltip-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 450px;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dl-transition);
+}
+
+.tooltip-wrapper.open {
+    opacity: 1;
+    pointer-events: auto;
+}

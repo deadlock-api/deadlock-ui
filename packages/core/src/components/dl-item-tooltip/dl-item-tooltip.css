@@ -1,0 +1,319 @@
+:host {
+  display: block;
+  width: 450px;
+  font-family: var(--dl-font-family);
+  color: var(--dl-text-primary);
+  line-height: 1.4;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Tooltip shell ─── */
+.tooltip {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.38);
+  font-size: 18px;
+}
+
+/* ─── Header ─── */
+.header-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 96px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1a1a2e;
+}
+
+.mod-name-container {
+  align-self: center;
+  color: var(--dl-text-primary);
+  padding: 20px;
+  z-index: 100;
+}
+
+.mod-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.19);
+}
+
+.mod-cost {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 3px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #99ffd6;
+  line-height: 1;
+}
+
+.soul-icon {
+  height: 26px;
+  width: auto;
+  display: block;
+  filter: brightness(0) saturate(100%) invert(92%) sepia(21%) saturate(695%) hue-rotate(84deg) brightness(100%) contrast(103%);
+}
+
+/* ─── Properties body ─── */
+.properties-container {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #0f0f1a;
+  padding: 0;
+}
+
+/* ─── Sections ─── */
+.section {
+  padding: 10px 15px;
+}
+
+/* ─── Innate section (no label, just stats) ─── */
+.innate-section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Active/Passive label ─── */
+.ability-type-label {
+  align-items: center;
+  background-color: rgba(16, 19, 13, 0.56);
+  display: flex;
+  justify-content: space-between;
+  height: 32px;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 8px 0 8px 15px;
+  margin: 0 -15px 8px;
+  width: calc(100% + 30px);
+}
+
+.ability-type-label.active {
+  color: var(--dl-text-primary);
+}
+
+.ability-type-label.passive {
+  font-style: italic;
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+/* ─── Info/description text inside sections ─── */
+.mod-info-label {
+  align-self: flex-start;
+  color: #cdcdcd;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 135%;
+  margin-bottom: 10px;
+  padding-right: 20px;
+}
+
+.mod-info-label .highlight {
+  color: #f8f8f8;
+  font-weight: 600;
+}
+
+.mod-info-label .diminish {
+  color: rgba(191, 187, 176, 0.9);
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* ─── Important stat boxes ─── */
+.important-stats-wrapper {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.important-stat-box {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70px;
+}
+
+.important-stat-icon-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.important-stat-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: 4px;
+}
+
+.important-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.important-stat-label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  margin-top: 2px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.important-stat-conditional {
+  font-style: italic;
+  font-weight: 500;
+  margin-top: 2px;
+  opacity: 0.4;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ─── Standard attribute rows ─── */
+.attribute-line-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+  margin: 2px 0 4px;
+  width: 100%;
+}
+
+.attribute-line-item:last-child {
+  margin-bottom: 0;
+}
+
+.prop-icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.attribute-value {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--dl-text-primary);
+  white-space: nowrap;
+}
+
+.attribute-value.elevated {
+  color: var(--slot-color);
+}
+
+.attribute-value.negative {
+  color: #ff6a6a;
+}
+
+.attribute-name {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(200, 200, 210, 0.75);
+}
+
+.conditional {
+  font-size: 14px;
+  color: #e8c56a;
+  padding: 2px 0 2px 26px;
+  font-style: italic;
+}
+
+/* ─── Inline content from API HTML ─── */
+.highlight {
+  color: #f8f8f8;
+  font-weight: 600;
+}
+
+.highlight_weapon,
+.highlight_courage {
+  color: #ec9719;
+  font-weight: 700;
+}
+
+.highlight_spirit,
+.highlight_tech {
+  color: #ce90ff;
+  font-weight: 700;
+}
+
+.highlight_armor,
+.highlight_fortitude {
+  color: #7bba1d;
+  font-weight: 700;
+}
+
+.is-negative {
+  color: #ff6a6a;
+  font-weight: 700;
+}
+
+.diminish {
+  color: rgba(191, 187, 176, 0.9);
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.strike {
+  text-decoration: line-through;
+  color: rgba(200, 200, 210, 0.5);
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.italic {
+  font-style: italic;
+}
+
+/* Inline SVGs and images from API HTML */
+svg,
+.mod-info-label img,
+.section img:not(.prop-icon):not(.important-stat-icon),
+.conditional img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  line-height: 0;
+  margin-top: -4px;
+}
+
+svg {
+  fill: currentColor;
+}
+
+.inline-attribute-label {
+  font-weight: 700;
+}
+
+.inline-attribute {
+  display: inline-block;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: middle;
+  width: 20px;
+}

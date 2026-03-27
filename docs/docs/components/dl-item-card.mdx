@@ -1,0 +1,65 @@
+---
+sidebar_position: 2
+---
+
+import LivePreview from '@site/src/components/LivePreview';
+
+# dl-item-card
+
+Displays a single item card with tooltip on hover or click.
+
+## Live Preview
+
+<LivePreview html={`
+  <div style="display: flex; gap: 8px; justify-content: center;">
+    <dl-item-card class-name="upgrade_aoe_root" hover-effect="scale"></dl-item-card>
+    <dl-item-card class-name="upgrade_mystic_regeneration" hover-effect="scale"></dl-item-card>
+    <dl-item-card class-name="upgrade_chonky" hover-effect="scale"></dl-item-card>
+  </div>
+`} />
+
+## Usage
+
+```html
+<dl-item-card class-name="upgrade_aoe_root"></dl-item-card>
+<dl-item-card class-name="upgrade_mystic_regeneration"></dl-item-card>
+<dl-item-card class-name="upgrade_chonky"></dl-item-card>
+```
+
+## Properties
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `class-name` | `string` | — | Item class name (e.g. `"upgrade_clip_size"`) |
+| `item-id` | `number` | — | Item ID (alternative to `class-name`) |
+| `hover-effect` | `"none"` \| `"scale"` | `"none"` | Hover effect on the card |
+| `show-tier-badge` | `boolean` | — | Override the global `show-tier-badge` for this card |
+
+## Hover Effect
+
+<LivePreview html={`
+  <div style="display: flex; gap: 24px; justify-content: center; align-items: center;">
+    <div style="text-align: center;">
+      <dl-item-card class-name="upgrade_clip_size" hover-effect="none"></dl-item-card>
+      <p style="color: #8b949e; font-size: 12px; margin-top: 8px;">hover-effect="none"</p>
+    </div>
+    <div style="text-align: center;">
+      <dl-item-card class-name="upgrade_clip_size" hover-effect="scale"></dl-item-card>
+      <p style="color: #8b949e; font-size: 12px; margin-top: 8px;">hover-effect="scale"</p>
+    </div>
+  </div>
+`} />
+
+## Tier Badge
+
+The tier badge can be controlled globally via `dl-provider` or per card:
+
+```html
+<!-- Global: all cards show badge -->
+<dl-provider show-tier-badge="true">
+  <dl-item-card class-name="upgrade_clip_size"></dl-item-card>
+</dl-provider>
+
+<!-- Per card: override global setting -->
+<dl-item-card class-name="upgrade_clip_size" show-tier-badge="true"></dl-item-card>
+```

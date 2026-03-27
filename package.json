@@ -1,0 +1,22 @@
+{
+  "name": "deadlock-ui-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*",
+    "docs"
+  ],
+  "scripts": {
+    "dev": "npm run build:core && concurrently -n core,sync,docs -c blue,yellow,green \"npm -w @deadlock-ui/core run dev\" \"node scripts/watch-copy.mjs\" \"npm -w docs run start\"",
+    "build": "npm -w @deadlock-ui/core run build && npm -w @deadlock-ui/react -w @deadlock-ui/vue run build",
+    "build:core": "npm -w @deadlock-ui/core run build",
+    "build:react": "npm -w @deadlock-ui/react run build",
+    "build:vue": "npm -w @deadlock-ui/vue run build",
+    "docs": "npm run build:core && npm -w docs run start",
+    "docs:build": "npm run build:core && npm -w docs run build",
+    "start": "npm -w @deadlock-ui/core run start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

@@ -1,0 +1,86 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Getting Started
+
+Deadlock UI is an open-source Web Components library for [Deadlock](https://store.steampowered.com/app/1422450/Deadlock/) game items. Item data and images are fetched directly from the [Deadlock API](https://assets.deadlock-api.com/) (no local assets or configuration needed).
+
+## Quick Start (CDN)
+
+Add the script tag to your HTML and start using components immediately:
+
+```html
+<script type="module" src="https://unpkg.com/@deadlock-ui/core/dist/main/main.esm.js"></script>
+
+<dl-item-card class-name="upgrade_clip_size"></dl-item-card>
+```
+
+## Install
+
+<Tabs groupId="pkg">
+  <TabItem value="npm" label="npm" default>
+    ```bash
+    npm install @deadlock-ui/core
+    ```
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+    ```bash
+    yarn add @deadlock-ui/core
+    ```
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+    ```bash
+    pnpm add @deadlock-ui/core
+    ```
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+    ```bash
+    bun add @deadlock-ui/core
+    ```
+  </TabItem>
+</Tabs>
+
+### Framework-specific packages
+
+<Tabs groupId="pkg">
+  <TabItem value="npm" label="npm" default>
+    ```bash
+    # React
+    npm install @deadlock-ui/react
+
+    # Vue
+    npm install @deadlock-ui/vue
+    ```
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+    ```bash
+    # React
+    yarn add @deadlock-ui/react
+
+    # Vue
+    yarn add @deadlock-ui/vue
+    ```
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+    ```bash
+    # React
+    pnpm add @deadlock-ui/react
+
+    # Vue
+    pnpm add @deadlock-ui/vue
+    ```
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+    ```bash
+    # React
+    bun add @deadlock-ui/react
+
+    # Vue
+    bun add @deadlock-ui/vue
+    ```
+  </TabItem>
+</Tabs>

@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deadlock Items — Demo</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #0d0d1a;
+        color: #e0e0e0;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        padding: 48px 24px;
+        min-height: 100vh;
+      }
+
+      /* Centered wrapper */
+      .page {
+        max-width: 1120px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 28px;
+        color: #fff;
+        margin-bottom: 8px;
+      }
+      .subtitle {
+        color: #6a6a7a;
+        font-size: 14px;
+        margin-bottom: 32px;
+      }
+      .subtitle a {
+        color: #c878f0;
+        text-decoration: none;
+      }
+      .subtitle a:hover {
+        text-decoration: underline;
+      }
+
+      /* Controls */
+      .controls {
+        display: inline-flex;
+        gap: 16px;
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .control {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .control label {
+        font-size: 13px;
+        color: #a0a0b0;
+      }
+      .control select,
+      .control input {
+        background: #1a1a2e;
+        color: #e0e0e0;
+        border: 1px solid #2a2a4a;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 13px;
+      }
+      .control input[type="number"] {
+        width: 70px;
+      }
+
+      /* Showcase card */
+      .showcase {
+        text-align: left;
+        background: #12121f;
+        border: 1px solid #2a2a4a;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 40px;
+      }
+      .showcase-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 20px;
+        border-bottom: 1px solid #2a2a4a;
+        background: #0f0f1a;
+      }
+      .showcase-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #a0a0b0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .btn-toggle-code {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid #2a2a4a;
+        color: #a0a0b0;
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .btn-toggle-code:hover {
+        border-color: #c878f0;
+        color: #c878f0;
+      }
+      .btn-toggle-code.active {
+        background: #c878f01a;
+        border-color: #c878f0;
+        color: #c878f0;
+      }
+      .btn-toggle-code svg {
+        width: 16px;
+        height: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .showcase-code {
+        max-height: 0;
+        overflow: hidden;
+        border-bottom: 1px solid transparent;
+        background: #0a0a14;
+        padding: 0 24px;
+        transition: max-height 0.3s ease, padding 0.3s ease, border-color 0.3s ease;
+      }
+      .showcase-code.visible {
+        max-height: 500px;
+        padding: 20px 24px;
+        border-bottom-color: #2a2a4a;
+      }
+      .showcase-preview {
+        padding: 24px;
+      }
+      .showcase-code pre {
+        margin: 0;
+        font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #c0c0d0;
+        white-space: pre;
+        tab-size: 2;
+      }
+      .showcase-code .tag { color: #f07178; }
+      .showcase-code .attr { color: #c792ea; }
+      .showcase-code .val { color: #c3e88d; }
+      .showcase-code .comment { color: #545480; }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <h1>Deadlock Items</h1>
+      <p class="subtitle">
+        Open-source Web Components for Deadlock game items. Powered by
+        <a href="https://assets.deadlock-api.com/" target="_blank">Deadlock API</a>
+        and <a href="https://stenciljs.com/" target="_blank">StencilJS</a>.
+      </p>
+
+      <div class="controls">
+        <div class="control">
+          <label for="lang">Language:</label>
+          <select id="lang">
+            <option value="brazilian">Brazilian Portuguese</option>
+            <option value="czech">Czech</option>
+            <option value="english" selected>English</option>
+            <option value="french">French</option>
+            <option value="german">German</option>
+            <option value="indonesian">Indonesian</option>
+            <option value="italian">Italian</option>
+            <option value="japanese">Japanese</option>
+            <option value="koreana">Korean</option>
+            <option value="latam">Latin American Spanish</option>
+            <option value="polish">Polish</option>
+            <option value="russian">Russian</option>
+            <option value="schinese">Simplified Chinese</option>
+            <option value="spanish">Spanish</option>
+            <option value="thai">Thai</option>
+            <option value="turkish">Turkish</option>
+            <option value="ukrainian">Ukrainian</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="behavior">Tooltip:</label>
+          <select id="behavior">
+            <option value="tooltip">Hover (tooltip)</option>
+            <option value="popover">Click (popover)</option>
+            <option value="none">Disabled</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="placement">Placement:</label>
+          <select id="placement">
+            <option value="auto" selected>Auto</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="delay">Delay (ms):</label>
+          <input id="delay" type="number" value="150" min="0" max="1000" step="50" />
+        </div>
+        <div class="control">
+          <label for="tier-badge">Tier Badge:</label>
+          <input id="tier-badge" type="checkbox" />
+        </div>
+      </div>
+
+      <!-- Showcase: Item Card -->
+      <div class="showcase" id="showcase-item">
+        <div class="showcase-header">
+          <span class="showcase-title">&lt;dl-item-card&gt;</span>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <select id="item-select" style="background: #1a1a2e; color: #e0e0e0; border: 1px solid #2a2a4a; padding: 6px 10px; border-radius: 4px; font-size: 13px; max-width: 300px;">
+              <option value="upgrade_clip_size">Loading items...</option>
+            </select>
+            <select id="item-hover-effect" style="background: #1a1a2e; color: #e0e0e0; border: 1px solid #2a2a4a; padding: 6px 10px; border-radius: 4px; font-size: 13px;">
+              <option value="none" selected>Hover: None</option>
+              <option value="scale">Hover: Scale</option>
+            </select>
+            <button class="btn-toggle-code" data-target="code-item" aria-label="Toggle code">
+              <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="showcase-code" id="code-item">
+          <pre><span class="tag">&lt;dl-provider</span>
+  <span class="attr">language</span>=<span class="val">"english"</span>
+  <span class="attr">tooltip-behavior</span>=<span class="val">"tooltip"</span>
+  <span class="attr">tooltip-placement</span>=<span class="val">"auto"</span>
+  <span class="attr">tooltip-delay</span>=<span class="val">"150"</span>
+  <span class="attr">show-tier-badge</span>=<span class="val">"false"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;dl-item-card</span> <span class="attr">class-name</span>=<span class="val">"upgrade_clip_size"</span><span class="tag">&gt;&lt;/dl-item-card&gt;</span>
+
+<span class="tag">&lt;/dl-provider&gt;</span></pre>
+        </div>
+        <div class="showcase-preview" style="display: flex; gap: 8px; justify-content: center;">
+          <dl-provider id="provider-item" language="english" tooltip-behavior="tooltip" tooltip-placement="auto" tooltip-delay="150" show-tier-badge="false">
+            <dl-item-card id="single-item-card" class-name="upgrade_clip_size"></dl-item-card>
+          </dl-provider>
+        </div>
+      </div>
+
+      <!-- Showcase: Shop Panel -->
+      <div class="showcase" id="showcase-shop">
+        <div class="showcase-header">
+          <span class="showcase-title">&lt;dl-shop-panel&gt;</span>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <select id="shop-tab-select" style="background: #1a1a2e; color: #e0e0e0; border: 1px solid #2a2a4a; padding: 6px 10px; border-radius: 4px; font-size: 13px;">
+              <option value="weapon" selected>Weapon</option>
+              <option value="vitality">Vitality</option>
+              <option value="spirit">Spirit</option>
+            </select>
+            <select id="shop-hover-effect" style="background: #1a1a2e; color: #e0e0e0; border: 1px solid #2a2a4a; padding: 6px 10px; border-radius: 4px; font-size: 13px;">
+              <option value="scale" selected>Hover: Scale</option>
+              <option value="none">Hover: None</option>
+            </select>
+            <button class="btn-toggle-code" data-target="code-shop" aria-label="Toggle code">
+              <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="showcase-code" id="code-shop">
+          <pre><span class="comment">&lt;!-- 1. Load the script --&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">type</span>=<span class="val">"module"</span> <span class="attr">src</span>=<span class="val">"https://unpkg.com/deadlock-ui/dist/main/main.esm.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="comment">&lt;!-- 2. Configure the provider --&gt;</span>
+<span class="tag">&lt;dl-provider</span>
+  <span class="attr">language</span>=<span class="val">"english"</span>
+  <span class="attr">tooltip-behavior</span>=<span class="val">"tooltip"</span>
+  <span class="attr">tooltip-placement</span>=<span class="val">"auto"</span>
+  <span class="attr">tooltip-delay</span>=<span class="val">"150"</span>
+  <span class="attr">show-tier-badge</span>=<span class="val">"false"</span><span class="tag">&gt;</span>
+
+  <span class="comment">&lt;!-- 3. Render the shop --&gt;</span>
+  <span class="tag">&lt;dl-shop-panel&gt;&lt;/dl-shop-panel&gt;</span>
+
+<span class="tag">&lt;/dl-provider&gt;</span></pre>
+        </div>
+        <div class="showcase-preview">
+          <dl-provider id="provider" language="english" tooltip-behavior="tooltip" tooltip-placement="auto" tooltip-delay="150" show-tier-badge="false">
+            <dl-shop-panel></dl-shop-panel>
+          </dl-provider>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/build/main.esm.js"></script>
+    <script nomodule src="/build/main.js"></script>
+    <script>
+      /* Toggle code visibility */
+      document.querySelectorAll('.btn-toggle-code').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var target = document.getElementById(btn.getAttribute('data-target'));
+          target.classList.toggle('visible');
+          btn.classList.toggle('active');
+        });
+      });
+
+      /* Controls */
+      function refresh() {
+        var panel = document.querySelector('dl-shop-panel');
+        var parent = panel.parentElement;
+        var activeTab = document.getElementById('shop-tab-select').value;
+        var hoverEffect = document.getElementById('shop-hover-effect').value;
+        panel.remove();
+        var newPanel = document.createElement('dl-shop-panel');
+        newPanel.setAttribute('active-tab', activeTab);
+        newPanel.setAttribute('hover-effect', hoverEffect);
+        parent.appendChild(newPanel);
+        updateCodePreview();
+      }
+
+      function updateCodePreview() {
+        var provider = document.getElementById('provider');
+        var lang = provider.getAttribute('language');
+        var behavior = provider.getAttribute('tooltip-behavior');
+        var placement = provider.getAttribute('tooltip-placement');
+        var delay = provider.getAttribute('tooltip-delay');
+        var badge = provider.getAttribute('show-tier-badge');
+        var activeTab = document.getElementById('shop-tab-select').value;
+        var shopHover = document.getElementById('shop-hover-effect').value;
+
+        var shopPanelAttrs = '';
+        if (activeTab !== 'weapon') {
+          shopPanelAttrs += ' <span class="attr">active-tab</span>=<span class="val">"' + activeTab + '"</span>';
+        }
+        if (shopHover !== 'scale') {
+          shopPanelAttrs += ' <span class="attr">hover-effect</span>=<span class="val">"' + shopHover + '"</span>';
+        }
+
+        var code = document.querySelector('#code-shop pre');
+        code.innerHTML =
+          '<span class="comment">&lt;!-- 1. Load the script --&gt;</span>\n' +
+          '<span class="tag">&lt;script</span> <span class="attr">type</span>=<span class="val">"module"</span> <span class="attr">src</span>=<span class="val">"https://unpkg.com/deadlock-ui/dist/main/main.esm.js"</span><span class="tag">&gt;&lt;/script&gt;</span>\n\n' +
+          '<span class="comment">&lt;!-- 2. Configure the provider --&gt;</span>\n' +
+          '<span class="tag">&lt;dl-provider</span>\n' +
+          '  <span class="attr">language</span>=<span class="val">"' + lang + '"</span>\n' +
+          '  <span class="attr">tooltip-behavior</span>=<span class="val">"' + behavior + '"</span>\n' +
+          '  <span class="attr">tooltip-placement</span>=<span class="val">"' + placement + '"</span>\n' +
+          '  <span class="attr">tooltip-delay</span>=<span class="val">"' + delay + '"</span>\n' +
+          '  <span class="attr">show-tier-badge</span>=<span class="val">"' + badge + '"</span><span class="tag">&gt;</span>\n\n' +
+          '  <span class="comment">&lt;!-- 3. Render the shop --&gt;</span>\n' +
+          '  <span class="tag">&lt;dl-shop-panel' + shopPanelAttrs + '&gt;&lt;/dl-shop-panel&gt;</span>\n\n' +
+          '<span class="tag">&lt;/dl-provider&gt;</span>';
+      }
+
+      var providers = ['provider', 'provider-item'];
+      function setProviderAttr(attr, value) {
+        providers.forEach(function(id) {
+          document.getElementById(id).setAttribute(attr, value);
+        });
+      }
+
+      document.getElementById('lang').addEventListener('change', function(e) {
+        setProviderAttr('language', e.target.value);
+        refresh();
+      });
+
+      document.getElementById('behavior').addEventListener('change', function(e) {
+        setProviderAttr('tooltip-behavior', e.target.value);
+        refresh();
+      });
+
+      document.getElementById('placement').addEventListener('change', function(e) {
+        setProviderAttr('tooltip-placement', e.target.value);
+        refresh();
+      });
+
+      document.getElementById('delay').addEventListener('change', function(e) {
+        setProviderAttr('tooltip-delay', e.target.value);
+        refresh();
+      });
+
+      document.getElementById('tier-badge').addEventListener('change', function(e) {
+        setProviderAttr('show-tier-badge', e.target.checked ? 'true' : 'false');
+        refresh();
+      });
+
+      document.getElementById('shop-tab-select').addEventListener('change', function() {
+        refresh();
+      });
+
+      document.getElementById('shop-hover-effect').addEventListener('change', function() {
+        refresh();
+      });
+
+      document.getElementById('item-hover-effect').addEventListener('change', function() {
+        updateItemCard();
+      });
+
+      /* Item selector */
+      function populateItemSelect() {
+        var provider = document.getElementById('provider-item');
+        var lang = provider.getAttribute('language') || 'english';
+
+        fetch('https://assets.deadlock-api.com/v2/items?language=' + lang).then(function(res) { return res.json(); }).then(function(items) {
+          var shopable = items.filter(function(i) { return i.shopable === true; });
+          var groups = { weapon: [], vitality: [], spirit: [] };
+          shopable.forEach(function(i) {
+            if (groups[i.item_slot_type]) {
+              groups[i.item_slot_type].push(i);
+            }
+          });
+
+          Object.keys(groups).forEach(function(slot) {
+            groups[slot].sort(function(a, b) {
+              if (a.cost !== b.cost) return a.cost - b.cost;
+              return a.name.localeCompare(b.name);
+            });
+          });
+
+          var select = document.getElementById('item-select');
+          var currentValue = select.value;
+          select.innerHTML = '';
+
+          var slotLabels = { weapon: 'Weapon', vitality: 'Vitality', spirit: 'Spirit' };
+          var slotColors = { weapon: '#cc8932', vitality: '#6dc04b', spirit: '#c878f0' };
+
+          ['weapon', 'vitality', 'spirit'].forEach(function(slot) {
+            var optgroup = document.createElement('optgroup');
+            optgroup.label = slotLabels[slot];
+            optgroup.style.color = slotColors[slot];
+            groups[slot].forEach(function(item) {
+              var opt = document.createElement('option');
+              opt.value = item.class_name;
+              var costStr = item.cost ? ' — ' + item.cost.toLocaleString() + ' souls' : '';
+              opt.textContent = item.name + costStr;
+              optgroup.appendChild(opt);
+            });
+            select.appendChild(optgroup);
+          });
+
+          // Keep current selection if it still exists, otherwise pick random once on first load
+          var found = shopable.some(function(i) { return i.class_name === currentValue; });
+          if (found) {
+            select.value = currentValue;
+          } else {
+            var eligible = shopable.filter(function(i) { return i.cost !== 9999; });
+            var random = eligible[Math.floor(Math.random() * eligible.length)];
+            select.value = random.class_name;
+          }
+          updateItemCard();
+        });
+      }
+
+      function updateItemCard() {
+        var className = document.getElementById('item-select').value;
+        var itemHover = document.getElementById('item-hover-effect').value;
+        var card = document.getElementById('single-item-card');
+        card.setAttribute('class-name', className);
+        card.setAttribute('hover-effect', itemHover);
+
+        var p = document.getElementById('provider-item');
+        var lang = p.getAttribute('language');
+        var behavior = p.getAttribute('tooltip-behavior');
+        var placement = p.getAttribute('tooltip-placement');
+        var delay = p.getAttribute('tooltip-delay');
+        var badge = p.getAttribute('show-tier-badge');
+
+        var itemCardAttrs = ' <span class="attr">class-name</span>=<span class="val">"' + className + '"</span>';
+        if (itemHover !== 'none') {
+          itemCardAttrs += ' <span class="attr">hover-effect</span>=<span class="val">"' + itemHover + '"</span>';
+        }
+
+        var code = document.querySelector('#code-item pre');
+        code.innerHTML =
+          '<span class="tag">&lt;dl-provider</span>\n' +
+          '  <span class="attr">language</span>=<span class="val">"' + lang + '"</span>\n' +
+          '  <span class="attr">tooltip-behavior</span>=<span class="val">"' + behavior + '"</span>\n' +
+          '  <span class="attr">tooltip-placement</span>=<span class="val">"' + placement + '"</span>\n' +
+          '  <span class="attr">tooltip-delay</span>=<span class="val">"' + delay + '"</span>\n' +
+          '  <span class="attr">show-tier-badge</span>=<span class="val">"' + badge + '"</span><span class="tag">&gt;</span>\n\n' +
+          '  <span class="tag">&lt;dl-item-card</span>' + itemCardAttrs + '<span class="tag">&gt;&lt;/dl-item-card&gt;</span>\n\n' +
+          '<span class="tag">&lt;/dl-provider&gt;</span>';
+      }
+
+      document.getElementById('item-select').addEventListener('change', updateItemCard);
+
+      populateItemSelect();
+
+      var origLangHandler = document.getElementById('lang').onchange;
+      document.getElementById('lang').addEventListener('change', function() {
+        setTimeout(populateItemSelect, 100);
+      });
+    </script>
+  </body>
+</html>

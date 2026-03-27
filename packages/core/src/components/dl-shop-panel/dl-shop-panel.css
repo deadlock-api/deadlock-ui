@@ -1,0 +1,218 @@
+:host {
+    display: block;
+    font-family: var(--dl-font-family);
+    color: var(--dl-text-primary);
+    line-height: 1.4;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.shop {
+    display: flex;
+    align-items: flex-start;
+    border-radius: 6px;
+    background: var(--dl-bg-primary);
+    overflow: hidden;
+    min-width: 1080px;
+    margin: 0 auto;
+}
+
+/* Vertical nav container */
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    gap: 4px;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+}
+
+.category-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    cursor: pointer;
+    padding: 0;
+}
+
+.category-icon-container {
+    height: auto;
+    width: auto;
+}
+
+.category-icon,
+.category-icon-container {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.category-icon {
+    width: 70px;
+    height: 73px;
+    transition:
+        width 0.2s ease,
+        height 0.2s ease,
+        margin-bottom 0.2s ease;
+}
+
+.category-icon.active {
+    width: 70px;
+    height: 200px;
+    margin-bottom: -10px;
+}
+
+/* Tiers 2x2 flex layout like Statlocker */
+.tiers {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    aspect-ratio: 1825 / 1618;
+}
+
+.tier-section {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 1%;
+    position: relative;
+}
+
+/* Tier sizing — all categories */
+.tier-section.tier-1 {
+    width: 45%;
+    padding: 16% 2% 3% 4%;
+}
+
+.tier-section.tier-2 {
+    width: 51%;
+    padding: 5% 3.5% 2% 1%;
+}
+
+/* Weapon: T3 wider, T4 narrower */
+.tiers.weapon .tier-section.tier-3 {
+    width: 52%;
+    padding: 5% 1.5% 0 4%;
+}
+
+.tiers.weapon .tier-section.tier-4 {
+    width: 44%;
+    padding: 5% 3.5% 0 1.5%;
+}
+
+/* Vitality & Spirit: T3 narrower, T4 wider */
+.tiers.vitality .tier-section.tier-3,
+.tiers.spirit .tier-section.tier-3 {
+    width: 45%;
+    margin-right: 0.8%;
+    padding: 5% 2% 2% 4%;
+}
+
+.tiers.vitality .tier-section.tier-4,
+.tiers.spirit .tier-section.tier-4 {
+    width: 51%;
+    padding: 5% 2.8% 1.4% 1%;
+}
+
+/* Items grid — fixed columns per tier */
+.mods-grid {
+    display: grid;
+    gap: 4px;
+    grid-auto-rows: min-content;
+    align-items: start;
+    justify-items: stretch;
+    width: 100%;
+}
+
+/* All categories: T1=5, T2=6 */
+.mods-grid.tier-1 {
+    grid-template-columns: repeat(5, 1fr);
+}
+.mods-grid.tier-2 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+/* Weapon: T3=6, T4=5 */
+.tiers.weapon .mods-grid.tier-3 {
+    grid-template-columns: repeat(6, 1fr);
+}
+.tiers.weapon .mods-grid.tier-4 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+/* Vitality & Spirit: T3=5, T4=6 */
+.tiers.vitality .mods-grid.tier-3,
+.tiers.spirit .mods-grid.tier-3 {
+    grid-template-columns: repeat(5, 1fr);
+}
+.tiers.vitality .mods-grid.tier-4,
+.tiers.spirit .mods-grid.tier-4 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.loading {
+    padding: 60px;
+    text-align: center;
+    color: var(--dl-text-muted);
+    font-size: 14px;
+}
+
+@media (max-width: 1119px) {
+    .category-icon {
+        width: 60px;
+        height: 63px;
+    }
+
+    .category-icon.active {
+        height: 170px;
+    }
+}
+
+@media (max-width: 767px) {
+    .shop {
+        flex-direction: column;
+    }
+
+    .nav-container {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .category-tab {
+        align-items: center;
+        flex-grow: 1;
+    }
+
+    .category-icon,
+    .category-icon.active {
+        width: 40px;
+        height: 42px;
+        margin-bottom: 0;
+    }
+
+    .tiers {
+        flex-direction: column;
+    }
+
+    .tier-section {
+        width: 98% !important;
+    }
+
+    .mods-grid {
+        grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)) !important;
+    }
+}
