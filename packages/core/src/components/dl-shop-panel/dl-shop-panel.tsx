@@ -1,7 +1,7 @@
 import { Component, Prop, State, Watch, h } from '@stencil/core';
 import { Item, ItemSlotType } from '../../types';
 import { fetchItems } from '../../api/client';
-import { configState } from '../../store/config-store';
+import { configState, onConfigChange } from '../../store/config-store';
 import { shopBackground, shopTabShape, shopTabIcon, shopTabEdgeOverlay } from '../../utils/assets';
 
 const CATEGORIES: { label: string; slot: ItemSlotType; color: string }[] = [
@@ -30,6 +30,8 @@ export class DlShopPanel {
   @State() private _loading = false;
   @State() private _activeTab: ItemSlotType = 'weapon';
 
+  private _unsubLanguage?: () => void;
+
   @Watch('activeTab')
   onActiveTabChange(value: string) {
     if (VALID_TABS.has(value)) {
@@ -42,6 +44,13 @@ export class DlShopPanel {
       this._activeTab = this.activeTab;
     }
     this.loadItems();
+    this._unsubLanguage = onConfigChange('language', () => {
+      this.loadItems();
+    });
+  }
+
+  disconnectedCallback() {
+    this._unsubLanguage?.();
   }
 
   private async loadItems() {

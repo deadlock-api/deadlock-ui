@@ -30,13 +30,6 @@ function Playground(): React.JSX.Element {
   const [showTierBadge, setShowTierBadge] = useState(false);
   const [activeTab, setActiveTab] = useState('weapon');
   const [hoverEffect, setHoverEffect] = useState('scale');
-  const [key, setKey] = useState(0);
-
-  // Force re-render when language changes (web components need remount)
-  const handleLanguageChange = (lang: string) => {
-    setLanguage(lang);
-    setKey(k => k + 1);
-  };
 
   return (
     <Layout title="Playground" description="Test Deadlock UI components live">
@@ -58,7 +51,7 @@ function Playground(): React.JSX.Element {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <label style={labelStyle}>Language:</label>
-            <select style={selectStyle} value={language} onChange={e => handleLanguageChange(e.target.value)}>
+            <select style={selectStyle} value={language} onChange={e => setLanguage(e.target.value)}>
               {LANGUAGES.map(l => <option key={l} value={l}>{l}</option>)}
             </select>
           </div>
@@ -118,7 +111,7 @@ function Playground(): React.JSX.Element {
         </div>
 
         <h2>Shop Panel</h2>
-        <div className="component-preview" key={`shop-${key}`}>
+        <div className="component-preview">
           {/* @ts-ignore */}
           <dl-provider
             language={language}

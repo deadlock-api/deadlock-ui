@@ -1,7 +1,7 @@
 import { Component, Prop, State, Watch, h } from '@stencil/core';
 import { Item, ItemSlotType, ItemTier } from '../../types';
 import { fetchItemsBySlotType, fetchItems } from '../../api/client';
-import { configState } from '../../store/config-store';
+import { configState, onConfigChange } from '../../store/config-store';
 
 @Component({
   tag: 'dl-item-grid',
@@ -21,8 +21,17 @@ export class DlItemGrid {
   @State() private _items: Item[] = [];
   @State() private _loading = false;
 
+  private _unsubLanguage?: () => void;
+
   connectedCallback() {
     this.loadItems();
+    this._unsubLanguage = onConfigChange('language', () => {
+      this.loadItems();
+    });
+  }
+
+  disconnectedCallback() {
+    this._unsubLanguage?.();
   }
 
   @Watch('slotType')
