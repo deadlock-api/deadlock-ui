@@ -1,0 +1,12 @@
+node_modules
+docs/node_modules
+docs/build
+docs/.docusaurus
+docs/static/deadlock-ui
+docs/static/assets
+packages/core/dist
+packages/core/loader
+packages/core/www
+packages/react/dist
+packages/vue/dist
+.git
