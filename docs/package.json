@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "copy-core": "node -e \"const{cpSync}=require('fs');cpSync('../packages/core/dist/main','./static/deadlock-ui',{recursive:true});cpSync('../packages/core/dist/main/assets','./static/assets',{recursive:true})\"",
+    "copy-core": "node -e \"const{cpSync}=require('fs');cpSync('../packages/core/dist/main','./static/deadlock-ui',{recursive:true})\"",
     "start": "npm run copy-core && docusaurus start",
     "build": "npm run copy-core && docusaurus build",
     "swizzle": "docusaurus swizzle",
