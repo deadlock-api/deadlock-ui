@@ -1,0 +1,14 @@
+{
+  "group-pull-request-title-pattern": "chore: release v${version}",
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "component": "deadlock-ui",
+      "extra-files": [
+        "packages/core/package.json",
+        "packages/react/package.json",
+        "packages/vue/package.json"
+      ]
+    }
+  }
+}
