@@ -273,6 +273,9 @@
               <option value="scale" selected>Hover: Scale</option>
               <option value="none">Hover: None</option>
             </select>
+            <label style="font-size: 13px; color: #a0a0b0; display: flex; align-items: center; gap: 6px;">
+              <input id="shop-disable-highlight" type="checkbox" /> Disable Highlight
+            </label>
             <button class="btn-toggle-code" data-target="code-shop" aria-label="Toggle code">
               <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </button>
@@ -321,10 +324,14 @@
         var parent = panel.parentElement;
         var activeTab = document.getElementById('shop-tab-select').value;
         var hoverEffect = document.getElementById('shop-hover-effect').value;
+        var disableHighlight = document.getElementById('shop-disable-highlight').checked;
         panel.remove();
         var newPanel = document.createElement('dl-shop-panel');
         newPanel.setAttribute('active-tab', activeTab);
         newPanel.setAttribute('hover-effect', hoverEffect);
+        if (disableHighlight) {
+          newPanel.setAttribute('disable-highlight', 'true');
+        }
         parent.appendChild(newPanel);
         updateCodePreview();
       }
@@ -411,6 +418,10 @@
       });
 
       document.getElementById('shop-hover-effect').addEventListener('change', function() {
+        refresh();
+      });
+
+      document.getElementById('shop-disable-highlight').addEventListener('change', function() {
         refresh();
       });
 

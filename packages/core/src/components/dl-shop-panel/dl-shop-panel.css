@@ -250,6 +250,19 @@
     left: -3%;
 }
 
+/* Highlight / dim effect on hover */
+.item-wrapper {
+    transition: opacity 0.15s ease;
+}
+
+.item-wrapper.dimmed {
+    opacity: 0.3;
+}
+
+.item-wrapper.highlighted {
+    opacity: 1;
+}
+
 .loading {
     padding: 60px;
     text-align: center;

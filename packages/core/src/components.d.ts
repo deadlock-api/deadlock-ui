@@ -91,6 +91,11 @@ export namespace Components {
          */
         "activeTab": ItemSlotType;
         /**
+          * When `true`, disables the highlight effect that dims unrelated items on hover.
+          * @default false
+         */
+        "disableHighlight": boolean;
+        /**
           * Hover effect applied to each item card. One of `"none"` or `"scale"`.
           * @default 'scale'
          */
@@ -220,6 +225,11 @@ declare namespace LocalJSX {
          */
         "activeTab"?: ItemSlotType;
         /**
+          * When `true`, disables the highlight effect that dims unrelated items on hover.
+          * @default false
+         */
+        "disableHighlight"?: boolean;
+        /**
           * Hover effect applied to each item card. One of `"none"` or `"scale"`.
           * @default 'scale'
          */
@@ -248,6 +258,7 @@ declare namespace LocalJSX {
     interface DlShopPanelAttributes {
         "activeTab": ItemSlotType;
         "hoverEffect": 'none' | 'scale';
+        "disableHighlight": boolean;
     }
 
     interface IntrinsicElements {
