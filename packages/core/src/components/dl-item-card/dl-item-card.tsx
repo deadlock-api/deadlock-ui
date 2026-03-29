@@ -47,6 +47,7 @@ export class DlItemCard {
 
   @State() private _item?: Item;
   @State() private _componentItems?: ComponentItemInfo[];
+  @State() private _parentItems?: ComponentItemInfo[];
   @State() private _loading = false;
   @State() private _error?: string;
   @State() private _open = false;
@@ -123,6 +124,7 @@ export class DlItemCard {
       this.fetchItemData();
     } else if (this.itemData) {
       this.resolveComponentItems();
+      this.resolveParentItems();
       this.resolveNameOverride();
     }
     this._unsubLanguage = onConfigChange('language', () => {
@@ -160,6 +162,7 @@ export class DlItemCard {
     try {
       this._item = await fetchItem(key, configState.language);
       this.resolveComponentItems();
+      this.resolveParentItems();
       this.resolveNameOverride();
     } catch (e) {
       this._error = e instanceof Error ? e.message : 'Failed to load item';
@@ -193,6 +196,34 @@ export class DlItemCard {
         });
       }
       this._componentItems = resolved;
+    } catch {
+      // silently fail
+    }
+  }
+
+  private async resolveParentItems() {
+    const item = this.item;
+    if (!item || this.parentItemsData) return;
+
+    try {
+      const allItems = await fetchItems(configState.language);
+
+      let nameOverrides: Map<string, string> | undefined;
+      if (this.itemNameLanguage && this.itemNameLanguage !== configState.language) {
+        const nameItems = await fetchItems(this.itemNameLanguage);
+        nameOverrides = new Map(nameItems.map(i => [i.class_name, i.name]));
+      }
+
+      const parents: ComponentItemInfo[] = [];
+      for (const other of allItems) {
+        if (other.component_items?.includes(item.class_name)) {
+          parents.push({
+            name: nameOverrides?.get(other.class_name) ?? other.name,
+            image: other.shop_image_webp || other.shop_image || other.image_webp || other.image || undefined,
+          });
+        }
+      }
+      this._parentItems = parents.length > 0 ? parents : undefined;
     } catch {
       // silently fail
     }
@@ -424,7 +455,7 @@ export class DlItemCard {
           itemData={item}
           nameOverride={this._nameOverride}
           componentItemsData={this.componentItemsData ?? this._componentItems}
-          parentItemsData={this.parentItemsData}
+          parentItemsData={this.parentItemsData ?? this._parentItems}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
         ></dl-item-tooltip>

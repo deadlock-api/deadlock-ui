@@ -4,6 +4,7 @@
   font-family: var(--dl-font-family);
   color: var(--dl-text-primary);
   line-height: 1.4;
+  text-align: left;
 }
 
 * {
