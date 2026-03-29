@@ -58,6 +58,8 @@
     object-fit: cover;
     z-index: 0;
     pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 /* Icon area */
@@ -68,7 +70,7 @@
     justify-content: center;
     min-height: 0;
     overflow: hidden;
-    padding: 0 2%;
+    padding: 0px;
     position: relative;
     width: 100%;
     box-sizing: border-box;
@@ -78,7 +80,9 @@
 .mod-icon {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: fill;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 /* Tier number badge — visible only on hover */
@@ -137,6 +141,7 @@
     text-transform: uppercase;
     border-radius: 2px;
     letter-spacing: 0.5px;
+    user-select: none;
 }
 
 .imbue-tag {
@@ -155,6 +160,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     border-radius: 2px;
+    user-select: none;
 }
 
 /* Name label */
@@ -172,13 +178,14 @@
 }
 
 .mod-name {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     line-height: 1.1;
     overflow-wrap: break-word;
     white-space: normal;
-    user-select: none;
     color: #1a1510;
+    font-family: 'Retail Demo';
+    padding: 0 7px;
 }
 
 /* Dark tier name colors */
@@ -193,6 +200,17 @@
 .mod-box.tier-4 .mod-name.spirit,
 .mod-box.tier-5 .mod-name.spirit {
     color: #e3d4f2;
+}
+
+/* Selection color by item type */
+.mod-box.weapon .mod-name::selection {
+    background-color: rgba(204, 137, 50, 0.4);
+}
+.mod-box.vitality .mod-name::selection {
+    background-color: rgba(109, 192, 75, 0.4);
+}
+.mod-box.spirit .mod-name::selection {
+    background-color: rgba(200, 120, 240, 0.4);
 }
 
 /* Tooltip positioning — managed by Floating UI */

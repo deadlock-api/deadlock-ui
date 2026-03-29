@@ -41,6 +41,8 @@
     justify-content: flex-end;
     cursor: pointer;
     padding: 0;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .category-icon-container {
