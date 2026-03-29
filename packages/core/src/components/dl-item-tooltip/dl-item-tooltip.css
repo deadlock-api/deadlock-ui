@@ -363,17 +363,21 @@ svg {
 
 /* ─── Component items ─── */
 .component-items-section {
-  padding: 10px 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.component-items-section + .component-items-section {
+  padding-top: 4px;
 }
 
 .component-items-label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   color: rgba(200, 200, 210, 0.6);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   text-align: left;
 }
 
@@ -390,8 +394,8 @@ svg {
 }
 
 .component-item-icon {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   flex-shrink: 0;
 }
