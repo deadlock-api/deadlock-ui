@@ -14,6 +14,7 @@ RUN npm ci
 COPY packages/core/ packages/core/
 COPY docs/ docs/
 COPY scripts/ scripts/
+COPY repo.config.mjs ./
 
 # Build core once, then copy assets and build docs (without re-building core)
 RUN npm run build:core
