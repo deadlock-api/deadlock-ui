@@ -94,9 +94,17 @@
   color: #e6edf3;
 }
 
+.footer__copyright {
+  opacity: .3;
+  font-size: 0.8rem;
+  margin-top: 2rem;
+}
+
 [data-theme='dark'] .footer {
   border-top: 1px solid #21262d;
-  background-color: #101010;
+  background-color: #010409;
+  padding-top: 3rem;
+  margin-top: 5rem;
 }
 
 [data-theme='dark'] .footer__link-item {

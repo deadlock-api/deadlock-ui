@@ -9,10 +9,13 @@ const sidebars: SidebarsConfig = {
       collapsible: false,
       customProps: { icon: 'Puzzle' },
       items: [
-        { type: 'doc', id: 'components/dl-provider', label: 'Provider', customProps: { icon: 'Settings' } },
-        { type: 'doc', id: 'components/dl-item-card', label: 'ItemCard', customProps: { icon: 'Square' } },
-        { type: 'doc', id: 'components/dl-shop-panel', label: 'ShopPanel', customProps: { icon: 'LayoutGrid' } },
-        { type: 'doc', id: 'components/dl-build-panel', label: 'BuildPanel', customProps: { icon: 'Hammer', badge: 'WIP' } },
+        { type: 'doc', id: 'components/dl-ability-order', label: 'AbilityOrder', customProps: { icon: 'Box', badge: 'WIP' } },
+        { type: 'doc', id: 'components/dl-build-panel', label: 'BuildPanel', customProps: { icon: 'Box', badge: 'WIP' } },
+        { type: 'doc', id: 'components/dl-hero-card', label: 'HeroCard', customProps: { icon: 'Box', badge: 'WIP' } },
+        { type: 'doc', id: 'components/dl-hero-minimap-icon', label: 'HeroMinimapIcon', customProps: { icon: 'Box', badge: 'WIP' } },
+        { type: 'doc', id: 'components/dl-item-card', label: 'ItemCard', customProps: { icon: 'Box' } },
+        { type: 'doc', id: 'components/dl-provider', label: 'Provider', customProps: { icon: 'Box' } },
+        { type: 'doc', id: 'components/dl-shop-panel', label: 'ShopPanel', customProps: { icon: 'Box' } },
       ],
     },
     {
@@ -21,8 +24,8 @@ const sidebars: SidebarsConfig = {
       collapsible: true,
       customProps: { icon: 'Zap' },
       items: [
-        { type: 'doc', id: 'frameworks/react', label: 'React', customProps: { icon: 'Atom' } },
-        { type: 'doc', id: 'frameworks/vue', label: 'Vue', customProps: { icon: 'Triangle' } },
+        { type: 'doc', id: 'frameworks/react', label: 'React' },
+        { type: 'doc', id: 'frameworks/vue', label: 'Vue' },
       ],
     },
     { type: 'doc', id: 'types', label: 'Types', customProps: { icon: 'FileType' } },
