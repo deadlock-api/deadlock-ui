@@ -73,6 +73,11 @@ const config: Config = {
           position: 'left',
         },
         {
+          to: '/class-names',
+          label: 'Class Names',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/user/deadlock-ui',
           label: 'GitHub',
           position: 'right',

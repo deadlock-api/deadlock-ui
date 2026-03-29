@@ -1,6 +1,6 @@
 import { Component, Prop, State, Watch, Element, h } from '@stencil/core';
 import { computePosition, flip, shift, offset, autoUpdate, Placement, VirtualElement } from '@floating-ui/dom';
-import { Item } from '../../types';
+import { Item, ItemClassName } from '../../types';
 import { fetchItem } from '../../api/client';
 import { configState, onConfigChange } from '../../store/config-store';
 import { cardBackground } from '../../utils/assets';
@@ -17,7 +17,7 @@ export class DlItemCard {
   @Prop({ attribute: 'item-id' }) itemId?: number;
 
   /** Item class name (e.g. `"upgrade_clip_size"`). Alternative to `item-id`. */
-  @Prop({ attribute: 'class-name' }) itemClassName?: string;
+  @Prop({ attribute: 'class-name' }) itemClassName?: ItemClassName;
 
   /** Pre-loaded item data object. When provided, skips the API fetch. */
   @Prop({ attribute: 'item-data' }) itemData?: Item;
@@ -94,7 +94,7 @@ export class DlItemCard {
     return spaceBottom >= spaceTop ? 'bottom' : 'top';
   }
 
-  private get itemKey(): string | number | undefined {
+  private get itemKey(): ItemClassName | number | undefined {
     return this.itemId ?? this.itemClassName;
   }
 

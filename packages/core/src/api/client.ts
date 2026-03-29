@@ -1,4 +1,4 @@
-import { Item, ItemSlotType, Language } from '../types';
+import { Item, ItemClassName, ItemSlotType, Language } from '../types';
 
 const API_BASE = 'https://assets.deadlock-api.com/v2';
 
@@ -57,7 +57,7 @@ export async function fetchItemsBySlotType(
 }
 
 export async function fetchItem(
-  idOrClassName: string | number,
+  idOrClassName: ItemClassName | number,
   language: Language = Language.EN,
 ): Promise<Item> {
   const items = await loadItems(language);

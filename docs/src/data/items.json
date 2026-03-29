@@ -1,0 +1,1370 @@
+[
+  {
+    "class_name": "upgrade_ability_power_shard",
+    "name": "Echo Shard",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/echo_shard.webp"
+  },
+  {
+    "class_name": "upgrade_ability_refresher",
+    "name": "Refresher",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/refresher.webp"
+  },
+  {
+    "class_name": "upgrade_absorbing_armor",
+    "name": "Witchmail",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/witchmail.webp"
+  },
+  {
+    "class_name": "upgrade_acolytes_glove",
+    "name": "Spirit Strike",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/spirit_strike.webp"
+  },
+  {
+    "class_name": "upgrade_active_reload",
+    "name": "Active Reload",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/active_reload.webp"
+  },
+  {
+    "class_name": "upgrade_aoe_root",
+    "name": "Vortex Web",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/vortex_web.webp"
+  },
+  {
+    "class_name": "upgrade_aprounds",
+    "name": "Armor Piercing Rounds",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/armor_piercing_rounds.webp"
+  },
+  {
+    "class_name": "upgrade_arcane_extension",
+    "name": "Duration Extender",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/duration_extender.webp"
+  },
+  {
+    "class_name": "upgrade_arcane_surge",
+    "name": "Arcane Surge",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/arcane_surge.webp"
+  },
+  {
+    "class_name": "upgrade_arctic_blast",
+    "name": "Arctic Blast",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/arctic_blast.webp"
+  },
+  {
+    "class_name": "upgrade_banshee_slugs",
+    "name": "Crippling Headshot",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/crippling_headshot.webp"
+  },
+  {
+    "class_name": "upgrade_berserker",
+    "name": "Berserker",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/berserker.webp"
+  },
+  {
+    "class_name": "upgrade_blitz_bullets",
+    "name": "Swift Striker",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/swift_striker.webp"
+  },
+  {
+    "class_name": "upgrade_blood_tribute",
+    "name": "Blood Tribute",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/blood_tribute.webp"
+  },
+  {
+    "class_name": "upgrade_boundless_spirit",
+    "name": "Boundless Spirit",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/boundless_spirit.webp"
+  },
+  {
+    "class_name": "upgrade_boxing_glove",
+    "name": "Lifestrike",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/lifestrike.webp"
+  },
+  {
+    "class_name": "upgrade_bullet_armor_reduction_aura",
+    "name": "Hunter's Aura",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/hunters_aura.webp"
+  },
+  {
+    "class_name": "upgrade_bullet_resist_shredder",
+    "name": "Bullet Resist Shredder",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/bullet_resist_shredder.webp"
+  },
+  {
+    "class_name": "upgrade_bulletshredimbue",
+    "name": "Ballistic Enchantment",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/alchemical_seal.webp"
+  },
+  {
+    "class_name": "upgrade_burst_fire",
+    "name": "Burst Fire",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/burst_fire.webp"
+  },
+  {
+    "class_name": "upgrade_capacitor",
+    "name": "Capacitor",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/capacitor.webp"
+  },
+  {
+    "class_name": "upgrade_cardio_calibrator",
+    "name": "Enduring Speed",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/enduring_speed.webp"
+  },
+  {
+    "class_name": "upgrade_celestial_guidance",
+    "name": "Celestial Blessing",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/celestial_guidance.webp"
+  },
+  {
+    "class_name": "upgrade_chain_lightning",
+    "name": "Tesla Bullets",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/tesla_bullets.webp"
+  },
+  {
+    "class_name": "upgrade_cheat_death",
+    "name": "Cheat Death",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/cheat_death.webp"
+  },
+  {
+    "class_name": "upgrade_chonky",
+    "name": "Fortitude",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/fortitude.webp"
+  },
+  {
+    "class_name": "upgrade_clip_size",
+    "name": "Extended Magazine",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/basic_magazine.webp"
+  },
+  {
+    "class_name": "upgrade_cloak_of_opportunity",
+    "name": "Cloak of Opportunity",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/cloak_of_opportunity.webp"
+  },
+  {
+    "class_name": "upgrade_cloaking_device_active",
+    "name": "Shadow Weave",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/shadow_weave.webp"
+  },
+  {
+    "class_name": "upgrade_close_quarter_combat",
+    "name": "Point Blank",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/point_blank.webp"
+  },
+  {
+    "class_name": "upgrade_close_range",
+    "name": "Close Quarters",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/close_quarters.webp"
+  },
+  {
+    "class_name": "upgrade_cold_front",
+    "name": "Cold Front",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/cold_front.webp"
+  },
+  {
+    "class_name": "upgrade_colossus",
+    "name": "Colossus",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/colossus.webp"
+  },
+  {
+    "class_name": "upgrade_containment",
+    "name": "Slowing Hex",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/slowing_hex.webp"
+  },
+  {
+    "class_name": "upgrade_cooldown_reduction",
+    "name": "Superior Cooldown",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/superior_cooldown.webp"
+  },
+  {
+    "class_name": "upgrade_counterspell",
+    "name": "Counterspell",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/counterspell.webp"
+  },
+  {
+    "class_name": "upgrade_crackshot",
+    "name": "Mystic Shot",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/mystic_shot.webp"
+  },
+  {
+    "class_name": "upgrade_critshot",
+    "name": "Lucky Shot",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/lucky_shot.webp"
+  },
+  {
+    "class_name": "upgrade_crushing_fists",
+    "name": "Crushing Fists",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/crushing_fists.webp"
+  },
+  {
+    "class_name": "upgrade_damage_recycler",
+    "name": "Leech",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/leech.webp"
+  },
+  {
+    "class_name": "upgrade_debuff_reducer",
+    "name": "Debuff Reducer",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/debuff_reducer.webp"
+  },
+  {
+    "class_name": "upgrade_deflecting_armor",
+    "name": "Plated Armor",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/plated_armor.webp"
+  },
+  {
+    "class_name": "upgrade_discord",
+    "name": "Scourge",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/scourge.webp"
+  },
+  {
+    "class_name": "upgrade_divine_barrier",
+    "name": "Divine Barrier",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/divine_barrier.webp"
+  },
+  {
+    "class_name": "upgrade_diviners_kevlar",
+    "name": "Diviner's Kevlar",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/diviners_kevlar.webp"
+  },
+  {
+    "class_name": "upgrade_dps_aura",
+    "name": "Heroic Aura",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/heroic_aura.webp"
+  },
+  {
+    "class_name": "upgrade_eldritch_shot",
+    "name": "Haunting Shot",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/eldritch_shot.webp"
+  },
+  {
+    "class_name": "upgrade_electric_slippers",
+    "name": "Electric Slippers",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/electric_slippers.webp"
+  },
+  {
+    "class_name": "upgrade_enchanted_holsters",
+    "name": "Spellslinger",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/spell_slinger.webp"
+  },
+  {
+    "class_name": "upgrade_endurance",
+    "name": "Extra Regen",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/extra_regen.webp"
+  },
+  {
+    "class_name": "upgrade_escalating_exposure",
+    "name": "Escalating Exposure",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/escalating_exposure.webp"
+  },
+  {
+    "class_name": "upgrade_eternal_gift",
+    "name": "Eternal Gift",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/eternal_gift.webp"
+  },
+  {
+    "class_name": "upgrade_ethereal_bullets",
+    "name": "Mercurial Magnum",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/mercurial_magnum.webp"
+  },
+  {
+    "class_name": "upgrade_express_shot",
+    "name": "Express Shot",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/express_shot.webp"
+  },
+  {
+    "class_name": "upgrade_extra_charge",
+    "name": "Extra Charge",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/extra_charge.webp"
+  },
+  {
+    "class_name": "upgrade_fervor",
+    "name": "Frenzy",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/frenzy.webp"
+  },
+  {
+    "class_name": "upgrade_fleetfoot_boots",
+    "name": "Fleetfoot",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/fleetfoot.webp"
+  },
+  {
+    "class_name": "upgrade_focus_lens",
+    "name": "Focus Lens",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/focus_lens.webp"
+  },
+  {
+    "class_name": "upgrade_fury_trance",
+    "name": "Fury Trance",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/fury_trance.webp"
+  },
+  {
+    "class_name": "upgrade_glass_cannon",
+    "name": "Glass Cannon",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/glass_cannon.webp"
+  },
+  {
+    "class_name": "upgrade_glitch",
+    "name": "Cursed Relic",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/curse.webp"
+  },
+  {
+    "class_name": "upgrade_goose_egg",
+    "name": "Golden Goose Egg",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/goose_egg.webp"
+  },
+  {
+    "class_name": "upgrade_greater_withering_whip",
+    "name": "Disarming Hex",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/disarming_hex.webp"
+  },
+  {
+    "class_name": "upgrade_guardian_ward",
+    "name": "Guardian Ward",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/guardian_ward.webp"
+  },
+  {
+    "class_name": "upgrade_headhunter",
+    "name": "Headhunter",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/headhunter.webp"
+  },
+  {
+    "class_name": "upgrade_headshot_booster",
+    "name": "Headshot Booster",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/headshot_booster.webp"
+  },
+  {
+    "class_name": "upgrade_headshot_booster2",
+    "name": "Weakening Headshot",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/weakening_headshot.webp"
+  },
+  {
+    "class_name": "upgrade_healbane",
+    "name": "Healbane",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/healbane.webp"
+  },
+  {
+    "class_name": "upgrade_healbuff",
+    "name": "Healing Tempo",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/healing_tempo.webp"
+  },
+  {
+    "class_name": "upgrade_healing_booster",
+    "name": "Healing Booster",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/healing_booster.webp"
+  },
+  {
+    "class_name": "upgrade_health",
+    "name": "Extra Health",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/extra_health.webp"
+  },
+  {
+    "class_name": "upgrade_health_nova",
+    "name": "Healing Nova",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/healing_nova.webp"
+  },
+  {
+    "class_name": "upgrade_health_stealing_magic",
+    "name": "Spirit Lifesteal",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/spirit_lifesteal.webp"
+  },
+  {
+    "class_name": "upgrade_health_stimpak",
+    "name": "Healing Rite",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/healing_rite.webp"
+  },
+  {
+    "class_name": "upgrade_high_velocity_mag",
+    "name": "High-Velocity Rounds",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/high_velocity_rounds.webp"
+  },
+  {
+    "class_name": "upgrade_hollow_point_rounds",
+    "name": "Hollow Point",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/hollow_point.webp"
+  },
+  {
+    "class_name": "upgrade_icarus_wings",
+    "name": "Seraphim Wings",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/icarus_wings.webp"
+  },
+  {
+    "class_name": "upgrade_imbued_duration_extender",
+    "name": "Superior Duration",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/superior_duration.webp"
+  },
+  {
+    "class_name": "upgrade_improved_bullet_armor",
+    "name": "Bullet Resilience",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/bullet_resilience.webp"
+  },
+  {
+    "class_name": "upgrade_improved_spirit",
+    "name": "Extra Spirit",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/extra_spirit.webp"
+  },
+  {
+    "class_name": "upgrade_improved_stamina",
+    "name": "Extra Stamina",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/extra_stamina.webp"
+  },
+  {
+    "class_name": "upgrade_infinite_rounds",
+    "name": "Infinite Rounds",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/infinite_rounds.webp"
+  },
+  {
+    "class_name": "upgrade_infuser",
+    "name": "Infuser",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/infuser.webp"
+  },
+  {
+    "class_name": "upgrade_inhibitor",
+    "name": "Inhibitor",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/inhibitor.webp"
+  },
+  {
+    "class_name": "upgrade_intensifying_clip",
+    "name": "Intensifying Magazine",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/intensifying_magazine.webp"
+  },
+  {
+    "class_name": "upgrade_juggernaut",
+    "name": "Juggernaut",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/juggernaut.webp"
+  },
+  {
+    "class_name": "upgrade_kinetic_sash",
+    "name": "Kinetic Dash",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/kinetic_dash.webp"
+  },
+  {
+    "class_name": "upgrade_lifestrike_gauntlets",
+    "name": "Melee Lifesteal",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/melee_lifesteal.webp"
+  },
+  {
+    "class_name": "upgrade_long_range",
+    "name": "Long Range",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/long_range.webp"
+  },
+  {
+    "class_name": "upgrade_magic_burst",
+    "name": "Mystic Burst",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/mystic_burst.webp"
+  },
+  {
+    "class_name": "upgrade_magic_carpet",
+    "name": "Magic Carpet",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/magic_carpet.webp"
+  },
+  {
+    "class_name": "upgrade_magic_reach",
+    "name": "Mystic Expansion",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/mystic_reach.webp"
+  },
+  {
+    "class_name": "upgrade_magic_shield",
+    "name": "Enchanter's Emblem",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/enchanters_emblem.webp"
+  },
+  {
+    "class_name": "upgrade_magic_shock",
+    "name": "Tankbuster",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/tankbuster.webp"
+  },
+  {
+    "class_name": "upgrade_magic_slow",
+    "name": "Mystic Slow",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/mystic_slow.webp"
+  },
+  {
+    "class_name": "upgrade_magic_storm",
+    "name": "Surge of Power",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/surge_of_power.webp"
+  },
+  {
+    "class_name": "upgrade_magic_tempo",
+    "name": "Compress Cooldown",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/improved_cooldown.webp"
+  },
+  {
+    "class_name": "upgrade_magic_vulnerability",
+    "name": "Mystic Vulnerability",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/mystic_vulnerability.webp"
+  },
+  {
+    "class_name": "upgrade_medic_bullets",
+    "name": "Restorative Shot",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/restorative_shot.webp"
+  },
+  {
+    "class_name": "upgrade_melee_charge",
+    "name": "Melee Charge",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/melee_charge.webp"
+  },
+  {
+    "class_name": "upgrade_melee_rebuttal",
+    "name": "Rebuttal",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/rebuttal.webp"
+  },
+  {
+    "class_name": "upgrade_metal_skin",
+    "name": "Metal Skin",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/metal_skin.webp"
+  },
+  {
+    "class_name": "upgrade_mystic_regeneration",
+    "name": "Mystic Regeneration",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/mystic_regen.webp"
+  },
+  {
+    "class_name": "upgrade_mystic_reverb",
+    "name": "Mystic Reverb",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/mystic_reverb.webp"
+  },
+  {
+    "class_name": "upgrade_mystical_piano",
+    "name": "Mystical Piano",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/mystical_piano.webp"
+  },
+  {
+    "class_name": "upgrade_non_player_bonus",
+    "name": "Monster Rounds",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/monster_rounds.webp"
+  },
+  {
+    "class_name": "upgrade_non_player_bonus_sacrifice",
+    "name": "Cultist Sacrifice",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/cultist_sacrifice.webp"
+  },
+  {
+    "class_name": "upgrade_nullification_aura",
+    "name": "Nullification Burst",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/nullification_aura.webp"
+  },
+  {
+    "class_name": "upgrade_omnicharge_pendant",
+    "name": "Omnicharge Signet",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/omnicharge_pendant.webp"
+  },
+  {
+    "class_name": "upgrade_patrons_blessing",
+    "name": "Mystic Conduit",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/patrons_blessing.webp"
+  },
+  {
+    "class_name": "upgrade_phantom_strike",
+    "name": "Phantom Strike",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/phantom_strike.webp"
+  },
+  {
+    "class_name": "upgrade_prism_blast",
+    "name": "Prism Blast",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/prism_blast.webp"
+  },
+  {
+    "class_name": "upgrade_pristine_emblem",
+    "name": "Opening Rounds",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/opening_rounds.webp"
+  },
+  {
+    "class_name": "upgrade_proc_silence",
+    "name": "Silencer",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/silencer.webp"
+  },
+  {
+    "class_name": "upgrade_quick_silver",
+    "name": "Quicksilver Reload",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/quicksilver_reload.webp"
+  },
+  {
+    "class_name": "upgrade_rapid_recharge",
+    "name": "Rapid Recharge",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/rapid_recharge.webp"
+  },
+  {
+    "class_name": "upgrade_rapid_rounds",
+    "name": "Rapid Rounds",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/rapid_rounds.webp"
+  },
+  {
+    "class_name": "upgrade_rechargingbullets",
+    "name": "Recharging Rush",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/recharging_rounds.webp"
+  },
+  {
+    "class_name": "upgrade_reduce_debuff_duration",
+    "name": "Dispel Magic",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/debuff_remover.webp"
+  },
+  {
+    "class_name": "upgrade_regenerating_bullet_shield",
+    "name": "Battle Vest",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/battle_vest.webp"
+  },
+  {
+    "class_name": "upgrade_reinforcing_casings",
+    "name": "Escalating Resilience",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/escalating_resilience.webp"
+  },
+  {
+    "class_name": "upgrade_rescue_beam",
+    "name": "Rescue Beam",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/rescue_beam.webp"
+  },
+  {
+    "class_name": "upgrade_resonant_healing",
+    "name": "Radiant Regeneration",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/radiant_regeneration.webp"
+  },
+  {
+    "class_name": "upgrade_restorative_locket",
+    "name": "Restorative Locket",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/restorative_locket.webp"
+  },
+  {
+    "class_name": "upgrade_return_fire",
+    "name": "Return Fire",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/return_fire.webp"
+  },
+  {
+    "class_name": "upgrade_ricochet",
+    "name": "Ricochet",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/ricochet.webp"
+  },
+  {
+    "class_name": "upgrade_rocket_booster",
+    "name": "Majestic Leap",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/majestic_leap.webp"
+  },
+  {
+    "class_name": "upgrade_runed_gauntlets",
+    "name": "Runed Gauntlets",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/runed_gauntlets.webp"
+  },
+  {
+    "class_name": "upgrade_rupture",
+    "name": "Decay",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/decay.webp"
+  },
+  {
+    "class_name": "upgrade_self_bubble",
+    "name": "Ethereal Shift",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/ethereal_shift.webp"
+  },
+  {
+    "class_name": "upgrade_shadow_strike",
+    "name": "Shadow Strike",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/shadow_strike.webp"
+  },
+  {
+    "class_name": "upgrade_sharpshooter",
+    "name": "Sharpshooter",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/sharp_shooter.webp"
+  },
+  {
+    "class_name": "upgrade_shivas_bracelet",
+    "name": "Frostbite Charm",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/frostbite.webp"
+  },
+  {
+    "class_name": "upgrade_shrink_ray",
+    "name": "Shrink Ray",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/shrink_ray.webp"
+  },
+  {
+    "class_name": "upgrade_siphon_bullets",
+    "name": "Siphon Bullets",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/siphon_bullets.webp"
+  },
+  {
+    "class_name": "upgrade_slowing_bullets",
+    "name": "Slowing Bullets",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/slowing_bullets.webp"
+  },
+  {
+    "class_name": "upgrade_soaring_spirit",
+    "name": "Improved Spirit",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/improved_spirit.webp"
+  },
+  {
+    "class_name": "upgrade_spellbreaker",
+    "name": "Spellbreaker",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/spellbreaker.webp"
+  },
+  {
+    "class_name": "upgrade_spellslinger_headshots",
+    "name": "Spirit Rend",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/spellslinger_headshots.webp"
+  },
+  {
+    "class_name": "upgrade_spirit_bubble",
+    "name": "Spirit Shielding",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/spirit_shielding.webp"
+  },
+  {
+    "class_name": "upgrade_spirit_burn",
+    "name": "Spirit Burn",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/spirit_burn.webp"
+  },
+  {
+    "class_name": "upgrade_spirit_sap",
+    "name": "Spirit Sap",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/spirit_sap.webp"
+  },
+  {
+    "class_name": "upgrade_spirit_snatch",
+    "name": "Spirit Snatch",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/spirit_snatch.webp"
+  },
+  {
+    "class_name": "upgrade_split_shot",
+    "name": "Split Shot",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/split_shot.webp"
+  },
+  {
+    "class_name": "upgrade_sprint_booster",
+    "name": "Sprint Boots",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/sprint_boots.webp"
+  },
+  {
+    "class_name": "upgrade_superior_stamina",
+    "name": "Stamina Mastery",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/stamina_mastery.webp"
+  },
+  {
+    "class_name": "upgrade_suppressor",
+    "name": "Suppressor",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/suppressor.webp"
+  },
+  {
+    "class_name": "upgrade_surging_power",
+    "name": "Vampiric Burst",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/vampiric_burst.webp"
+  },
+  {
+    "class_name": "upgrade_target_stun",
+    "name": "Knockdown",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/knockdown.webp"
+  },
+  {
+    "class_name": "upgrade_targeted_silence",
+    "name": "Silence Wave",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/silence_glyph.webp"
+  },
+  {
+    "class_name": "upgrade_tech_damage_pulse",
+    "name": "Torment Pulse",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/torment_pulse.webp"
+  },
+  {
+    "class_name": "upgrade_tech_defense_shredders",
+    "name": "Spirit Shredder Bullets",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/spirit_shredder_bullets.webp"
+  },
+  {
+    "class_name": "upgrade_tech_overflow",
+    "name": "Spiritual Overflow",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/spiritual_overflow.webp"
+  },
+  {
+    "class_name": "upgrade_tech_purge",
+    "name": "Spirit Resilience",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/spirit_resilience.webp"
+  },
+  {
+    "class_name": "upgrade_tech_range",
+    "name": "Greater Expansion",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/greater_expansion.webp"
+  },
+  {
+    "class_name": "upgrade_thermal_detonator",
+    "name": "Alchemical Fire",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/alchemical_fire.webp"
+  },
+  {
+    "class_name": "upgrade_titan_round",
+    "name": "Titanic Magazine",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/titanic_magazine.webp"
+  },
+  {
+    "class_name": "upgrade_toxic_bullets",
+    "name": "Toxic Bullets",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/toxic_bullets.webp"
+  },
+  {
+    "class_name": "upgrade_transcendent_cooldown",
+    "name": "Transcendent Cooldown",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/transcendent_cooldown.webp"
+  },
+  {
+    "class_name": "upgrade_trophy_collector",
+    "name": "Trophy Collector",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/trophy_collector.webp"
+  },
+  {
+    "class_name": "upgrade_ultimate_burst",
+    "name": "Lightning Scroll",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/lightning_scroll.webp"
+  },
+  {
+    "class_name": "upgrade_unstable_concoction",
+    "name": "Unstable Concoction",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 5,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/brawl/unstable_concoction.webp"
+  },
+  {
+    "class_name": "upgrade_unstoppable",
+    "name": "Unstoppable",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/unstoppable.webp"
+  },
+  {
+    "class_name": "upgrade_vampire",
+    "name": "Bullet Lifesteal",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/bullet_lifesteal.webp"
+  },
+  {
+    "class_name": "upgrade_veil_walker",
+    "name": "Veil Walker",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/veil_walker.webp"
+  },
+  {
+    "class_name": "upgrade_vex_barrier",
+    "name": "Reactive Barrier",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/reactive_barrier.webp"
+  },
+  {
+    "class_name": "upgrade_warp_stone",
+    "name": "Warp Stone",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/warp_stone.webp"
+  },
+  {
+    "class_name": "upgrade_weapon_backstabber",
+    "name": "Stalker",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/backstabber.webp"
+  },
+  {
+    "class_name": "upgrade_weapon_shielding",
+    "name": "Weapon Shielding",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 2,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/weapon_shielding.webp"
+  },
+  {
+    "class_name": "upgrade_weighted_shots",
+    "name": "Weighted Shots",
+    "type": "upgrade",
+    "item_slot_type": "weapon",
+    "item_tier": 3,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/weighted_shots.webp"
+  },
+  {
+    "class_name": "upgrade_withering_whip",
+    "name": "Rusted Barrel",
+    "type": "upgrade",
+    "item_slot_type": "spirit",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/rusted_barrel.webp"
+  }
+]

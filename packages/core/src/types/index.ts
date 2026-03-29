@@ -1,5 +1,6 @@
 export { Language, SUPPORTED_LANGUAGES } from './language';
 export type { TooltipBehavior, TooltipPlacement, TooltipSection, TooltipSectionAttribute, TooltipSectionType } from './tooltip';
+export type { ItemClassName } from './item-class-name';
 export type {
   Item,
   ItemProperty,

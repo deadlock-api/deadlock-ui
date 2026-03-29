@@ -1,3 +1,4 @@
+import { ItemClassName } from './item-class-name';
 import { TooltipSection } from './tooltip';
 
 export type ItemSlotType = 'weapon' | 'spirit' | 'vitality';
@@ -44,7 +45,7 @@ export interface ItemUpgrade {
 
 export interface Item {
   id: number;
-  class_name: string;
+  class_name: ItemClassName;
   name: string;
   type: ItemType;
   item_slot_type: ItemSlotType;

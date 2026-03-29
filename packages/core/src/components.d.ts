@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Item, ItemSlotType, ItemTier, Language, TooltipBehavior, TooltipPlacement } from "./types";
-export { Item, ItemSlotType, ItemTier, Language, TooltipBehavior, TooltipPlacement } from "./types";
+import { Item, ItemClassName, ItemSlotType, ItemTier, Language, TooltipBehavior, TooltipPlacement } from "./types";
+export { Item, ItemClassName, ItemSlotType, ItemTier, Language, TooltipBehavior, TooltipPlacement } from "./types";
 export namespace Components {
     interface DlItemCard {
         /**
@@ -17,7 +17,7 @@ export namespace Components {
         /**
           * Item class name (e.g. `"upgrade_clip_size"`). Alternative to `item-id`.
          */
-        "itemClassName"?: string;
+        "itemClassName"?: ItemClassName;
         /**
           * Pre-loaded item data object. When provided, skips the API fetch.
          */
@@ -141,7 +141,7 @@ declare namespace LocalJSX {
         /**
           * Item class name (e.g. `"upgrade_clip_size"`). Alternative to `item-id`.
          */
-        "itemClassName"?: string;
+        "itemClassName"?: ItemClassName;
         /**
           * Pre-loaded item data object. When provided, skips the API fetch.
          */
@@ -218,7 +218,7 @@ declare namespace LocalJSX {
 
     interface DlItemCardAttributes {
         "itemId": number;
-        "itemClassName": string;
+        "itemClassName": ItemClassName;
         "hoverEffect": 'none' | 'scale';
         "showTierBadge": boolean;
     }

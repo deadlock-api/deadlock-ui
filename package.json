@@ -14,7 +14,8 @@
     "build:vue": "npm -w @deadlock-ui/vue run build",
     "docs": "npm run build:core && npm -w docs run start",
     "docs:build": "npm run build:core && npm -w docs run build",
-    "start": "npm -w @deadlock-ui/core run start"
+    "start": "npm -w @deadlock-ui/core run start",
+    "codegen": "node scripts/generate-class-names.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

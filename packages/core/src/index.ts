@@ -11,6 +11,7 @@ export { fetchItems, fetchItemsBySlotType, fetchItem } from './api/client';
 
 export { Language, SUPPORTED_LANGUAGES } from './types';
 export type {
+  ItemClassName,
   TooltipBehavior,
   Item,
   ItemProperty,
