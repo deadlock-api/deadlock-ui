@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/deadlockprobr/deadlock-ui/compare/deadlock-ui-v1.0.1...deadlock-ui-v1.0.2) (2026-03-29)
+
+
+### Bug Fixes
+
+* include repo.config.mjs in Docker build context ([4d43f0b](https://github.com/deadlockprobr/deadlock-ui/commit/4d43f0b7b2d81e28abbe395e9954a842025e06d8))
+* resolve parent items and text alignment for standalone usage ([a6491fe](https://github.com/deadlockprobr/deadlock-ui/commit/a6491fe63ab4b5f72018388252a28400c35d1ed1))
+
 ## [1.0.1](https://github.com/deadlockprobr/deadlock-ui/compare/deadlock-ui-v1.0.0...deadlock-ui-v1.0.1) (2026-03-29)
 
 
