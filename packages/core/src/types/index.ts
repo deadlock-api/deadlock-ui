@@ -1,4 +1,4 @@
-export { SUPPORTED_LANGUAGES, type Language } from './language';
+export { Language, SUPPORTED_LANGUAGES } from './language';
 export type { TooltipBehavior, TooltipPlacement, TooltipSection, TooltipSectionAttribute, TooltipSectionType } from './tooltip';
 export type {
   Item,

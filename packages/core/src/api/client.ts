@@ -44,13 +44,13 @@ function loadItems(language: Language): Promise<Item[]> {
   return promise;
 }
 
-export async function fetchItems(language: Language = 'english'): Promise<Item[]> {
+export async function fetchItems(language: Language = Language.EN): Promise<Item[]> {
   return loadItems(language);
 }
 
 export async function fetchItemsBySlotType(
   slotType: ItemSlotType,
-  language: Language = 'english',
+  language: Language = Language.EN,
 ): Promise<Item[]> {
   const items = await loadItems(language);
   return items.filter(i => i.item_slot_type === slotType);
@@ -58,7 +58,7 @@ export async function fetchItemsBySlotType(
 
 export async function fetchItem(
   idOrClassName: string | number,
-  language: Language = 'english',
+  language: Language = Language.EN,
 ): Promise<Item> {
   const items = await loadItems(language);
   const item = items.find(

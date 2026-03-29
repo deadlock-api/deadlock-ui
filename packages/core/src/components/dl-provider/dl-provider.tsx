@@ -9,7 +9,7 @@ import { injectFonts } from '../../utils/fonts';
 })
 export class DlProvider {
   /** Language for item data (e.g. `"english"`, `"brazilian"`, `"japanese"`). */
-  @Prop() language: Language = 'english';
+  @Prop() language: Language = Language.EN;
 
   /** How the item tooltip is triggered: `"tooltip"` on hover, `"popover"` on click, or `"none"` to disable. */
   @Prop({ attribute: 'tooltip-behavior' }) tooltipBehavior: TooltipBehavior = 'tooltip';

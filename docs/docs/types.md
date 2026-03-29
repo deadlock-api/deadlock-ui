@@ -12,35 +12,34 @@ import type { Language, Item, TooltipBehavior } from '@deadlock-ui/core';
 
 ## Language
 
-Supported language codes for item data localization. Used by [`dl-provider`](/docs/components/dl-provider).
+Enum with supported language codes for item data localization. Used by [`dl-provider`](/docs/components/dl-provider).
 
-| Value | Language |
-|---|---|
-| `brazilian` | Brazilian Portuguese |
-| `czech` | Czech |
-| `english` | English |
-| `french` | French |
-| `german` | German |
-| `indonesian` | Indonesian |
-| `italian` | Italian |
-| `japanese` | Japanese |
-| `koreana` | Korean |
-| `latam` | Latin American Spanish |
-| `polish` | Polish |
-| `russian` | Russian |
-| `schinese` | Simplified Chinese |
-| `spanish` | Spanish |
-| `thai` | Thai |
-| `turkish` | Turkish |
-| `ukrainian` | Ukrainian |
-
-A runtime array `SUPPORTED_LANGUAGES` is also available:
+| Enum Key | Value | Language |
+|---|---|---|
+| `Language.PT_BR` | `brazilian` | Brazilian Portuguese |
+| `Language.CS` | `czech` | Czech |
+| `Language.EN` | `english` | English |
+| `Language.FR` | `french` | French |
+| `Language.DE` | `german` | German |
+| `Language.ID` | `indonesian` | Indonesian |
+| `Language.IT` | `italian` | Italian |
+| `Language.JA` | `japanese` | Japanese |
+| `Language.KO` | `koreana` | Korean |
+| `Language.ES_LA` | `latam` | Latin American Spanish |
+| `Language.PL` | `polish` | Polish |
+| `Language.RU` | `russian` | Russian |
+| `Language.ZH_CN` | `schinese` | Simplified Chinese |
+| `Language.ES` | `spanish` | Spanish |
+| `Language.TH` | `thai` | Thai |
+| `Language.TR` | `turkish` | Turkish |
+| `Language.UK` | `ukrainian` | Ukrainian |
 
 ```ts
-import { SUPPORTED_LANGUAGES } from '@deadlock-ui/core';
+import { Language, SUPPORTED_LANGUAGES } from '@deadlock-ui/core';
 
-console.log(SUPPORTED_LANGUAGES);
-// ['brazilian', 'czech', 'english', ...]
+Language.EN;            // 'english'
+Language.PT_BR;         // 'brazilian'
+SUPPORTED_LANGUAGES;    // ['brazilian', 'czech', 'english', ...]
 ```
 
 ## TooltipBehavior

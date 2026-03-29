@@ -55,7 +55,7 @@ export namespace Components {
     interface DlProvider {
         /**
           * Language for item data (e.g. `"english"`, `"brazilian"`, `"japanese"`).
-          * @default 'english'
+          * @default Language.EN
          */
         "language": Language;
         /**
@@ -179,7 +179,7 @@ declare namespace LocalJSX {
     interface DlProvider {
         /**
           * Language for item data (e.g. `"english"`, `"brazilian"`, `"japanese"`).
-          * @default 'english'
+          * @default Language.EN
          */
         "language"?: Language;
         /**

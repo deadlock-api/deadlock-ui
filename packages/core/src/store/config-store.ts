@@ -10,7 +10,7 @@ interface ConfigState {
 }
 
 const { state, onChange } = createStore<ConfigState>({
-  language: 'english',
+  language: Language.EN,
   tooltipBehavior: 'tooltip',
   tooltipPlacement: 'auto',
   tooltipDelay: 150,

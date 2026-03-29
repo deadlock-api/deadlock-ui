@@ -9,9 +9,8 @@ export { configState } from './store/config-store';
 
 export { fetchItems, fetchItemsBySlotType, fetchItem } from './api/client';
 
-export { SUPPORTED_LANGUAGES } from './types';
+export { Language, SUPPORTED_LANGUAGES } from './types';
 export type {
-  Language,
   TooltipBehavior,
   Item,
   ItemProperty,
