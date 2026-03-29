@@ -4,6 +4,7 @@ import { Item, ItemClassName } from '../../types';
 import { fetchItem } from '../../api/client';
 import { configState, onConfigChange } from '../../store/config-store';
 import { cardBackground } from '../../utils/assets';
+import { injectFonts } from '../../utils/fonts';
 
 @Component({
   tag: 'dl-item-card',
@@ -99,6 +100,7 @@ export class DlItemCard {
   }
 
   connectedCallback() {
+    injectFonts();
     if (this.itemKey && !this.itemData) {
       this.fetchItemData();
     }
