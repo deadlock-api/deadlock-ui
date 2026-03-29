@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Item, ItemClassName, ItemSlotType, ItemTier, Language, TooltipBehavior, TooltipPlacement } from "./types";
-export { Item, ItemClassName, ItemSlotType, ItemTier, Language, TooltipBehavior, TooltipPlacement } from "./types";
+import { Item, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
+export { Item, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
 export namespace Components {
     interface DlItemCard {
         /**
@@ -64,20 +64,25 @@ export namespace Components {
          */
         "showTierBadge": boolean;
         /**
-          * How the item tooltip is triggered: `"tooltip"` on hover, `"popover"` on click, or `"none"` to disable.
-          * @default 'tooltip'
-         */
-        "tooltipBehavior": TooltipBehavior;
-        /**
           * Delay in milliseconds before showing the tooltip on hover.
           * @default 150
          */
         "tooltipDelay": number;
         /**
+          * When `true`, the tooltip follows the cursor instead of anchoring to the card. Only applies when `tooltip-trigger` is `"hover"`.
+          * @default false
+         */
+        "tooltipFollowCursor": boolean;
+        /**
           * Preferred tooltip position. `"auto"` picks the side with the most space.
           * @default 'auto'
          */
         "tooltipPlacement": TooltipPlacement;
+        /**
+          * How the item tooltip is triggered: `"hover"` on mouse over, `"click"` on click, or `"none"` to disable.
+          * @default 'hover'
+         */
+        "tooltipTrigger": TooltipTrigger;
     }
     interface DlShopPanel {
         /**
@@ -188,20 +193,25 @@ declare namespace LocalJSX {
          */
         "showTierBadge"?: boolean;
         /**
-          * How the item tooltip is triggered: `"tooltip"` on hover, `"popover"` on click, or `"none"` to disable.
-          * @default 'tooltip'
-         */
-        "tooltipBehavior"?: TooltipBehavior;
-        /**
           * Delay in milliseconds before showing the tooltip on hover.
           * @default 150
          */
         "tooltipDelay"?: number;
         /**
+          * When `true`, the tooltip follows the cursor instead of anchoring to the card. Only applies when `tooltip-trigger` is `"hover"`.
+          * @default false
+         */
+        "tooltipFollowCursor"?: boolean;
+        /**
           * Preferred tooltip position. `"auto"` picks the side with the most space.
           * @default 'auto'
          */
         "tooltipPlacement"?: TooltipPlacement;
+        /**
+          * How the item tooltip is triggered: `"hover"` on mouse over, `"click"` on click, or `"none"` to disable.
+          * @default 'hover'
+         */
+        "tooltipTrigger"?: TooltipTrigger;
     }
     interface DlShopPanel {
         /**
@@ -229,8 +239,9 @@ declare namespace LocalJSX {
     }
     interface DlProviderAttributes {
         "language": Language;
-        "tooltipBehavior": TooltipBehavior;
+        "tooltipTrigger": TooltipTrigger;
         "tooltipPlacement": TooltipPlacement;
+        "tooltipFollowCursor": boolean;
         "tooltipDelay": number;
         "showTierBadge": boolean;
     }

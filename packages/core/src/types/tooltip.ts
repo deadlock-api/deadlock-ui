@@ -1,4 +1,4 @@
-export type TooltipBehavior = 'tooltip' | 'popover' | 'none';
+export type TooltipTrigger = 'hover' | 'click' | 'none';
 
 export type TooltipPlacement = 'auto' | 'top' | 'bottom' | 'left' | 'right';
 

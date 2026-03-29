@@ -1,5 +1,5 @@
 import { Component, Prop, Watch, h } from '@stencil/core';
-import { Language, TooltipBehavior, TooltipPlacement } from '../../types';
+import { Language, TooltipTrigger, TooltipPlacement } from '../../types';
 import { configState } from '../../store/config-store';
 import { injectFonts } from '../../utils/fonts';
 
@@ -11,11 +11,14 @@ export class DlProvider {
   /** Language for item data (e.g. `"english"`, `"brazilian"`, `"japanese"`). */
   @Prop() language: Language = Language.EN;
 
-  /** How the item tooltip is triggered: `"tooltip"` on hover, `"popover"` on click, or `"none"` to disable. */
-  @Prop({ attribute: 'tooltip-behavior' }) tooltipBehavior: TooltipBehavior = 'tooltip';
+  /** How the item tooltip is triggered: `"hover"` on mouse over, `"click"` on click, or `"none"` to disable. */
+  @Prop({ attribute: 'tooltip-trigger' }) tooltipTrigger: TooltipTrigger = 'hover';
 
   /** Preferred tooltip position. `"auto"` picks the side with the most space. */
   @Prop({ attribute: 'tooltip-placement' }) tooltipPlacement: TooltipPlacement = 'auto';
+
+  /** When `true`, the tooltip follows the cursor instead of anchoring to the card. Only applies when `tooltip-trigger` is `"hover"`. */
+  @Prop({ attribute: 'tooltip-follow-cursor' }) tooltipFollowCursor: boolean = false;
 
   /** Delay in milliseconds before showing the tooltip on hover. */
   @Prop({ attribute: 'tooltip-delay', reflect: true }) tooltipDelay: number = 150;
@@ -26,8 +29,9 @@ export class DlProvider {
   connectedCallback() {
     injectFonts();
     configState.language = this.language;
-    configState.tooltipBehavior = this.tooltipBehavior;
+    configState.tooltipTrigger = this.tooltipTrigger;
     configState.tooltipPlacement = this.tooltipPlacement;
+    configState.tooltipFollowCursor = this.tooltipFollowCursor;
     configState.tooltipDelay = this.tooltipDelay;
     configState.showTierBadge = this.showTierBadge;
   }
@@ -37,14 +41,19 @@ export class DlProvider {
     configState.language = newVal;
   }
 
-  @Watch('tooltipBehavior')
-  tooltipBehaviorChanged(newVal: TooltipBehavior) {
-    configState.tooltipBehavior = newVal;
+  @Watch('tooltipTrigger')
+  tooltipTriggerChanged(newVal: TooltipTrigger) {
+    configState.tooltipTrigger = newVal;
   }
 
   @Watch('tooltipPlacement')
   tooltipPlacementChanged(newVal: TooltipPlacement) {
     configState.tooltipPlacement = newVal;
+  }
+
+  @Watch('tooltipFollowCursor')
+  tooltipFollowCursorChanged(newVal: boolean) {
+    configState.tooltipFollowCursor = newVal;
   }
 
   @Watch('tooltipDelay')

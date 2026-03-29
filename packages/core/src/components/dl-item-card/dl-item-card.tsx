@@ -163,12 +163,12 @@ export class DlItemCard {
     });
   }
 
-  /** Tooltip mode: position relative to cursor via virtual element */
+  /** Follow-cursor mode: position relative to cursor via virtual element */
   private updatePositionFromMouse = () => {
     this.computeFloatingPosition(this.virtualRef);
   };
 
-  /** Popover mode: position relative to card element */
+  /** Anchored mode: position relative to card element */
   private updatePositionFromCard = () => {
     const card = this.cardEl;
     if (!card) return;
@@ -186,12 +186,12 @@ export class DlItemCard {
     }
   };
 
-  private showTooltipMode() {
+  private showFollowCursorMode() {
     this._open = true;
     this.updatePositionFromMouse();
   }
 
-  private showPopoverMode() {
+  private showAnchoredMode() {
     this._open = true;
 
     const card = this.cardEl;
@@ -214,31 +214,43 @@ export class DlItemCard {
   }
 
   private handleMouseEnter = (e: MouseEvent) => {
-    if (configState.tooltipBehavior !== 'tooltip') return;
-    this._mouseX = e.clientX;
-    this._mouseY = e.clientY;
-    this.el.addEventListener('mousemove', this.handleMouseMove);
+    if (configState.tooltipTrigger !== 'hover') return;
+
     const delay = configState.tooltipDelay;
-    if (delay > 0) {
-      this._hoverTimeout = setTimeout(() => this.showTooltipMode(), delay);
+
+    if (configState.tooltipFollowCursor) {
+      this._mouseX = e.clientX;
+      this._mouseY = e.clientY;
+      this.el.addEventListener('mousemove', this.handleMouseMove);
+      if (delay > 0) {
+        this._hoverTimeout = setTimeout(() => this.showFollowCursorMode(), delay);
+      } else {
+        this.showFollowCursorMode();
+      }
     } else {
-      this.showTooltipMode();
+      if (delay > 0) {
+        this._hoverTimeout = setTimeout(() => this.showAnchoredMode(), delay);
+      } else {
+        this.showAnchoredMode();
+      }
     }
   };
 
   private handleMouseLeave = () => {
-    if (configState.tooltipBehavior !== 'tooltip') return;
-    this.el.removeEventListener('mousemove', this.handleMouseMove);
+    if (configState.tooltipTrigger !== 'hover') return;
+    if (configState.tooltipFollowCursor) {
+      this.el.removeEventListener('mousemove', this.handleMouseMove);
+    }
     this.hideTooltip();
   };
 
   private handleCardClick = () => {
-    if (configState.tooltipBehavior !== 'popover') return;
+    if (configState.tooltipTrigger !== 'click') return;
     if (this._open) {
       this.hideTooltip();
       document.removeEventListener('click', this._onOutsideClick);
     } else {
-      this.showPopoverMode();
+      this.showAnchoredMode();
       requestAnimationFrame(() => {
         document.addEventListener('click', this._onOutsideClick);
       });
@@ -281,15 +293,15 @@ export class DlItemCard {
     const isActive = item.is_active_item || (item.activation !== 'passive');
     const hasImbue = !!item.imbue;
     const cardBg = cardBackground(slot, tier);
-    const isPopover = configState.tooltipBehavior === 'popover';
-    const noTooltip = configState.tooltipBehavior === 'none';
+    const isClickMode = configState.tooltipTrigger === 'click';
+    const noTooltip = configState.tooltipTrigger === 'none';
     const romanNumerals = ['I', 'II', 'III', 'IV', 'V'];
 
     return [
       <div
         class={{
           'mod-box': true,
-          'clickable': isPopover,
+          'clickable': isClickMode,
           [`tier-${tier}`]: true,
           [slot]: true,
         }}

@@ -1,18 +1,20 @@
 import { createStore } from '@stencil/store';
-import { Language, TooltipBehavior, TooltipPlacement } from '../types';
+import { Language, TooltipTrigger, TooltipPlacement } from '../types';
 
 interface ConfigState {
   language: Language;
-  tooltipBehavior: TooltipBehavior;
+  tooltipTrigger: TooltipTrigger;
   tooltipPlacement: TooltipPlacement;
+  tooltipFollowCursor: boolean;
   tooltipDelay: number;
   showTierBadge: boolean;
 }
 
 const { state, onChange } = createStore<ConfigState>({
   language: Language.EN,
-  tooltipBehavior: 'tooltip',
+  tooltipTrigger: 'hover',
   tooltipPlacement: 'auto',
+  tooltipFollowCursor: false,
   tooltipDelay: 150,
   showTierBadge: true,
 });

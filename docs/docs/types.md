@@ -7,7 +7,7 @@ sidebar_position: 2
 All types are exported from the core package and can be imported directly:
 
 ```ts
-import type { Language, Item, TooltipBehavior } from '@deadlock-ui/core';
+import type { Language, Item, TooltipTrigger } from '@deadlock-ui/core';
 ```
 
 ## Language
@@ -42,14 +42,14 @@ Language.PT_BR;         // 'brazilian'
 SUPPORTED_LANGUAGES;    // ['brazilian', 'czech', 'english', ...]
 ```
 
-## TooltipBehavior
+## TooltipTrigger
 
 Controls how the item tooltip is triggered.
 
 | Value | Description |
 |---|---|
-| `tooltip` | Shows on hover |
-| `popover` | Shows on click |
+| `hover` | Shows on mouse hover |
+| `click` | Shows on click |
 | `none` | Disabled |
 
 ## TooltipPlacement

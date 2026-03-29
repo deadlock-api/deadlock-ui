@@ -24,8 +24,9 @@ const labelStyle: React.CSSProperties = {
 
 function Playground(): React.JSX.Element {
   const [language, setLanguage] = useState('english');
-  const [tooltipBehavior, setTooltipBehavior] = useState('tooltip');
+  const [tooltipTrigger, setTooltipTrigger] = useState('hover');
   const [tooltipPlacement, setTooltipPlacement] = useState('auto');
+  const [tooltipFollowCursor, setTooltipFollowCursor] = useState(false);
   const [tooltipDelay, setTooltipDelay] = useState(150);
   const [showTierBadge, setShowTierBadge] = useState(false);
   const [activeTab, setActiveTab] = useState('weapon');
@@ -56,10 +57,10 @@ function Playground(): React.JSX.Element {
             </select>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <label style={labelStyle}>Tooltip:</label>
-            <select style={selectStyle} value={tooltipBehavior} onChange={e => setTooltipBehavior(e.target.value)}>
-              <option value="tooltip">Hover</option>
-              <option value="popover">Click</option>
+            <label style={labelStyle}>Trigger:</label>
+            <select style={selectStyle} value={tooltipTrigger} onChange={e => setTooltipTrigger(e.target.value)}>
+              <option value="hover">Hover</option>
+              <option value="click">Click</option>
               <option value="none">Disabled</option>
             </select>
           </div>
@@ -72,6 +73,14 @@ function Playground(): React.JSX.Element {
               <option value="left">Left</option>
               <option value="right">Right</option>
             </select>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <label style={labelStyle}>Follow Cursor:</label>
+            <input
+              type="checkbox"
+              checked={tooltipFollowCursor}
+              onChange={e => setTooltipFollowCursor(e.target.checked)}
+            />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <label style={labelStyle}>Delay:</label>
@@ -115,8 +124,9 @@ function Playground(): React.JSX.Element {
           {/* @ts-ignore */}
           <dl-provider
             language={language}
-            tooltip-behavior={tooltipBehavior}
+            tooltip-trigger={tooltipTrigger}
             tooltip-placement={tooltipPlacement}
+            tooltip-follow-cursor={tooltipFollowCursor.toString()}
             tooltip-delay={tooltipDelay}
             show-tier-badge={showTierBadge.toString()}
           >
@@ -129,8 +139,8 @@ function Playground(): React.JSX.Element {
         <CodeBlock language="html" title="Usage">
 {`<dl-provider
   language="${language}"
-  tooltip-behavior="${tooltipBehavior}"
-  tooltip-placement="${tooltipPlacement}"
+  tooltip-trigger="${tooltipTrigger}"
+  tooltip-placement="${tooltipPlacement}"${tooltipFollowCursor ? `\n  tooltip-follow-cursor="true"` : ''}
   tooltip-delay="${tooltipDelay}"
   show-tier-badge="${showTierBadge}">
 

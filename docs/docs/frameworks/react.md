@@ -17,7 +17,7 @@ import { DlProvider, DlItemCard, DlShopPanel } from '@deadlock-ui/react';
 
 function App() {
   return (
-    <DlProvider language="english" tooltipBehavior="tooltip">
+    <DlProvider language="english" tooltipTrigger="hover">
       <DlItemCard className="upgrade_clip_size" hoverEffect="scale" />
       <DlShopPanel activeTab="spirit" />
     </DlProvider>

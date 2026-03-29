@@ -192,10 +192,10 @@
           </select>
         </div>
         <div class="control">
-          <label for="behavior">Tooltip:</label>
-          <select id="behavior">
-            <option value="tooltip">Hover (tooltip)</option>
-            <option value="popover">Click (popover)</option>
+          <label for="trigger">Trigger:</label>
+          <select id="trigger">
+            <option value="hover" selected>Hover</option>
+            <option value="click">Click</option>
             <option value="none">Disabled</option>
           </select>
         </div>
@@ -208,6 +208,10 @@
             <option value="left">Left</option>
             <option value="right">Right</option>
           </select>
+        </div>
+        <div class="control">
+          <label for="follow-cursor">Follow Cursor:</label>
+          <input id="follow-cursor" type="checkbox" />
         </div>
         <div class="control">
           <label for="delay">Delay (ms):</label>
@@ -239,7 +243,7 @@
         <div class="showcase-code" id="code-item">
           <pre><span class="tag">&lt;dl-provider</span>
   <span class="attr">language</span>=<span class="val">"english"</span>
-  <span class="attr">tooltip-behavior</span>=<span class="val">"tooltip"</span>
+  <span class="attr">tooltip-trigger</span>=<span class="val">"hover"</span>
   <span class="attr">tooltip-placement</span>=<span class="val">"auto"</span>
   <span class="attr">tooltip-delay</span>=<span class="val">"150"</span>
   <span class="attr">show-tier-badge</span>=<span class="val">"false"</span><span class="tag">&gt;</span>
@@ -249,7 +253,7 @@
 <span class="tag">&lt;/dl-provider&gt;</span></pre>
         </div>
         <div class="showcase-preview" style="display: flex; gap: 8px; justify-content: center;">
-          <dl-provider id="provider-item" language="english" tooltip-behavior="tooltip" tooltip-placement="auto" tooltip-delay="150" show-tier-badge="false">
+          <dl-provider id="provider-item" language="english" tooltip-trigger="hover" tooltip-placement="auto" tooltip-delay="150" show-tier-badge="false">
             <dl-item-card id="single-item-card" class-name="upgrade_clip_size"></dl-item-card>
           </dl-provider>
         </div>
@@ -281,7 +285,7 @@
 <span class="comment">&lt;!-- 2. Configure the provider --&gt;</span>
 <span class="tag">&lt;dl-provider</span>
   <span class="attr">language</span>=<span class="val">"english"</span>
-  <span class="attr">tooltip-behavior</span>=<span class="val">"tooltip"</span>
+  <span class="attr">tooltip-trigger</span>=<span class="val">"hover"</span>
   <span class="attr">tooltip-placement</span>=<span class="val">"auto"</span>
   <span class="attr">tooltip-delay</span>=<span class="val">"150"</span>
   <span class="attr">show-tier-badge</span>=<span class="val">"false"</span><span class="tag">&gt;</span>
@@ -292,7 +296,7 @@
 <span class="tag">&lt;/dl-provider&gt;</span></pre>
         </div>
         <div class="showcase-preview">
-          <dl-provider id="provider" language="english" tooltip-behavior="tooltip" tooltip-placement="auto" tooltip-delay="150" show-tier-badge="false">
+          <dl-provider id="provider" language="english" tooltip-trigger="hover" tooltip-placement="auto" tooltip-delay="150" show-tier-badge="false">
             <dl-shop-panel></dl-shop-panel>
           </dl-provider>
         </div>
@@ -328,8 +332,9 @@
       function updateCodePreview() {
         var provider = document.getElementById('provider');
         var lang = provider.getAttribute('language');
-        var behavior = provider.getAttribute('tooltip-behavior');
+        var trigger = provider.getAttribute('tooltip-trigger');
         var placement = provider.getAttribute('tooltip-placement');
+        var followCursor = provider.getAttribute('tooltip-follow-cursor');
         var delay = provider.getAttribute('tooltip-delay');
         var badge = provider.getAttribute('show-tier-badge');
         var activeTab = document.getElementById('shop-tab-select').value;
@@ -343,6 +348,11 @@
           shopPanelAttrs += ' <span class="attr">hover-effect</span>=<span class="val">"' + shopHover + '"</span>';
         }
 
+        var followCursorLine = '';
+        if (followCursor === 'true') {
+          followCursorLine = '\n  <span class="attr">tooltip-follow-cursor</span>=<span class="val">"true"</span>';
+        }
+
         var code = document.querySelector('#code-shop pre');
         code.innerHTML =
           '<span class="comment">&lt;!-- 1. Load the script --&gt;</span>\n' +
@@ -350,8 +360,8 @@
           '<span class="comment">&lt;!-- 2. Configure the provider --&gt;</span>\n' +
           '<span class="tag">&lt;dl-provider</span>\n' +
           '  <span class="attr">language</span>=<span class="val">"' + lang + '"</span>\n' +
-          '  <span class="attr">tooltip-behavior</span>=<span class="val">"' + behavior + '"</span>\n' +
-          '  <span class="attr">tooltip-placement</span>=<span class="val">"' + placement + '"</span>\n' +
+          '  <span class="attr">tooltip-trigger</span>=<span class="val">"' + trigger + '"</span>\n' +
+          '  <span class="attr">tooltip-placement</span>=<span class="val">"' + placement + '"</span>' + followCursorLine + '\n' +
           '  <span class="attr">tooltip-delay</span>=<span class="val">"' + delay + '"</span>\n' +
           '  <span class="attr">show-tier-badge</span>=<span class="val">"' + badge + '"</span><span class="tag">&gt;</span>\n\n' +
           '  <span class="comment">&lt;!-- 3. Render the shop --&gt;</span>\n' +
@@ -371,13 +381,18 @@
         refresh();
       });
 
-      document.getElementById('behavior').addEventListener('change', function(e) {
-        setProviderAttr('tooltip-behavior', e.target.value);
+      document.getElementById('trigger').addEventListener('change', function(e) {
+        setProviderAttr('tooltip-trigger', e.target.value);
         refresh();
       });
 
       document.getElementById('placement').addEventListener('change', function(e) {
         setProviderAttr('tooltip-placement', e.target.value);
+        refresh();
+      });
+
+      document.getElementById('follow-cursor').addEventListener('change', function(e) {
+        setProviderAttr('tooltip-follow-cursor', e.target.checked ? 'true' : 'false');
         refresh();
       });
 
@@ -467,8 +482,9 @@
 
         var p = document.getElementById('provider-item');
         var lang = p.getAttribute('language');
-        var behavior = p.getAttribute('tooltip-behavior');
+        var trigger = p.getAttribute('tooltip-trigger');
         var placement = p.getAttribute('tooltip-placement');
+        var followCursor = p.getAttribute('tooltip-follow-cursor');
         var delay = p.getAttribute('tooltip-delay');
         var badge = p.getAttribute('show-tier-badge');
 
@@ -477,12 +493,17 @@
           itemCardAttrs += ' <span class="attr">hover-effect</span>=<span class="val">"' + itemHover + '"</span>';
         }
 
+        var followCursorLine = '';
+        if (followCursor === 'true') {
+          followCursorLine = '\n  <span class="attr">tooltip-follow-cursor</span>=<span class="val">"true"</span>';
+        }
+
         var code = document.querySelector('#code-item pre');
         code.innerHTML =
           '<span class="tag">&lt;dl-provider</span>\n' +
           '  <span class="attr">language</span>=<span class="val">"' + lang + '"</span>\n' +
-          '  <span class="attr">tooltip-behavior</span>=<span class="val">"' + behavior + '"</span>\n' +
-          '  <span class="attr">tooltip-placement</span>=<span class="val">"' + placement + '"</span>\n' +
+          '  <span class="attr">tooltip-trigger</span>=<span class="val">"' + trigger + '"</span>\n' +
+          '  <span class="attr">tooltip-placement</span>=<span class="val">"' + placement + '"</span>' + followCursorLine + '\n' +
           '  <span class="attr">tooltip-delay</span>=<span class="val">"' + delay + '"</span>\n' +
           '  <span class="attr">show-tier-badge</span>=<span class="val">"' + badge + '"</span><span class="tag">&gt;</span>\n\n' +
           '  <span class="tag">&lt;dl-item-card</span>' + itemCardAttrs + '<span class="tag">&gt;&lt;/dl-item-card&gt;</span>\n\n' +

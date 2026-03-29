@@ -18,7 +18,7 @@ import { DlProvider, DlItemCard, DlShopPanel } from '@deadlock-ui/vue';
 </script>
 
 <template>
-  <DlProvider language="english" tooltip-behavior="tooltip">
+  <DlProvider language="english" tooltip-trigger="hover">
     <DlItemCard class-name="upgrade_clip_size" hover-effect="scale" />
     <DlShopPanel active-tab="spirit" />
   </DlProvider>
