@@ -166,12 +166,20 @@
 
 /* ─── Important stat boxes ─── */
 .important-stats-wrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
 }
 
+.important-stats-wrapper.count-1 {
+  grid-template-columns: 1fr;
+}
+
+.important-stats-wrapper.count-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .important-stat-box {
-  flex: 1;
   background: rgba(0, 0, 0, 0.2);
   padding: 8px 8px;
   text-align: center;
