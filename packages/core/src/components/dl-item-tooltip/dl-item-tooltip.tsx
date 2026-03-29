@@ -92,6 +92,26 @@ export class DlItemTooltip {
     ];
   }
 
+  private renderBlockProperty(key: string, elevated: boolean) {
+    const item = this.itemData;
+    if (!item?.properties) return null;
+
+    const prop = item.properties[key];
+    if (!prop || !isPropertyVisible(prop)) return null;
+
+    const value = formatPropertyValue(prop);
+    const isNegative = prop.negative_attribute === true;
+
+    return (
+      <div class="block-prop-item">
+        <span class={{ 'attribute-value': true, 'elevated': elevated, 'negative': isNegative }}>
+          {value}
+        </span>
+        <span class="attribute-name">{prop.label ?? key}</span>
+      </div>
+    );
+  }
+
   private renderSectionContent(section: TooltipSection, excludeKey?: string) {
     return section.section_attributes.map(attr => {
       const importantKeys = new Set(attr.important_properties ?? []);
@@ -109,13 +129,13 @@ export class DlItemTooltip {
         ),
 
         hasImportant ? (
-          <div class="stats-block">
+          <div class={{ 'stats-block': true, 'stats-block-inline': importantList.length === 1 && regularProps.length > 0 }}>
             <div class={{ 'important-stats-wrapper': true, [`count-${importantList.length}`]: true }}>
               {importantList.map(k => this.renderImportantProp(k))}
             </div>
             {regularProps.length > 0 && (
               <div class="stats-block-props">
-                {regularProps.map(propKey => this.renderProperty(propKey, elevatedSet.has(propKey)))}
+                {regularProps.map(propKey => this.renderBlockProperty(propKey, elevatedSet.has(propKey)))}
               </div>
             )}
           </div>

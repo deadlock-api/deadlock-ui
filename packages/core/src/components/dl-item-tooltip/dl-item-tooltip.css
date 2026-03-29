@@ -160,7 +160,49 @@
 }
 
 .stats-block-props {
-  padding: 6px 10px 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.2);
+  margin-top: 4px;
+}
+
+/* When 1 important stat: side-by-side layout */
+.stats-block-inline {
+  display: flex;
+  flex-direction: row;
+}
+
+.stats-block-inline .important-stats-wrapper {
+  flex: 0 0 auto;
+}
+
+.stats-block-inline .stats-block-props {
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+/* Block property items (no icons, compact) */
+.block-prop-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+}
+
+.block-prop-item .attribute-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dl-text-tooltip);
+}
+
+.block-prop-item .attribute-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(200, 200, 210, 0.65);
 }
 
 /* ─── Important stat boxes ─── */
