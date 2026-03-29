@@ -26,12 +26,33 @@ export class DlItemTooltip {
   /** Override the item name displayed in the tooltip header. */
   @Prop() nameOverride?: string;
 
+  private static STATUS_EFFECT_LABELS: Record<string, { label: string; sublabel: string }> = {
+    StatusEffectStun: { label: 'Stuns', sublabel: 'targets hit' },
+    StatusEffectDisarmed: { label: 'Disarms', sublabel: 'targets hit' },
+    StatusEffectEMP: { label: 'Silences', sublabel: 'targets hit' },
+    StatusEffectInvisible: { label: 'Invisible', sublabel: 'targets hit' },
+    StatusEffectInfiniteClip: { label: 'Infinite Clip', sublabel: '' },
+  };
+
   private renderImportantProp(key: string) {
     const item = this.itemData;
     if (!item?.properties) return null;
 
     const prop = item.properties[key];
-    if (!prop || !isPropertyVisible(prop)) return null;
+
+    // Handle status effects and other keys not present in properties
+    if (!prop || !isPropertyVisible(prop)) {
+      const statusEffect = DlItemTooltip.STATUS_EFFECT_LABELS[key];
+      if (statusEffect) {
+        return (
+          <div class="important-stat-box status-effect">
+            <div class="important-stat-value">{statusEffect.label}</div>
+            {statusEffect.sublabel && <div class="important-stat-label">{statusEffect.sublabel}</div>}
+          </div>
+        );
+      }
+      return null;
+    }
 
     const value = formatPropertyValue(prop);
 
@@ -42,7 +63,9 @@ export class DlItemTooltip {
           <div class="important-stat-value">{value}</div>
         </div>
         <div class="important-stat-label">{prop.label ?? key}</div>
-        {prop.conditional && <div class="important-stat-conditional">Conditional</div>}
+        {(prop.conditional || prop.usage_flags?.includes('ConditionallyApplied')) && (
+          <div class="important-stat-conditional">Conditional</div>
+        )}
       </div>
     );
   }

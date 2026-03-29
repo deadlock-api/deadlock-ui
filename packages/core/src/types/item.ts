@@ -30,6 +30,7 @@ export interface ItemProperty {
   postvalue_label?: string | null;
   conditional?: string | null;
   icon?: string | null;
+  usage_flags?: string[] | null;
 }
 
 export interface PropertyUpgrade {

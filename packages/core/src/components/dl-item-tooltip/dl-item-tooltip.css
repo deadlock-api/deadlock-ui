@@ -132,12 +132,11 @@
 /* ─── Info/description text inside sections ─── */
 .mod-info-label {
   align-self: flex-start;
-  color: #cdcdcd;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 135%;
-  margin-bottom: 10px;
-  padding-right: 20px;
+  color: #a9a9a9;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 138%;
+  margin: 15px 0;
 }
 
 .mod-info-label .highlight {
@@ -190,6 +189,11 @@
   min-height: 70px;
 }
 
+.important-stat-box.status-effect .important-stat-value {
+  color: #6dc04b;
+  font-size: 18px;
+}
+
 .important-stat-icon-value {
   display: flex;
   align-items: center;
@@ -212,8 +216,8 @@
 }
 
 .important-stat-label {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   line-height: 16px;
   margin-top: 2px;
   overflow: hidden;
