@@ -31,7 +31,7 @@ function FilterButton({ label, active, onClick }: { label: string; active: boole
   );
 }
 
-function ClassNames(): React.JSX.Element {
+function Items(): React.JSX.Element {
   const [search, setSearch] = useState('');
   const [slotFilter, setSlotFilter] = useState<string>('all');
   const [tierFilter, setTierFilter] = useState<string>('all');
@@ -49,9 +49,9 @@ function ClassNames(): React.JSX.Element {
   }, [search, slotFilter, tierFilter]);
 
   return (
-    <Layout title="Class Names" description="All available item class names for Deadlock UI components">
+    <Layout title="Items" description="All available items for Deadlock UI components">
       <main style={{ padding: '32px 24px', maxWidth: '1200px', margin: '0 auto' }}>
-        <h1>Item Class Names</h1>
+        <h1>Items</h1>
         <p style={{ color: 'var(--ifm-color-emphasis-600)', marginBottom: '8px' }}>
           Use these values in the <code>class-name</code> attribute of <code>&lt;dl-item-card&gt;</code>.
         </p>
@@ -162,4 +162,4 @@ function ClassNames(): React.JSX.Element {
   );
 }
 
-export default ClassNames;
+export default Items;

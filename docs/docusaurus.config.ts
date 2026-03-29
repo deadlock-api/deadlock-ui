@@ -73,8 +73,8 @@ const config: Config = {
           position: 'left',
         },
         {
-          to: '/class-names',
-          label: 'Class Names',
+          to: '/items',
+          label: 'Items',
           position: 'left',
         },
         {

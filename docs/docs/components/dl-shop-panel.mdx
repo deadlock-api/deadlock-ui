@@ -27,10 +27,19 @@ Displays the full item shop with category tabs (Weapon, Vitality, Spirit) and ti
 | `active-tab` | `"weapon"` \| `"vitality"` \| `"spirit"` | `"weapon"` | Initial active tab |
 | `hover-effect` | `"none"` \| `"scale"` | `"scale"` | Hover effect on item cards |
 | `disable-highlight` | `boolean` | `false` | Disables the highlight effect that dims unrelated items on hover/click |
+| `item-name-language` | [`Language`](/docs/types#language) | — | Override language for item names only. Tooltip content uses the global language set via [`dl-provider`](/docs/components/dl-provider) |
 
 ## Setting the Initial Tab
 
 ```html
 <!-- Opens on the Spirit tab -->
 <dl-shop-panel active-tab="spirit"></dl-shop-panel>
+```
+
+## Item Name Language
+
+Override item names to a different language while keeping tooltip content in the global language:
+
+```html
+<dl-shop-panel item-name-language="brazilian"></dl-shop-panel>
 ```
