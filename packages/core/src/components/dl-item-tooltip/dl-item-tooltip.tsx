@@ -1,5 +1,5 @@
 import { Component, Prop, h } from '@stencil/core';
-import { Item, TooltipSection } from '../../types';
+import { Item, ItemProperty, TooltipSection } from '../../types';
 import { formatPropertyValue, isPropertyVisible, formatCost, getSlotColor } from '../../utils/format';
 import { tooltipHeaderBg, tooltipBodyBg, soulIcon } from '../../utils/assets';
 
@@ -66,13 +66,13 @@ export class DlItemTooltip {
     ];
   }
 
-  private renderSectionContent(section: TooltipSection) {
+  private renderSectionContent(section: TooltipSection, excludeKey?: string) {
     return section.section_attributes.map(attr => {
       const importantKeys = new Set(attr.important_properties ?? []);
       const regularProps = [
         ...(attr.properties ?? []),
         ...(attr.elevated_properties ?? []),
-      ].filter(k => !importantKeys.has(k));
+      ].filter(k => !importantKeys.has(k) && k !== excludeKey);
       const elevatedSet = new Set(attr.elevated_properties ?? []);
       const importantList = attr.important_properties ?? [];
       const hasImportant = importantList.length > 0;
@@ -108,13 +108,59 @@ export class DlItemTooltip {
     );
   }
 
+  private isCooldownKey(key: string, prop: ItemProperty): boolean {
+    return prop.css_class === 'cooldown'
+      || key === 'AbilityCooldown'
+      || key === 'ProcCooldown'
+      || key === 'AbilityChargeUpTime';
+  }
+
+  private findSectionCooldown(section: TooltipSection) {
+    const item = this.itemData;
+    if (!item?.properties) return null;
+
+    // First: look for cooldown listed in section attributes
+    for (const attr of section.section_attributes) {
+      const allProps = [...(attr.properties ?? []), ...(attr.elevated_properties ?? [])];
+      for (const key of allProps) {
+        const prop = item.properties[key];
+        if (prop && this.isCooldownKey(key, prop) && isPropertyVisible(prop)) {
+          return { key, prop };
+        }
+      }
+    }
+
+    // Fallback: look for AbilityCooldown directly in item properties
+    const cooldown = item.properties['AbilityCooldown'];
+    if (cooldown && isPropertyVisible(cooldown)) {
+      return { key: 'AbilityCooldown', prop: cooldown };
+    }
+
+    return null;
+  }
+
   private renderAbilitySection(section: TooltipSection) {
     const sectionType = section.section_type ?? 'passive';
+    const cooldown = this.findSectionCooldown(section);
 
     return (
       <div class="section">
-        <div class={{ 'ability-type-label': true, [sectionType]: true }}>{sectionType}</div>
-        {this.renderSectionContent(section)}
+        <div class={{ 'ability-type-label': true, [sectionType]: true }}>
+          <span>{sectionType}</span>
+          {cooldown && (
+            <span class="ability-cooldown">
+              {(cooldown.prop.icon || this.itemData?.properties?.['AbilityCooldown']?.icon) && (
+                <img
+                  class="ability-cooldown-icon"
+                  src={cooldown.prop.icon || this.itemData!.properties!['AbilityCooldown']!.icon!}
+                  alt=""
+                />
+              )}
+              {formatPropertyValue(cooldown.prop)}
+            </span>
+          )}
+        </div>
+        {this.renderSectionContent(section, cooldown?.key)}
       </div>
     );
   }

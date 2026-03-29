@@ -41,7 +41,7 @@
 .mod-name {
   font-size: 28px;
   font-weight: 700;
-  color: #f7e7d1!important;
+  color: var(--dl-text-tooltip)!important;
   max-width: 320px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -106,7 +106,27 @@
 .ability-type-label.passive {
   font-style: italic;
   font-weight: 600;
-  opacity: 0.5;
+}
+
+.ability-cooldown {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: 'Retail Demo', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  font-style: normal;
+  color: var(--dl-text-tooltip);
+  background-color: #000000b8;
+  padding: 0 1rem;
+  height: 30px;
+  line-height: 30px;
+}
+
+.ability-cooldown-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 /* ─── Info/description text inside sections ─── */
@@ -307,10 +327,10 @@ svg,
 .conditional img {
   display: inline-block;
   vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  line-height: 0;
-  margin-top: -4px;
+  width: 16px;
+  height: 16px;
+  top: 2px;
+  position: relative;
 }
 
 svg {
