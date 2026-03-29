@@ -260,9 +260,12 @@
 }
 
 .item-wrapper.highlighted {
-    position: relative;
-    z-index: 2;
     opacity: 1;
+}
+
+.item-wrapper.tooltip-source {
+    position: relative;
+    z-index: 100;
 }
 
 .loading {

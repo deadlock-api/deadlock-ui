@@ -292,12 +292,14 @@ export class DlShopPanel {
                     {items.map(item => {
                       const isHighlighting = this._highlightedItems !== null;
                       const isRelated = isHighlighting && this._highlightedItems!.has(item.class_name);
+                      const isSource = isHighlighting && item.class_name === this._highlightSource;
                       return (
                         <div
                           class={{
                             'item-wrapper': true,
                             'dimmed': isHighlighting && !isRelated,
                             'highlighted': isRelated,
+                            'tooltip-source': isSource,
                           }}
                         >
                           <dl-item-card
