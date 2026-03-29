@@ -1,4 +1,4 @@
-export type { JSX } from './components';
+export type { JSX, DlItemCardCustomEvent } from './components';
 export { DlProvider } from './components/dl-provider/dl-provider';
 export { DlItemCard } from './components/dl-item-card/dl-item-card';
 export { DlItemTooltip } from './components/dl-item-tooltip/dl-item-tooltip';
