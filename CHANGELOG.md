@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/deadlockprobr/deadlock-ui/compare/deadlock-ui-v1.0.3...deadlock-ui-v1.0.4) (2026-03-30)
+
+
+### Bug Fixes
+
+* **vue:** auto-register custom elements on component import ([ddbc3d8](https://github.com/deadlockprobr/deadlock-ui/commit/ddbc3d84476dc79fe41602cc98989ff5d3f4fc88))
+
 ## [1.0.3](https://github.com/deadlockprobr/deadlock-ui/compare/deadlock-ui-v1.0.2...deadlock-ui-v1.0.3) (2026-03-29)
 
 
