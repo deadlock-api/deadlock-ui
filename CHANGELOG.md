@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/deadlockprobr/deadlock-ui/compare/deadlock-ui-v1.0.4...deadlock-ui-v1.0.5) (2026-03-30)
+
+
+### Bug Fixes
+
+* **core:** expose dist/components in package exports ([e15c227](https://github.com/deadlockprobr/deadlock-ui/commit/e15c2273510376e72be6757f845a726d62351345))
+
 ## [1.0.4](https://github.com/deadlockprobr/deadlock-ui/compare/deadlock-ui-v1.0.3...deadlock-ui-v1.0.4) (2026-03-30)
 
 
