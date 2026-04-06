@@ -10,16 +10,16 @@ Item data and images are fetched directly from the [Deadlock API](https://deadlo
 
 | Package | Description |
 |---|---|
-| [`@deadlock-ui/core`](packages/core) | Web Components built with StencilJS |
-| [`@deadlock-ui/react`](packages/react) | React bindings |
-| [`@deadlock-ui/vue`](packages/vue) | Vue bindings |
+| [`@deadlock-api/ui-core`](packages/core) | Web Components built with StencilJS |
+| [`@deadlock-api/ui-react`](packages/react) | React bindings |
+| [`@deadlock-api/ui-vue`](packages/vue) | Vue bindings |
 
 ## Quick Start
 
 ### HTML
 
 ```html
-<script type="module" src="https://unpkg.com/@deadlock-ui/core/dist/main/main.esm.js"></script>
+<script type="module" src="https://unpkg.com/@deadlock-api/ui-core/dist/main/main.esm.js"></script>
 
 <dl-provider language="english">
   <dl-item-card class-name="upgrade_clip_size"></dl-item-card>
@@ -29,11 +29,11 @@ Item data and images are fetched directly from the [Deadlock API](https://deadlo
 ### React
 
 ```bash
-npm install @deadlock-ui/react
+npm install @deadlock-api/ui-react
 ```
 
 ```jsx
-import { DlProvider, DlItemCard } from '@deadlock-ui/react';
+import { DlProvider, DlItemCard } from '@deadlock-api/ui-react';
 
 function App() {
   return (
@@ -47,12 +47,12 @@ function App() {
 ### Vue
 
 ```bash
-npm install @deadlock-ui/vue
+npm install @deadlock-api/ui-vue
 ```
 
 ```vue
 <script setup>
-import { DlProvider, DlItemCard } from '@deadlock-ui/vue';
+import { DlProvider, DlItemCard } from '@deadlock-api/ui-vue';
 </script>
 
 <template>

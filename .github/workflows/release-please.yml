@@ -38,17 +38,17 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - name: Publish @deadlock-ui/core
-        run: npm publish -w @deadlock-ui/core --provenance --access public
+      - name: Publish @deadlock-api/ui-core
+        run: npm publish -w @deadlock-api/ui-core --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @deadlock-ui/react
-        run: npm publish -w @deadlock-ui/react --provenance --access public
+      - name: Publish @deadlock-api/ui-react
+        run: npm publish -w @deadlock-api/ui-react --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @deadlock-ui/vue
-        run: npm publish -w @deadlock-ui/vue --provenance --access public
+      - name: Publish @deadlock-api/ui-vue
+        run: npm publish -w @deadlock-api/ui-vue --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

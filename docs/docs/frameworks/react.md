@@ -7,13 +7,13 @@ sidebar_position: 1
 ## Install
 
 ```bash
-npm install @deadlock-ui/react
+npm install @deadlock-api/ui-react
 ```
 
 ## Usage
 
 ```tsx
-import { DlProvider, DlItemCard, DlShopPanel } from '@deadlock-ui/react';
+import { DlProvider, DlItemCard, DlShopPanel } from '@deadlock-api/ui-react';
 
 function App() {
   return (

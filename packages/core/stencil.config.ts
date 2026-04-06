@@ -31,7 +31,7 @@ export const config: Config = {
       outDir: '../react/src/components',
     }),
     vueOutputTarget({
-      componentCorePackage: '@deadlock-ui/core',
+      componentCorePackage: '@deadlock-api/ui-core',
       proxiesFile: '../vue/src/components.ts',
       includeImportCustomElements: true,
       customElementsDir: 'dist/components',

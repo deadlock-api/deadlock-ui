@@ -1,5 +1,5 @@
 {
-  "name": "@deadlock-ui/core",
+  "name": "@deadlock-api/ui-core",
   "version": "1.0.5",
   "description": "Web Components library for Deadlock game items UI — built with StencilJS",
   "main": "dist/index.cjs.js",
@@ -43,7 +43,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/deadlockprobr/deadlock-ui"
+    "url": "https://github.com/deadlock-api/deadlock-ui"
   },
   "license": "MIT",
   "publishConfig": {

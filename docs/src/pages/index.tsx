@@ -39,12 +39,12 @@ function Home(): React.JSX.Element {
   }, []);
 
   const vanillaExample = `<script type="module"
-  src="https://unpkg.com/@deadlock-ui/core/dist/main/main.esm.js">
+  src="https://unpkg.com/@deadlock-api/ui-core/dist/main/main.esm.js">
 </script>
 
 ${items.map(name => `<dl-item-card class-name="${name}"></dl-item-card>`).join('\n')}`;
 
-  const reactExample = `import { DlProvider, DlItemCard } from '@deadlock-ui/react';
+  const reactExample = `import { DlProvider, DlItemCard } from '@deadlock-api/ui-react';
 
 function App() {
   return (
@@ -55,7 +55,7 @@ ${items.map(name => `      <DlItemCard className="${name}" />`).join('\n')}
 }`;
 
   const vueExample = `<script setup>
-import { DlProvider, DlItemCard } from '@deadlock-ui/vue';
+import { DlProvider, DlItemCard } from '@deadlock-api/ui-vue';
 </script>
 
 <template>

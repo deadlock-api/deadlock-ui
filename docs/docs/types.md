@@ -7,7 +7,7 @@ sidebar_position: 2
 All types are exported from the core package and can be imported directly:
 
 ```ts
-import type { Language, Item, TooltipTrigger } from '@deadlock-ui/core';
+import type { Language, Item, TooltipTrigger } from '@deadlock-api/ui-core';
 ```
 
 ## Language
@@ -35,7 +35,7 @@ Enum with supported language codes for item data localization. Used by [`dl-prov
 | `Language.UK` | `ukrainian` | Ukrainian |
 
 ```ts
-import { Language, SUPPORTED_LANGUAGES } from '@deadlock-ui/core';
+import { Language, SUPPORTED_LANGUAGES } from '@deadlock-api/ui-core';
 
 Language.EN;            // 'english'
 Language.PT_BR;         // 'brazilian'

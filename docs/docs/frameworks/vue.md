@@ -7,14 +7,14 @@ sidebar_position: 2
 ## Install
 
 ```bash
-npm install @deadlock-ui/vue
+npm install @deadlock-api/ui-vue
 ```
 
 ## Usage
 
 ```html
 <script setup>
-import { DlProvider, DlItemCard, DlShopPanel } from '@deadlock-ui/vue';
+import { DlProvider, DlItemCard, DlShopPanel } from '@deadlock-api/ui-vue';
 </script>
 
 <template>

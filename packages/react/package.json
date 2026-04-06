@@ -1,5 +1,5 @@
 {
-  "name": "@deadlock-ui/react",
+  "name": "@deadlock-api/ui-react",
   "version": "1.0.5",
   "description": "React bindings for Deadlock UI web components",
   "main": "dist/index.js",
@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/deadlockprobr/deadlock-ui"
+    "url": "https://github.com/deadlock-api/deadlock-ui"
   },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@deadlock-ui/core": "*",
+    "@deadlock-api/ui-core": "*",
     "@stencil/react-output-target": "^1.0.0"
   },
   "peerDependencies": {
