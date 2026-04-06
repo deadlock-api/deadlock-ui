@@ -1,6 +1,6 @@
 {
   "name": "@deadlock-api/ui-vue",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "Vue bindings for Deadlock UI web components",
   "main": "dist/index.js",
   "module": "dist/index.js",
