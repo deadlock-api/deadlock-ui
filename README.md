@@ -68,7 +68,7 @@ import { DlProvider, DlItemCard } from '@deadlock-api/ui-vue';
 - **`<dl-item-card>`** — Single item card with tooltip
 - **`<dl-shop-panel>`** — Full item shop with category tabs and tier sections
 
-See the [documentation](https://ui-docs.deadlock.pro.br) for full component API and examples.
+See the [documentation](https://ui.deadlock-api.com) for full component API and examples.
 
 ## Supported Languages
 
