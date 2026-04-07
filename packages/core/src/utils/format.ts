@@ -5,7 +5,8 @@ export function formatPropertyValue(prop: ItemProperty): string {
   const val = String(prop.value);
   const prefix = prop.prefix?.replace('{s:sign}', Number(val) >= 0 ? '+' : '') ?? '';
   const postfix = prop.postfix ?? '';
-  return `${prefix}${val}${postfix}`;
+  const suffix = postfix && val.endsWith(postfix.trim()) ? '' : postfix;
+  return `${prefix}${val}${suffix}`;
 }
 
 export function isPropertyVisible(prop: ItemProperty): boolean {
