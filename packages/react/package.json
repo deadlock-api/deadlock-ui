@@ -1,6 +1,6 @@
 {
   "name": "@deadlock-api/ui-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React bindings for Deadlock UI web components",
   "main": "dist/index.js",
   "module": "dist/index.js",

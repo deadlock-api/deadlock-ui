@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.0.0...deadlock-ui-v1.0.1) (2026-04-07)
+
+
+### Bug Fixes
+
+* prevent duplicate unit suffix in item tooltip property values ([0324733](https://github.com/deadlock-api/deadlock-ui/commit/03247338be4c2a21b30bae6e73c38402ffa93be9))
+
 ## [1.0.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v0.1.0...deadlock-ui-v1.0.0) (2026-04-06)
 
 

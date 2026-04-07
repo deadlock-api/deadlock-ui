@@ -1,6 +1,6 @@
 {
   "name": "@deadlock-api/ui-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Web Components library for Deadlock game items UI — built with StencilJS",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
