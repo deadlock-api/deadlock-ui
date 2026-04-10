@@ -3,7 +3,6 @@ import { Item, ItemProperty, ItemClassName, Language, TooltipSection } from '../
 import { formatPropertyValue, isPropertyVisible, formatCost, getSlotColor } from '../../utils/format';
 import { tooltipHeaderBg, tooltipBodyBg, soulIcon } from '../../utils/assets';
 import { fetchItem, fetchItems } from '../../api/client';
-import { ComponentItemInfo } from '../dl-item-tooltip/dl-item-tooltip';
 import { configState, onConfigChange } from '../../store/config-store';
 import { injectFonts } from '../../utils/fonts';
 
@@ -40,11 +39,15 @@ export class DlItemTooltip {
   /** Override the item name displayed in the tooltip header. */
   @Prop() nameOverride?: string;
 
+  /** Fetch and display the item name in a different language than the global config. */
+  @Prop({ attribute: 'item-name-language' }) itemNameLanguage?: Language;
+
   // ─── Internal state ───────────────────────────────────────────────────────
 
   @State() private _item?: Item;
   @State() private _componentItems?: ComponentItemInfo[];
   @State() private _parentItems?: ComponentItemInfo[];
+  @State() private _nameOverride?: string;
   @State() private _loading = false;
   @State() private _error?: string;
 
@@ -69,6 +72,7 @@ export class DlItemTooltip {
     } else if (this.itemData) {
       this.resolveComponentItems();
       this.resolveParentItems();
+      this.resolveNameOverride();
     }
     this._unsubLanguage = onConfigChange('language', () => {
       if (this.itemKey && !this.itemData) {
@@ -89,6 +93,11 @@ export class DlItemTooltip {
     }
   }
 
+  @Watch('itemNameLanguage')
+  onItemNameLanguageChange() {
+    this.resolveNameOverride();
+  }
+
   // ─── Data fetching ────────────────────────────────────────────────────────
 
   private async fetchItemData() {
@@ -100,6 +109,7 @@ export class DlItemTooltip {
       this._item = await fetchItem(key, configState.language);
       this.resolveComponentItems();
       this.resolveParentItems();
+      this.resolveNameOverride();
     } catch (e) {
       this._error = e instanceof Error ? e.message : 'Failed to load item';
     } finally {
@@ -150,6 +160,27 @@ export class DlItemTooltip {
     } catch {
       // silently fail
     }
+  }
+
+  private async resolveNameOverride() {
+    const item = this.item;
+    if (!item || !this.itemNameLanguage || this.itemNameLanguage === configState.language) {
+      this._nameOverride = undefined;
+      return;
+    }
+    try {
+      const items = await fetchItems(this.itemNameLanguage);
+      const match = items.find(i => i.class_name === item.class_name);
+      this._nameOverride = match?.name;
+    } catch {
+      // silently fail — fall back to default name
+    }
+  }
+
+  private get displayName(): string {
+    // nameOverride prop (from dl-item-card) takes highest priority,
+    // then internally resolved name override, then item name
+    return this.nameOverride ?? this._nameOverride ?? this.item?.name ?? '';
   }
 
   // ─── Rendering helpers (unchanged) ───────────────────────────────────────
@@ -381,7 +412,7 @@ export class DlItemTooltip {
         {/* ── Header ── */}
         <div class="header-container" style={{ backgroundImage: `url("${headerBg}")` }}>
           <div class="mod-name-container">
-            <div class="mod-name">{this.nameOverride ?? item.name}</div>
+            <div class="mod-name">{this.displayName}</div>
             {item.cost != null && item.cost > 0 && (
               <div class="mod-cost">
                 <img class="soul-icon" src={soulIcon()} alt="Souls" />
