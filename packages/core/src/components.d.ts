@@ -46,6 +46,10 @@ export namespace Components {
           * Show the tier badge on hover. When not set, falls back to the global provider value.
          */
         "showTierBadge"?: boolean;
+        /**
+          * Override the tooltip trigger for this card. When not set, falls back to the global provider value.
+         */
+        "tooltipTrigger"?: TooltipTrigger;
     }
     interface DlItemGrid {
         /**
@@ -244,6 +248,10 @@ declare namespace LocalJSX {
           * Show the tier badge on hover. When not set, falls back to the global provider value.
          */
         "showTierBadge"?: boolean;
+        /**
+          * Override the tooltip trigger for this card. When not set, falls back to the global provider value.
+         */
+        "tooltipTrigger"?: TooltipTrigger;
     }
     interface DlItemGrid {
         /**
@@ -350,6 +358,7 @@ declare namespace LocalJSX {
         "hoverEffect": 'none' | 'scale';
         "showTierBadge": boolean;
         "itemNameLanguage": Language;
+        "tooltipTrigger": TooltipTrigger;
     }
     interface DlItemGridAttributes {
         "slotType": ItemSlotType;
