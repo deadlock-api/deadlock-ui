@@ -68,9 +68,21 @@ export namespace Components {
          */
         "componentItemsData"?: ComponentItemInfo1[];
         /**
-          * Item data to display in the tooltip.
+          * Item class name (e.g. `"upgrade_capacitor"`). Alternative to `item-id`.
+         */
+        "itemClassName"?: ItemClassName;
+        /**
+          * Pre-loaded item data object. When provided, skips the API fetch.
          */
         "itemData"?: Item;
+        /**
+          * Item numeric ID. Alternative to `class-name`.
+         */
+        "itemId"?: number;
+        /**
+          * Fetch and display the item name in a different language than the global config.
+         */
+        "itemNameLanguage"?: Language;
         /**
           * Override the item name displayed in the tooltip header.
          */
@@ -254,9 +266,21 @@ declare namespace LocalJSX {
          */
         "componentItemsData"?: ComponentItemInfo1[];
         /**
-          * Item data to display in the tooltip.
+          * Item class name (e.g. `"upgrade_capacitor"`). Alternative to `item-id`.
+         */
+        "itemClassName"?: ItemClassName;
+        /**
+          * Pre-loaded item data object. When provided, skips the API fetch.
          */
         "itemData"?: Item;
+        /**
+          * Item numeric ID. Alternative to `class-name`.
+         */
+        "itemId"?: number;
+        /**
+          * Fetch and display the item name in a different language than the global config.
+         */
+        "itemNameLanguage"?: Language;
         /**
           * Override the item name displayed in the tooltip header.
          */
@@ -333,7 +357,10 @@ declare namespace LocalJSX {
         "shopableOnly": boolean;
     }
     interface DlItemTooltipAttributes {
+        "itemId": number;
+        "itemClassName": ItemClassName;
         "nameOverride": string;
+        "itemNameLanguage": Language;
     }
     interface DlProviderAttributes {
         "language": Language;

@@ -20,10 +20,6 @@ export const config: Config = {
       serviceWorker: null,
     },
     {
-      type: 'docs-readme',
-      strict: true,
-    },
-    {
       type: 'docs-vscode',
       file: 'dist/vscode-data.json',
     },
