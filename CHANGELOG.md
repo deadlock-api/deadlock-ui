@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.1.0...deadlock-ui-v1.2.0) (2026-04-10)
+
+
+### Features
+
+* **dl-item-card:** add slot support and per-card tooltip-trigger prop ([#6](https://github.com/deadlock-api/deadlock-ui/issues/6)) ([6a83257](https://github.com/deadlock-api/deadlock-ui/commit/6a83257843ea225305586f3022ad6bf272551150))
+
 ## [1.1.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.0.1...deadlock-ui-v1.1.0) (2026-04-10)
 
 
