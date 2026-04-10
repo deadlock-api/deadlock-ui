@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.0.1...deadlock-ui-v1.1.0) (2026-04-10)
+
+
+### Features
+
+* **dl-item-tooltip:** add standalone item fetching support ([ca16285](https://github.com/deadlock-api/deadlock-ui/commit/ca1628503ad326f4e23a5058499f12de08ea6550))
+
 ## [1.0.1](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.0.0...deadlock-ui-v1.0.1) (2026-04-07)
 
 
