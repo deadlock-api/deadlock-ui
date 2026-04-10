@@ -1,6 +1,6 @@
 import { Component, Prop, State, Watch, Element, Event, EventEmitter, h } from '@stencil/core';
 import { computePosition, flip, shift, offset, autoUpdate, Placement, VirtualElement } from '@floating-ui/dom';
-import { Item, ItemClassName, Language } from '../../types';
+import { Item, ItemClassName, Language, TooltipTrigger } from '../../types';
 import { fetchItem, fetchItems } from '../../api/client';
 import { ComponentItemInfo } from '../dl-item-tooltip/dl-item-tooltip';
 import { configState, onConfigChange } from '../../store/config-store';
@@ -39,6 +39,9 @@ export class DlItemCard {
   /** Override language for the item name only. Tooltip content uses the global language. */
   @Prop({ attribute: 'item-name-language' }) itemNameLanguage?: Language;
 
+  /** Override the tooltip trigger for this card. When not set, falls back to the global provider value. */
+  @Prop({ attribute: 'tooltip-trigger' }) tooltipTrigger?: TooltipTrigger;
+
   /** Emitted when the tooltip opens. Detail contains the item's `class_name`. */
   @Event({ eventName: 'tooltipOpen' }) tooltipOpen!: EventEmitter<string>;
 
@@ -65,7 +68,7 @@ export class DlItemCard {
   }
 
   private get cardEl(): HTMLElement | undefined {
-    return this.el.shadowRoot?.querySelector('.mod-box') as HTMLElement | undefined;
+    return this.el.shadowRoot?.querySelector('.trigger') as HTMLElement | undefined;
   }
 
   private get floatingEl(): HTMLElement | undefined {
@@ -118,8 +121,13 @@ export class DlItemCard {
     return this.itemId ?? this.itemClassName;
   }
 
+  private get resolvedTrigger(): TooltipTrigger {
+    return this.tooltipTrigger ?? configState.tooltipTrigger;
+  }
+
   connectedCallback() {
     injectFonts();
+    this.detectCustomTrigger();
     if (this.itemKey && !this.itemData) {
       this.fetchItemData();
     } else if (this.itemData) {
@@ -132,6 +140,11 @@ export class DlItemCard {
         this.fetchItemData();
       }
     });
+  }
+
+  private detectCustomTrigger() {
+    const hasSlottedContent = this.el.childNodes.length > 0;
+    this.el.classList.toggle('custom-trigger', hasSlottedContent);
   }
 
   disconnectedCallback() {
@@ -335,7 +348,7 @@ export class DlItemCard {
   }
 
   private handleMouseEnter = (e: MouseEvent) => {
-    if (configState.tooltipTrigger !== 'hover') return;
+    if (this.resolvedTrigger !== 'hover') return;
 
     const delay = configState.tooltipDelay;
 
@@ -358,7 +371,7 @@ export class DlItemCard {
   };
 
   private handleMouseLeave = () => {
-    if (configState.tooltipTrigger !== 'hover') return;
+    if (this.resolvedTrigger !== 'hover') return;
     if (configState.tooltipFollowCursor) {
       this.el.removeEventListener('mousemove', this.handleMouseMove);
     }
@@ -366,7 +379,7 @@ export class DlItemCard {
   };
 
   private handleCardClick = () => {
-    if (configState.tooltipTrigger !== 'click') return;
+    if (this.resolvedTrigger !== 'click') return;
     if (this._open) {
       this.hideTooltip();
       document.removeEventListener('click', this._onOutsideClick);
@@ -387,7 +400,36 @@ export class DlItemCard {
 
   render() {
     const item = this.item;
+    const isClickMode = this.resolvedTrigger === 'click';
+    const noTooltip = this.resolvedTrigger === 'none';
 
+    return [
+      <div
+        class="trigger"
+        onClick={this.handleCardClick}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
+        <slot>{this.renderDefaultCard(item, isClickMode)}</slot>
+      </div>,
+      !noTooltip && item && (
+        <div
+          class={{ 'tooltip-wrapper': true, 'open': this._open }}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+        >
+          <dl-item-tooltip
+            itemData={item}
+            nameOverride={this._nameOverride}
+            componentItemsData={this.componentItemsData ?? this._componentItems}
+            parentItemsData={this.parentItemsData ?? this._parentItems}
+          ></dl-item-tooltip>
+        </div>
+      ),
+    ];
+  }
+
+  private renderDefaultCard(item: Item | undefined, isClickMode: boolean) {
     if (this._loading || !item) {
       return (
         <div class="mod-box loading">
@@ -414,11 +456,9 @@ export class DlItemCard {
     const isActive = item.is_active_item || (item.activation !== 'passive');
     const hasImbue = !!item.imbue;
     const cardBg = cardBackground(slot, tier);
-    const isClickMode = configState.tooltipTrigger === 'click';
-    const noTooltip = configState.tooltipTrigger === 'none';
     const romanNumerals = ['I', 'II', 'III', 'IV', 'V'];
 
-    return [
+    return (
       <div
         class={{
           'mod-box': true,
@@ -426,9 +466,6 @@ export class DlItemCard {
           [`tier-${tier}`]: true,
           [slot]: true,
         }}
-        onClick={this.handleCardClick}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
       >
         {cardBg && <img class="card-background" src={cardBg} alt="" />}
 
@@ -448,18 +485,7 @@ export class DlItemCard {
         <div class="mod-name-container">
           <span class={{ 'mod-name': true, [slot]: true }}>{this.displayName}</span>
         </div>
-      </div>,
-      !noTooltip && (
-        <dl-item-tooltip
-          class={{ 'tooltip-wrapper': true, 'open': this._open }}
-          itemData={item}
-          nameOverride={this._nameOverride}
-          componentItemsData={this.componentItemsData ?? this._componentItems}
-          parentItemsData={this.parentItemsData ?? this._parentItems}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-        ></dl-item-tooltip>
-      ),
-    ];
+      </div>
+    );
   }
 }

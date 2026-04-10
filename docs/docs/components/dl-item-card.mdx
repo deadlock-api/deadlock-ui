@@ -35,6 +35,7 @@ Displays a single item card with tooltip on hover or click.
 | `hover-effect` | `"none"` \| `"scale"` | `"none"` | Hover effect on the card |
 | `show-tier-badge` | `boolean` | — | Override the global `show-tier-badge` for this card |
 | `item-name-language` | [`Language`](/docs/types#language) | — | Override language for the item name only. Tooltip content uses the global language set via [`dl-provider`](/docs/components/dl-provider) |
+| `tooltip-trigger` | `"hover"` \| `"click"` \| `"none"` | — | Override the tooltip trigger for this card. Falls back to the global [`dl-provider`](/docs/components/dl-provider) value |
 | `component-items-data` | `ComponentItemInfo[]` | — | Pre-resolved component items to display in the tooltip. When omitted, resolved automatically |
 
 ## Events
@@ -89,4 +90,33 @@ Override the displayed item name language independently from the global language
 <dl-item-card class-name="upgrade_magic_slow" item-name-language="brazilian"></dl-item-card>
 <dl-item-card class-name="upgrade_magic_slow" item-name-language="japanese"></dl-item-card>
 <dl-item-card class-name="upgrade_magic_slow" item-name-language="koreana"></dl-item-card>
+```
+
+## Custom Trigger (Slot)
+
+You can replace the default card with any custom content using a slot. The tooltip behavior (hover, click, positioning) works the same regardless of what you put inside.
+
+<LivePreview html={`
+  <div style="display: flex; gap: 12px; align-items: center;">
+    <dl-item-card class-name="upgrade_aoe_root" tooltip-trigger="click">
+      <button style="padding: 8px 16px; border-radius: 6px; border: 1px solid #555; background: #2a2a3e; color: #fff; cursor: pointer;">
+        Click me
+      </button>
+    </dl-item-card>
+    <dl-item-card class-name="upgrade_mystic_regeneration">
+      <span style="color: #b07fd6; text-decoration: underline; cursor: pointer;">Hover me</span>
+    </dl-item-card>
+  </div>
+`} />
+
+```html
+<!-- Click trigger -->
+<dl-item-card class-name="upgrade_aoe_root" tooltip-trigger="click">
+  <button>Click me</button>
+</dl-item-card>
+
+<!-- Hover trigger (default) -->
+<dl-item-card class-name="upgrade_mystic_regeneration">
+  <span>Hover me</span>
+</dl-item-card>
 ```
