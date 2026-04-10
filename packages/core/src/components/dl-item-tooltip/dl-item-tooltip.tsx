@@ -1,7 +1,11 @@
-import { Component, Prop, h } from '@stencil/core';
-import { Item, ItemProperty, TooltipSection } from '../../types';
+import { Component, Prop, State, Watch, h } from '@stencil/core';
+import { Item, ItemProperty, ItemClassName, Language, TooltipSection } from '../../types';
 import { formatPropertyValue, isPropertyVisible, formatCost, getSlotColor } from '../../utils/format';
 import { tooltipHeaderBg, tooltipBodyBg, soulIcon } from '../../utils/assets';
+import { fetchItem, fetchItems } from '../../api/client';
+import { ComponentItemInfo } from '../dl-item-tooltip/dl-item-tooltip';
+import { configState, onConfigChange } from '../../store/config-store';
+import { injectFonts } from '../../utils/fonts';
 
 export interface ComponentItemInfo {
   name: string;
@@ -14,7 +18,17 @@ export interface ComponentItemInfo {
   shadow: true,
 })
 export class DlItemTooltip {
-  /** Item data to display in the tooltip. */
+  // ─── Standalone fetch props ───────────────────────────────────────────────
+
+  /** Item numeric ID. Alternative to `class-name`. */
+  @Prop({ attribute: 'item-id' }) itemId?: number;
+
+  /** Item class name (e.g. `"upgrade_capacitor"`). Alternative to `item-id`. */
+  @Prop({ attribute: 'class-name' }) itemClassName?: ItemClassName;
+
+  // ─── Pre-loaded data props (used by dl-item-card) ─────────────────────────
+
+  /** Pre-loaded item data object. When provided, skips the API fetch. */
   @Prop() itemData?: Item;
 
   /** Resolved component items to display at the bottom of the tooltip. */
@@ -26,6 +40,120 @@ export class DlItemTooltip {
   /** Override the item name displayed in the tooltip header. */
   @Prop() nameOverride?: string;
 
+  // ─── Internal state ───────────────────────────────────────────────────────
+
+  @State() private _item?: Item;
+  @State() private _componentItems?: ComponentItemInfo[];
+  @State() private _parentItems?: ComponentItemInfo[];
+  @State() private _loading = false;
+  @State() private _error?: string;
+
+  private _unsubLanguage?: () => void;
+
+  // ─── Resolved item (prop takes precedence over fetched) ──────────────────
+
+  private get item(): Item | undefined {
+    return this.itemData ?? this._item;
+  }
+
+  private get itemKey(): ItemClassName | number | undefined {
+    return this.itemId ?? this.itemClassName;
+  }
+
+  // ─── Lifecycle ────────────────────────────────────────────────────────────
+
+  connectedCallback() {
+    injectFonts();
+    if (this.itemKey && !this.itemData) {
+      this.fetchItemData();
+    } else if (this.itemData) {
+      this.resolveComponentItems();
+      this.resolveParentItems();
+    }
+    this._unsubLanguage = onConfigChange('language', () => {
+      if (this.itemKey && !this.itemData) {
+        this.fetchItemData();
+      }
+    });
+  }
+
+  disconnectedCallback() {
+    this._unsubLanguage?.();
+  }
+
+  @Watch('itemId')
+  @Watch('itemClassName')
+  itemKeyChanged() {
+    if (this.itemKey && !this.itemData) {
+      this.fetchItemData();
+    }
+  }
+
+  // ─── Data fetching ────────────────────────────────────────────────────────
+
+  private async fetchItemData() {
+    const key = this.itemKey;
+    if (!key) return;
+    this._loading = true;
+    this._error = undefined;
+    try {
+      this._item = await fetchItem(key, configState.language);
+      this.resolveComponentItems();
+      this.resolveParentItems();
+    } catch (e) {
+      this._error = e instanceof Error ? e.message : 'Failed to load item';
+    } finally {
+      this._loading = false;
+    }
+  }
+
+  private async resolveComponentItems() {
+    const item = this.item;
+    if (!item?.component_items?.length || this.componentItemsData) return;
+
+    try {
+      const allItems = await fetchItems(configState.language);
+      const byClassName = new Map<string, Item>(allItems.map(i => [i.class_name, i]));
+
+      const resolved: ComponentItemInfo[] = [];
+      for (const cn of item.component_items) {
+        const comp = byClassName.get(cn);
+        if (!comp) continue;
+        resolved.push({
+          name: comp.name,
+          image: comp.shop_image_webp || comp.shop_image || comp.image_webp || comp.image || undefined,
+        });
+      }
+      this._componentItems = resolved;
+    } catch {
+      // silently fail
+    }
+  }
+
+  private async resolveParentItems() {
+    const item = this.item;
+    if (!item || this.parentItemsData) return;
+
+    try {
+      const allItems = await fetchItems(configState.language);
+
+      const parents: ComponentItemInfo[] = [];
+      for (const other of allItems) {
+        if (other.component_items?.includes(item.class_name)) {
+          parents.push({
+            name: other.name,
+            image: other.shop_image_webp || other.shop_image || other.image_webp || other.image || undefined,
+          });
+        }
+      }
+      this._parentItems = parents.length > 0 ? parents : undefined;
+    } catch {
+      // silently fail
+    }
+  }
+
+  // ─── Rendering helpers (unchanged) ───────────────────────────────────────
+
   private static STATUS_EFFECT_LABELS: Record<string, { label: string; sublabel: string }> = {
     StatusEffectStun: { label: 'Stuns', sublabel: 'targets hit' },
     StatusEffectDisarmed: { label: 'Disarms', sublabel: 'targets hit' },
@@ -35,12 +163,11 @@ export class DlItemTooltip {
   };
 
   private renderImportantProp(key: string) {
-    const item = this.itemData;
+    const item = this.item;
     if (!item?.properties) return null;
 
     const prop = item.properties[key];
 
-    // Handle status effects and other keys not present in properties
     if (!prop || !isPropertyVisible(prop)) {
       const statusEffect = DlItemTooltip.STATUS_EFFECT_LABELS[key];
       if (statusEffect) {
@@ -71,7 +198,7 @@ export class DlItemTooltip {
   }
 
   private renderProperty(key: string, elevated: boolean) {
-    const item = this.itemData;
+    const item = this.item;
     if (!item?.properties) return null;
 
     const prop = item.properties[key];
@@ -93,7 +220,7 @@ export class DlItemTooltip {
   }
 
   private renderBlockProperty(key: string, elevated: boolean) {
-    const item = this.itemData;
+    const item = this.item;
     if (!item?.properties) return null;
 
     const prop = item.properties[key];
@@ -162,10 +289,9 @@ export class DlItemTooltip {
   }
 
   private findSectionCooldown(section: TooltipSection) {
-    const item = this.itemData;
+    const item = this.item;
     if (!item?.properties) return null;
 
-    // First: look for cooldown listed in section attributes
     for (const attr of section.section_attributes) {
       const allProps = [...(attr.properties ?? []), ...(attr.elevated_properties ?? [])];
       for (const key of allProps) {
@@ -176,7 +302,6 @@ export class DlItemTooltip {
       }
     }
 
-    // Fallback: look for AbilityCooldown directly in item properties
     const cooldown = item.properties['AbilityCooldown'];
     if (cooldown && isPropertyVisible(cooldown)) {
       return { key: 'AbilityCooldown', prop: cooldown };
@@ -195,10 +320,10 @@ export class DlItemTooltip {
           <span>{sectionType}</span>
           {cooldown && (
             <span class="ability-cooldown">
-              {(cooldown.prop.icon || this.itemData?.properties?.['AbilityCooldown']?.icon) && (
+              {(cooldown.prop.icon || this.item?.properties?.['AbilityCooldown']?.icon) && (
                 <img
                   class="ability-cooldown-icon"
-                  src={cooldown.prop.icon || this.itemData!.properties!['AbilityCooldown']!.icon!}
+                  src={cooldown.prop.icon || this.item!.properties!['AbilityCooldown']!.icon!}
                   alt=""
                 />
               )}
@@ -211,8 +336,33 @@ export class DlItemTooltip {
     );
   }
 
+  // ─── Render ───────────────────────────────────────────────────────────────
+
   render() {
-    const item = this.itemData;
+    // Loading state (only shown in standalone mode)
+    if (this._loading) {
+      return (
+        <div class="tooltip" style={{ '--slot-color': 'transparent' }}>
+          <div class="header-container" style={{ background: '#1a1a2e' }}></div>
+          <div class="properties-container"></div>
+        </div>
+      );
+    }
+
+    // Error state (only shown in standalone mode)
+    if (this._error) {
+      return (
+        <div class="tooltip" style={{ '--slot-color': 'transparent' }}>
+          <div class="header-container" style={{ background: '#1a1a2e' }}>
+            <div class="mod-name-container">
+              <div class="mod-name">{this._error}</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const item = this.item;
     if (!item) return null;
 
     const slot = item.item_slot_type;
@@ -222,6 +372,9 @@ export class DlItemTooltip {
 
     const innateSections = item.tooltip_sections?.filter(s => s.section_type === 'innate') ?? [];
     const abilitySections = item.tooltip_sections?.filter(s => s.section_type !== 'innate') ?? [];
+
+    const resolvedComponentItems = this.componentItemsData ?? this._componentItems;
+    const resolvedParentItems = this.parentItemsData ?? this._parentItems;
 
     return (
       <div class={{ 'tooltip': true, [`${slot}-mod`]: true }} style={{ '--slot-color': slotColor }}>
@@ -243,11 +396,11 @@ export class DlItemTooltip {
           {innateSections.map(s => this.renderInnateSection(s))}
           {abilitySections.map(s => this.renderAbilitySection(s))}
 
-          {this.componentItemsData && this.componentItemsData.length > 0 && (
+          {resolvedComponentItems && resolvedComponentItems.length > 0 && (
             <div class="component-items-section">
               <div class="component-items-label">Component:</div>
               <div class="component-items-grid">
-                {this.componentItemsData.map(comp => (
+                {resolvedComponentItems.map(comp => (
                   <div class="component-item">
                     {comp.image && <img class="component-item-icon" src={comp.image} alt="" />}
                     <span class="component-item-name">{comp.name}</span>
@@ -257,11 +410,11 @@ export class DlItemTooltip {
             </div>
           )}
 
-          {this.parentItemsData && this.parentItemsData.length > 0 && (
+          {resolvedParentItems && resolvedParentItems.length > 0 && (
             <div class="component-items-section">
               <div class="component-items-label">Component of:</div>
               <div class="component-items-grid">
-                {this.parentItemsData.map(parent => (
+                {resolvedParentItems.map(parent => (
                   <div class="component-item">
                     {parent.image && <img class="component-item-icon" src={parent.image} alt="" />}
                     <span class="component-item-name">{parent.name}</span>
