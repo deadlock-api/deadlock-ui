@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.2.0...deadlock-ui-v1.2.1) (2026-04-20)
+
+
+### Bug Fixes
+
+* **core:** strip stencil lazy-load dynamic import from custom-elements build ([307e5eb](https://github.com/deadlock-api/deadlock-ui/commit/307e5eb73f41643c2a870bb93af60ad99e1713b4))
+
 ## [1.2.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.1.0...deadlock-ui-v1.2.0) (2026-04-10)
 
 
