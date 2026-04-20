@@ -27,7 +27,7 @@
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build",
+    "build": "stencil build && node ../../scripts/strip-lazy-import.mjs dist/components",
     "dev": "stencil build --dev --watch",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec",
