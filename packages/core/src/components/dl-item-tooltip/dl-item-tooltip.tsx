@@ -427,7 +427,7 @@ export class DlItemTooltip {
 
           {resolvedComponentItems && resolvedComponentItems.length > 0 && (
             <div class="component-items-section">
-              <div class="component-items-label">Component:</div>
+              <div class="component-items-label">Upgrades from:</div>
               <div class="component-items-grid">
                 {resolvedComponentItems.map(comp => (
                   <div class="component-item">
@@ -441,7 +441,7 @@ export class DlItemTooltip {
 
           {resolvedParentItems && resolvedParentItems.length > 0 && (
             <div class="component-items-section">
-              <div class="component-items-label">Component of:</div>
+              <div class="component-items-label">Upgrades to:</div>
               <div class="component-items-grid">
                 {resolvedParentItems.map(parent => (
                   <div class="component-item">
