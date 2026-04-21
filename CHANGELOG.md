@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.2](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.2.1...deadlock-ui-v1.2.2) (2026-04-21)
+
+
+### Bug Fixes
+
+* **core:** fix broken dist/esm/index.js entry refs + add Next.js debug app ([3275125](https://github.com/deadlock-api/deadlock-ui/commit/3275125a24657f301180d467f7be13218bddd126))
+* **dl-item-tooltip:** always spread important stat boxes full-width equally ([6524f49](https://github.com/deadlock-api/deadlock-ui/commit/6524f49a7a8d390e393c7b612b05cb5e4dd9f69f))
+* **dl-item-tooltip:** capitalize section type labels for consistency ([e7decdf](https://github.com/deadlock-api/deadlock-ui/commit/e7decdff6116061b50f7c7287c45e023efd09123))
+* **dl-item-tooltip:** preserve API section order instead of forcing innates first ([d067078](https://github.com/deadlock-api/deadlock-ui/commit/d0670781872ff4e4344a820d00791474917c968b))
+* **dl-item-tooltip:** update component label texts for clarity ([79bba95](https://github.com/deadlock-api/deadlock-ui/commit/79bba956abda5573b3250ba8f2b4c35e7f7e1bfa))
+
 ## [1.2.1](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.2.0...deadlock-ui-v1.2.1) (2026-04-20)
 
 
