@@ -169,23 +169,6 @@
   margin-top: 4px;
 }
 
-/* When 1 important stat: side-by-side layout */
-.stats-block-inline {
-  display: flex;
-  flex-direction: row;
-}
-
-.stats-block-inline .important-stats-wrapper {
-  flex: 0 0 auto;
-}
-
-.stats-block-inline .stats-block-props {
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px;
-}
-
 /* Block property items (no icons, compact) */
 .block-prop-item {
   display: flex;
@@ -209,16 +192,9 @@
 /* ─── Important stat boxes ─── */
 .important-stats-wrapper {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  width: 100%;
   gap: 8px;
-}
-
-.important-stats-wrapper.count-1 {
-  grid-template-columns: 1fr;
-}
-
-.important-stats-wrapper.count-3 {
-  grid-template-columns: repeat(3, 1fr);
 }
 
 .important-stat-box {

@@ -287,8 +287,8 @@ export class DlItemTooltip {
         ),
 
         hasImportant ? (
-          <div class={{ 'stats-block': true, 'stats-block-inline': importantList.length === 1 && regularProps.length > 0 }}>
-            <div class={{ 'important-stats-wrapper': true, [`count-${importantList.length}`]: true }}>
+          <div class="stats-block">
+            <div class="important-stats-wrapper">
               {importantList.map(k => this.renderImportantProp(k))}
             </div>
             {regularProps.length > 0 && (
