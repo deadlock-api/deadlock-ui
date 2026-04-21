@@ -400,6 +400,8 @@
   width: 100%;
   min-height: 0;
   gap: 5px;
+  padding: 0;
+  background-color: transparent;
 }
 
 .stats-block-stacked .stats-block-props {
