@@ -401,8 +401,7 @@ export class DlItemTooltip {
     const headerBg = tooltipHeaderBg(slot);
     const bodyBg = tooltipBodyBg(slot);
 
-    const innateSections = item.tooltip_sections?.filter(s => s.section_type === 'innate') ?? [];
-    const abilitySections = item.tooltip_sections?.filter(s => s.section_type !== 'innate') ?? [];
+    const sections = item.tooltip_sections ?? [];
 
     const resolvedComponentItems = this.componentItemsData ?? this._componentItems;
     const resolvedParentItems = this.parentItemsData ?? this._parentItems;
@@ -424,8 +423,7 @@ export class DlItemTooltip {
 
         {/* ── Properties body ── */}
         <div class="properties-container" style={{ backgroundImage: `url("${bodyBg}")` }}>
-          {innateSections.map(s => this.renderInnateSection(s))}
-          {abilitySections.map(s => this.renderAbilitySection(s))}
+          {sections.map(s => s.section_type === 'innate' ? this.renderInnateSection(s) : this.renderAbilitySection(s))}
 
           {resolvedComponentItems && resolvedComponentItems.length > 0 && (
             <div class="component-items-section">
