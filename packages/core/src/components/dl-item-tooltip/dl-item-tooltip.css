@@ -218,7 +218,6 @@
   width: 100%;
   min-height: 80px;
   overflow: hidden;
-  border-radius: 5px;
 }
 
 /* When 1 important stat: side-by-side layout */
@@ -566,7 +565,6 @@ svg {
   height: 24px;
   margin: 0 3px;
   padding: 0 6px;
-  border-radius: 4px;
   background-color: #c6b6a2;
   color: var(--tooltip-black);
   font-size: 17px;
@@ -1096,7 +1094,6 @@ svg {
   flex-direction: column;
   width: 100%;
   margin-top: -1px;
-  border-radius: 0 0 8px 8px;
   background-color: #0f0f1a;
   background-size: cover;
   background-position: center;
