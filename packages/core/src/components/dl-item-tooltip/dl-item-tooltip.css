@@ -81,6 +81,10 @@
   padding: 10px 15px;
 }
 
+.section-type-label {
+  text-transform: capitalize;
+}
+
 /* ─── Innate section (no label, just stats) ─── */
 .innate-section {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);

@@ -348,7 +348,7 @@ export class DlItemTooltip {
     return (
       <div class="section">
         <div class={{ 'ability-type-label': true, [sectionType]: true }}>
-          <span>{sectionType}</span>
+          <span class="section-type-label">{sectionType}</span>
           {cooldown && (
             <span class="ability-cooldown">
               {(cooldown.prop.icon || this.item?.properties?.['AbilityCooldown']?.icon) && (
