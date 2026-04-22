@@ -1,8 +1,8 @@
 :host {
   display: block;
   width: 450px;
-  font-family: var(--dl-font-family);
-  color: var(--dl-text-primary);
+  font-family: var(--dl-font-family, 'Retail Demo', sans-serif);
+  color: var(--dl-text-tooltip, #ffefd7);
   line-height: 1.4;
   text-align: left;
 }
@@ -15,17 +15,51 @@
 
 /* ─── Tooltip shell ─── */
 .tooltip {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.38);
+  width: 450px;
   font-size: 18px;
+  --tooltip-off-white: #ffefd7;
+  --tooltip-muted: rgba(255, 255, 255, 0.5);
+  --tooltip-black: #10130d;
+  --courageBrightColor: #ec981a;
+  --courageColor: #9e630c;
+  --fortitudeBrightColor: #7cbb1e;
+  --fortitudeColor: #659818;
+  --spiritBrightColor: #ce91ff;
+  --spiritColor: #8b56b4;
+  --armorColor: #00ff9a;
+  --offWhite: #ffefd7;
+  --tooltip-courage-bright: var(--courageBrightColor);
+  --tooltip-fortitude-bright: var(--fortitudeBrightColor);
+  --tooltip-spirit-bright: var(--spiritBrightColor);
+  --tooltip-armor: var(--armorColor);
+  --tooltip-filter-courage: brightness(0) saturate(100%) invert(62%) sepia(82%) saturate(611%) hue-rotate(357deg) brightness(101%) contrast(91%);
+  --tooltip-filter-fortitude: brightness(0) saturate(100%) invert(84%) sepia(52%) saturate(895%) hue-rotate(91deg) brightness(109%) contrast(102%);
+  --tooltip-filter-spirit: brightness(0) saturate(100%) invert(74%) sepia(36%) saturate(1115%) hue-rotate(219deg) brightness(103%) contrast(97%);
+  --tooltip-filter-off-white: brightness(0) saturate(100%) invert(97%) sepia(12%) saturate(600%) hue-rotate(0deg) brightness(107%);
+  --tooltip-heal-text: #99f051;
+  --tooltip-stamina-text: #a9f0a1;
+  --tooltip-debuff: #9af052;
+}
+
+.tooltip-shadow {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.66), inset 0 0 0 1px rgba(0, 0, 0, 0.66);
+}
+
+.tooltip-main {
+  width: 100%;
 }
 
 /* ─── Header ─── */
 .header-container {
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  width: 100%;
   min-height: 96px;
+  padding: 0 20px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -33,122 +67,455 @@
 }
 
 .mod-name-container {
-  align-self: center;
-  color: var(--dl-text-primary);
-  padding: 20px;
-  z-index: 100;
+  width: 100%;
+  min-width: 0;
 }
 
 .mod-name {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--tooltip-off-white);
   font-size: 28px;
   font-weight: 700;
-  color: var(--dl-text-tooltip)!important;
-  max-width: 320px;
-  overflow: hidden;
+  line-height: 1.08;
   text-overflow: ellipsis;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.19);
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
 }
 
 .mod-cost {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 5px;
   margin-top: 3px;
+  color: #99ffd6;
   font-size: 20px;
   font-weight: 700;
-  color: #99ffd6;
   line-height: 1;
 }
 
 .soul-icon {
-  height: 26px;
-  width: auto;
   display: block;
+  width: 16px;
+  height: 22px;
+  object-fit: contain;
   filter: brightness(0) saturate(100%) invert(92%) sepia(21%) saturate(695%) hue-rotate(84deg) brightness(100%) contrast(103%);
 }
 
 /* ─── Properties body ─── */
 .properties-container {
+  width: 100%;
+  margin-top: -1px;
+  background-color: #0f0f1a;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #0f0f1a;
   padding: 0;
 }
 
 /* ─── Sections ─── */
 .section {
-  padding: 10px 15px;
+  width: 100%;
+  padding: 8px 14px 12px;
 }
 
-.section-type-label {
-  text-transform: capitalize;
+.section + .section {
+  padding-top: 0;
 }
 
 /* ─── Innate section (no label, just stats) ─── */
 .innate-section {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 8px;
 }
 
 /* ─── Active/Passive label ─── */
 .ability-type-label {
-  align-items: center;
-  background-color: rgba(16, 19, 13, 0.56);
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  width: calc(100% + 28px);
   height: 32px;
+  margin: 0 -14px 8px;
+  padding-left: 20px;
+  background-color: rgba(16, 19, 13, 0.48);
+  color: var(--tooltip-off-white);
   font-size: 18px;
   font-weight: 700;
-  padding: 8px 0 8px 15px;
-  margin: 0 -15px 8px;
-  width: calc(100% + 30px);
-}
-
-.ability-type-label.active {
-  color: var(--dl-text-primary);
+  line-height: 32px;
+  text-transform: capitalize;
 }
 
 .ability-type-label.passive {
+  background-color: rgba(16, 19, 13, 0.37);
+}
+
+.ability-type-label.passive .ability-type-text {
   font-style: italic;
   font-weight: 600;
+  opacity: 0.7;
 }
 
-.ability-cooldown {
+.ability-timing-group {
   display: flex;
-  align-items: baseline;
-  gap: 4px;
-  font-family: 'Retail Demo', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  font-style: normal;
-  color: var(--dl-text-tooltip);
-  background-color: #000000b8;
-  padding: 0 1rem;
-  height: 30px;
-  line-height: 30px;
+  align-items: stretch;
+  height: 100%;
+  margin-left: auto;
 }
 
-.ability-cooldown-icon {
-  width: 16px;
-  height: 16px;
+.ability-timing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 100%;
+  padding: 0 20px;
+  background-color: rgba(0, 0, 0, 0.76);
+  color: var(--tooltip-off-white);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.ability-timing-icon {
+  width: 22px;
+  height: 22px;
   object-fit: contain;
+  filter: none;
+}
+
+.ability-timing.cooldown .ability-timing-icon,
+.ability-timing.charge-up .ability-timing-icon {
+  filter: none;
 }
 
 /* ─── Info/description text inside sections ─── */
 .mod-info-label {
-  align-self: flex-start;
-  color: #a9a9a9;
-  font-size: 16px;
+  width: 100%;
+  color: #cdcdcd;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 138%;
-  margin: 15px 0;
+  line-height: 135%;
 }
 
+/* ─── Stats block (important stats + regular props) ─── */
+.applied-attributes-container + .applied-attributes-container {
+  margin-top: 12px;
+}
+
+.has-description .stats-block {
+  margin-top: 15px;
+}
+
+.innate-section .has-description .stats-block {
+  margin-top: 10px;
+}
+
+.stats-block {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  width: 100%;
+  min-height: 80px;
+  overflow: hidden;
+}
+
+/* When 1 important stat: side-by-side layout */
+.stats-block-stacked {
+  flex-direction: column;
+}
+
+.stats-block-no-important {
+  min-height: 40px;
+}
+
+.no-applied-stats .important-stats-wrapper {
+  flex: 1 1 100%;
+  width: 100%;
+}
+
+/* ─── Important stat boxes ─── */
+.important-stats-wrapper {
+  display: flex;
+  flex: 0 0 130px;
+  flex-direction: row;
+  gap: 4px;
+  min-height: 80px;
+}
+
+.stats-block-stacked .important-stats-wrapper {
+  flex: none;
+  width: 100%;
+  min-height: 70px;
+}
+
+.important-stats-wrapper.count-4,
+.important-stats-wrapper.count-5,
+.important-stats-wrapper.count-6 {
+  flex-wrap: wrap;
+}
+
+.important-stat-box {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 80px;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.important-stats-wrapper.count-4 .important-stat-box,
+.important-stats-wrapper.count-5 .important-stat-box,
+.important-stats-wrapper.count-6 .important-stat-box {
+  flex-basis: calc(50% - 2px);
+  min-height: 70px;
+}
+
+.important-stat-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  width: 100%;
+  min-width: 0;
+  line-height: 1.1;
+}
+
+.important-stat-icon-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  margin-top: -2px;
+}
+
+.important-stat-icon-value.hide-important-stat-icon .important-stat-icon {
+  display: none;
+}
+
+.important-stat-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+  object-fit: contain;
+}
+
+.important-stat-value {
+  min-width: 0;
+  color: var(--tooltip-off-white);
+  font-size: 22px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.important-stat-labels {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 100%;
+  min-width: 0;
+}
+
+.important-stat-type {
+  display: -webkit-box;
+  width: 100%;
+  max-height: 40px;
+  overflow: hidden;
+  color: var(--tooltip-off-white);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.15;
+  text-align: center;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.important-stat-label {
+  display: -webkit-box;
+  width: 100%;
+  max-height: 40px;
+  overflow: hidden;
+  color: var(--tooltip-off-white);
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.15;
+  opacity: 0.5;
+  text-align: center;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.important-stat-box.status-effect .important-stat-value {
+  color: #6dc04b;
+  font-size: 20px;
+}
+
+.prop_bullet_damage .important-stat-type,
+.prop_damage .important-stat-type {
+  color: #ec981a;
+  font-weight: 600;
+}
+
+.prop_tech_damage .important-stat-type,
+.prop_tech_power .important-stat-type,
+.prop_spirit .important-stat-type {
+  color: #ce91ff;
+  font-weight: 600;
+}
+
+.prop_healing .important-stat-type,
+.prop_health .important-stat-type {
+  color: #7bba1d;
+  font-weight: 600;
+}
+
+.stats-block-props {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  min-width: 0;
+  min-height: 80px;
+  padding: 10px 15px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.stats-block-props.empty {
+  display: none;
+}
+
+.stats-block-no-important .stats-block-props {
+  width: 100%;
+  min-height: 0;
+  gap: 5px;
+  padding: 0;
+  background-color: transparent;
+}
+
+.stats-block-stacked .stats-block-props {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1px 4px;
+  width: 100%;
+  min-height: 0;
+}
+
+/* Block property items (no icons, compact) */
+.stats-block-stacked .block-prop-item {
+  width: calc(50% - 2px);
+  padding: 2px 0;
+}
+
+.block-prop-item {
+  display: block;
+  min-width: 0;
+  color: var(--tooltip-off-white);
+  font-size: 18px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* ─── Standard attribute rows ─── */
+.attribute-value {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.attribute-name {
+  margin-left: 5px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+.attribute-name.elevated {
+  color: #ffffff;
+  font-weight: 700;
+  opacity: 1;
+}
+
+.full-property-value {
+  color: var(--tooltip-off-white);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.prefix-value,
+.postfix-value {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+}
+
+.postfix-value.shrink,
+.stats-block-props .postfix-value {
+  font-size: 16px;
+}
+
+.property-value {
+  color: var(--tooltip-off-white);
+  font-weight: 700;
+}
+
+.full-property-value.is-negative .prefix-value,
+.full-property-value.is-negative .postfix-value,
+.full-property-value.is-negative .property-value {
+  color: #ff6a6a;
+  opacity: 1;
+}
+
+/* ─── Inline content from API HTML ─── */
+.highlight,
 .mod-info-label .highlight {
   color: #f8f8f8;
   font-weight: 600;
 }
 
+.highlight_weapon,
+.highlight_courage,
+.mod-info-label .highlight_weapon,
+.mod-info-label .highlight_courage {
+  color: var(--tooltip-courage-bright);
+  font-weight: 700;
+}
+
+.highlight_spirit,
+.highlight_tech,
+.mod-info-label .highlight_spirit,
+.mod-info-label .highlight_tech {
+  color: var(--tooltip-spirit-bright);
+  font-weight: 700;
+}
+
+.highlight_armor,
+.highlight_fortitude,
+.mod-info-label .highlight_armor,
+.mod-info-label .highlight_fortitude {
+  color: var(--tooltip-fortitude-bright);
+  font-weight: 700;
+}
+
+.is-negative,
+.isNegative,
+.mod-info-label .is-negative,
+.mod-info-label .isNegative {
+  color: #ff6a6a;
+  font-weight: 700;
+}
+
+.diminish,
 .mod-info-label .diminish {
   color: rgba(191, 187, 176, 0.9);
   font-size: 15px;
@@ -156,192 +523,9 @@
   font-weight: 600;
 }
 
-/* ─── Stats block (important stats + regular props) ─── */
-.stats-block {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  margin: 10px 0;
-  padding: 0;
-}
-
-.stats-block-props {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px 16px;
-  padding: 8px 10px;
-  background: rgba(0, 0, 0, 0.2);
-  margin-top: 4px;
-}
-
-/* Block property items (no icons, compact) */
-.block-prop-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 15px;
-}
-
-.block-prop-item .attribute-value {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--dl-text-tooltip);
-}
-
-.block-prop-item .attribute-name {
-  font-size: 15px;
-  font-weight: 500;
-  color: rgba(200, 200, 210, 0.65);
-}
-
-/* ─── Important stat boxes ─── */
-.important-stats-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  width: 100%;
-  gap: 8px;
-}
-
-.important-stat-box {
-  background: rgba(0, 0, 0, 0.2);
-  padding: 8px 8px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 70px;
-}
-
-.important-stat-box.status-effect .important-stat-value {
-  color: #6dc04b;
-  font-size: 18px;
-}
-
-.important-stat-icon-value {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
-
-.important-stat-icon {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-  margin-right: 4px;
-}
-
-.important-stat-value {
-  font-size: 20px;
-  font-weight: 700;
-  color: #fff;
-}
-
-.important-stat-label {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 16px;
-  margin-top: 2px;
-  overflow: hidden;
-  text-align: center;
-  text-overflow: ellipsis;
-}
-
-.important-stat-conditional {
-  font-style: italic;
-  font-weight: 500;
-  margin-top: 2px;
-  opacity: 0.4;
-  text-align: center;
-  font-size: 14px;
-}
-
-/* ─── Standard attribute rows ─── */
-.attribute-line-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 18px;
-  margin: 2px 0 4px;
-  width: 100%;
-}
-
-.attribute-line-item:last-child {
-  margin-bottom: 0;
-}
-
-.prop-icon {
-  display: none;
-}
-
-.attribute-value {
-  font-size: 19px;
-  font-weight: 700;
-  color: var(--dl-text-primary);
-  white-space: nowrap;
-}
-
-.attribute-value.elevated {
-  color: var(--slot-color);
-}
-
-.attribute-value.negative {
-  color: #ff6a6a;
-}
-
-.attribute-name {
-  font-size: 18px;
-  font-weight: 500;
-  color: rgba(200, 200, 210, 0.75);
-}
-
-.conditional {
-  font-size: 14px;
-  color: #e8c56a;
-  padding: 2px 0 2px 26px;
-  font-style: italic;
-}
-
-/* ─── Inline content from API HTML ─── */
-.highlight {
-  color: #f8f8f8;
-  font-weight: 600;
-}
-
-.highlight_weapon,
-.highlight_courage {
-  color: #ec9719;
-  font-weight: 700;
-}
-
-.highlight_spirit,
-.highlight_tech {
-  color: #ce90ff;
-  font-weight: 700;
-}
-
-.highlight_armor,
-.highlight_fortitude {
-  color: #7bba1d;
-  font-weight: 700;
-}
-
-.is-negative {
-  color: #ff6a6a;
-  font-weight: 700;
-}
-
-.diminish {
-  color: rgba(191, 187, 176, 0.9);
-  font-size: 15px;
-  font-style: italic;
-  font-weight: 600;
-}
-
 .strike {
-  text-decoration: line-through;
   color: rgba(200, 200, 210, 0.5);
+  text-decoration: line-through;
 }
 
 .bold {
@@ -355,14 +539,13 @@
 /* Inline SVGs and images from API HTML */
 svg,
 .mod-info-label img,
-.section img:not(.prop-icon):not(.important-stat-icon),
-.conditional img {
+.section img:not(.important-stat-icon):not(.ability-timing-icon) {
+  position: relative;
+  top: 2px;
   display: inline-block;
-  vertical-align: middle;
   width: 16px;
   height: 16px;
-  top: 2px;
-  position: relative;
+  vertical-align: middle;
 }
 
 svg {
@@ -373,56 +556,596 @@ svg {
   font-weight: 700;
 }
 
+.mod-info-label .InlineKey,
+.mod-info-label .keybind {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  margin: 0 3px;
+  padding: 0 6px;
+  background-color: #c6b6a2;
+  color: var(--tooltip-black);
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 24px;
+  text-transform: uppercase;
+  vertical-align: -3px;
+}
+
+.mod-info-label .inline-attribute-label.Spirit,
+.mod-info-label .inline-attribute-label.SpiritDamage,
+.mod-info-label .inline-attribute-label.BonusSpiritDamage,
+.mod-info-label .inline-attribute-label.SpiritDPS,
+.mod-info-label .inline-attribute-label.SpiritResist,
+.mod-info-label .InlineAttributeName.Spirit,
+.mod-info-label .InlineAttributeName.SpiritDamage,
+.mod-info-label .InlineAttributeName.BonusSpiritDamage,
+.mod-info-label .InlineAttributeName.SpiritDPS,
+.mod-info-label .InlineAttributeName.SpiritResist,
+.mod-info-label .Spirit,
+.mod-info-label .SpiritDamage,
+.mod-info-label .BonusSpiritDamage,
+.mod-info-label .SpiritDPS,
+.mod-info-label .SpiritResist,
+.mod-info-label [style*="spiritBrightColor"] {
+  color: var(--tooltip-spirit-bright) !important;
+}
+
+.mod-info-label .inline-attribute-label.Courage,
+.mod-info-label .inline-attribute-label.MeleeDamage,
+.mod-info-label .inline-attribute-label.WeaponDamage,
+.mod-info-label .inline-attribute-label.BonusWeaponDamage,
+.mod-info-label .inline-attribute-label.BulletDamage,
+.mod-info-label .inline-attribute-label.BulletResist,
+.mod-info-label .InlineAttributeName.Courage,
+.mod-info-label .InlineAttributeName.MeleeDamage,
+.mod-info-label .InlineAttributeName.WeaponDamage,
+.mod-info-label .InlineAttributeName.BonusWeaponDamage,
+.mod-info-label .InlineAttributeName.BulletDamage,
+.mod-info-label .InlineAttributeName.BulletResist,
+.mod-info-label .Courage,
+.mod-info-label .MeleeDamage,
+.mod-info-label .WeaponDamage,
+.mod-info-label .BonusWeaponDamage,
+.mod-info-label .BulletDamage,
+.mod-info-label .BulletResist,
+.mod-info-label [style*="courageBrightColor"] {
+  color: var(--tooltip-courage-bright) !important;
+}
+
+.mod-info-label .inline-attribute-label.Fortitude,
+.mod-info-label .inline-attribute-label.Heals,
+.mod-info-label .inline-attribute-label.Healing,
+.mod-info-label .inline-attribute-label.Heal,
+.mod-info-label .inline-attribute-label.Regen,
+.mod-info-label .inline-attribute-label.MaxHealth,
+.mod-info-label .InlineAttributeName.Fortitude,
+.mod-info-label .InlineAttributeName.Heals,
+.mod-info-label .InlineAttributeName.Healing,
+.mod-info-label .InlineAttributeName.Heal,
+.mod-info-label .InlineAttributeName.Regen,
+.mod-info-label .InlineAttributeName.MaxHealth,
+.mod-info-label .Fortitude,
+.mod-info-label .Heals,
+.mod-info-label .Healing,
+.mod-info-label .Heal,
+.mod-info-label .Regen,
+.mod-info-label .MaxHealth,
+.mod-info-label [style*="fortitudeBrightColor"] {
+  color: var(--tooltip-fortitude-bright) !important;
+}
+
+.mod-info-label .inline-attribute-label.Slow,
+.mod-info-label .inline-attribute-label.Slowing,
+.mod-info-label .inline-attribute-label.SlowResistance,
+.mod-info-label .inline-attribute-label.Debuff,
+.mod-info-label .inline-attribute-label.ReducedFireRate,
+.mod-info-label .inline-attribute-label.BonusMoveSpeed,
+.mod-info-label .inline-attribute-label.MoveSpeed,
+.mod-info-label .inline-attribute-label.FireRate,
+.mod-info-label .inline-attribute-label.BonusFireRate,
+.mod-info-label .inline-attribute-label.BonusSprintSpeed,
+.mod-info-label .InlineAttributeName.Slow,
+.mod-info-label .InlineAttributeName.Slowing,
+.mod-info-label .InlineAttributeName.SlowResistance,
+.mod-info-label .InlineAttributeName.Debuff,
+.mod-info-label .InlineAttributeName.ReducedFireRate,
+.mod-info-label .InlineAttributeName.BonusMoveSpeed,
+.mod-info-label .InlineAttributeName.MoveSpeed,
+.mod-info-label .InlineAttributeName.FireRate,
+.mod-info-label .InlineAttributeName.BonusFireRate,
+.mod-info-label .InlineAttributeName.BonusSprintSpeed {
+  color: var(--tooltip-off-white) !important;
+}
+
+.mod-info-label .inline-attribute-label.CombatBarrier,
+.mod-info-label .inline-attribute-label.DamageAmp,
+.mod-info-label .inline-attribute-label.Immobilize,
+.mod-info-label .inline-attribute-label.KnockBack,
+.mod-info-label .inline-attribute-label.KnockUp,
+.mod-info-label .inline-attribute-label.Pull,
+.mod-info-label .inline-attribute-label.Pulls,
+.mod-info-label .inline-attribute-label.Pulling,
+.mod-info-label .inline-attribute-label.Drag,
+.mod-info-label .inline-attribute-label.Stun,
+.mod-info-label .InlineAttributeName.CombatBarrier,
+.mod-info-label .InlineAttributeName.DamageAmp,
+.mod-info-label .InlineAttributeName.Immobilize,
+.mod-info-label .InlineAttributeName.KnockBack,
+.mod-info-label .InlineAttributeName.KnockUp,
+.mod-info-label .InlineAttributeName.Pull,
+.mod-info-label .InlineAttributeName.Pulls,
+.mod-info-label .InlineAttributeName.Pulling,
+.mod-info-label .InlineAttributeName.Drag,
+.mod-info-label .InlineAttributeName.Stun {
+  color: var(--tooltip-off-white) !important;
+}
+
+.mod-info-label .inline-attribute-label.Heals,
+.mod-info-label .inline-attribute-label.Healing,
+.mod-info-label .inline-attribute-label.Heal,
+.mod-info-label .inline-attribute-label.Regen,
+.mod-info-label .inline-attribute-label.MaxHealth,
+.mod-info-label .InlineAttributeName.Heals,
+.mod-info-label .InlineAttributeName.Healing,
+.mod-info-label .InlineAttributeName.Heal,
+.mod-info-label .InlineAttributeName.Regen,
+.mod-info-label .InlineAttributeName.MaxHealth {
+  color: var(--tooltip-heal-text) !important;
+}
+
+.mod-info-label .inline-attribute-label.StaminaRegenPerSecond,
+.mod-info-label .InlineAttributeName.StaminaRegenPerSecond {
+  color: var(--tooltip-stamina-text) !important;
+}
+
+.mod-info-label .inline-attribute-label.PureDamage,
+.mod-info-label .InlineAttributeName.PureDamage {
+  color: #ffffff !important;
+}
+
+.mod-info-label .inline-attribute-label.Silence,
+.mod-info-label .InlineAttributeName.Silence {
+  color: var(--tooltip-spirit-bright) !important;
+}
+
+.mod-info-label .InlineAttributeIcon,
+.mod-info-label .inline-attribute-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: sub;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.mod-info-label .InlineAttributeIcon.Spirit,
+.mod-info-label .InlineAttributeIcon.SpiritIcon,
+.mod-info-label .inline-attribute-icon.Spirit,
+.mod-info-label .inline-attribute-icon.SpiritIcon {
+  background-color: var(--tooltip-spirit-bright);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/spirit.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/spirit.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.Courage,
+.mod-info-label .inline-attribute-icon.Courage {
+  background-color: var(--tooltip-courage-bright);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/hud/core/icon_damage_melee_psd.png");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/hud/core/icon_damage_melee_psd.png");
+}
+
+.mod-info-label .InlineAttributeIcon.Fortitude,
+.mod-info-label .inline-attribute-icon.Fortitude {
+  background-color: var(--tooltip-fortitude-bright);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/health.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/health.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.SpiritDamage,
+.mod-info-label .InlineAttributeIcon.BonusSpiritDamage,
+.mod-info-label .InlineAttributeIcon.SpiritDPS,
+.mod-info-label .inline-attribute-icon.SpiritDamage,
+.mod-info-label .inline-attribute-icon.BonusSpiritDamage,
+.mod-info-label .inline-attribute-icon.SpiritDPS {
+  background-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/damage_magic_color.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.BulletResist,
+.mod-info-label .inline-attribute-icon.BulletResist {
+  background-color: var(--tooltip-courage-bright);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/upgrades/property_bullet_armor_psd.png");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/upgrades/property_bullet_armor_psd.png");
+}
+
+.mod-info-label .InlineAttributeIcon.SpiritResist,
+.mod-info-label .inline-attribute-icon.SpiritResist {
+  background-color: var(--tooltip-spirit-bright);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/upgrades/property_tech_armor_psd.png");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/upgrades/property_tech_armor_psd.png");
+}
+
+.mod-info-label .InlineAttributeIcon.MeleeDamage,
+.mod-info-label .inline-attribute-icon.MeleeDamage {
+  background-color: var(--tooltip-courage-bright);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/hud/core/icon_damage_melee_psd.png");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/hud/core/icon_damage_melee_psd.png");
+}
+
+.mod-info-label .InlineAttributeIcon.Slow,
+.mod-info-label .InlineAttributeIcon.Slowing,
+.mod-info-label .InlineAttributeIcon.SlowResistance,
+.mod-info-label .inline-attribute-icon.Slow,
+.mod-info-label .inline-attribute-icon.Slowing,
+.mod-info-label .inline-attribute-icon.SlowResistance {
+  background-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/upgrades/property_slow_large_psd.png");
+}
+
+.mod-info-label .InlineAttributeIcon.WeaponDamage,
+.mod-info-label .InlineAttributeIcon.BonusWeaponDamage,
+.mod-info-label .InlineAttributeIcon.BulletDamage,
+.mod-info-label .inline-attribute-icon.WeaponDamage,
+.mod-info-label .inline-attribute-icon.BonusWeaponDamage,
+.mod-info-label .inline-attribute-icon.BulletDamage {
+  background-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/damage_bullet_color.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.ReducedFireRate,
+.mod-info-label .InlineAttributeIcon.BonusFireRate,
+.mod-info-label .InlineAttributeIcon.FireRate,
+.mod-info-label .inline-attribute-icon.ReducedFireRate,
+.mod-info-label .inline-attribute-icon.BonusFireRate,
+.mod-info-label .inline-attribute-icon.FireRate {
+  background-color: var(--tooltip-courage-bright);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/fire_rate.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/fire_rate.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.BonusMoveSpeed,
+.mod-info-label .InlineAttributeIcon.MoveSpeed,
+.mod-info-label .InlineAttributeIcon.BonusSprintSpeed,
+.mod-info-label .inline-attribute-icon.BonusMoveSpeed,
+.mod-info-label .inline-attribute-icon.MoveSpeed,
+.mod-info-label .inline-attribute-icon.BonusSprintSpeed {
+  background-color: var(--tooltip-armor);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/move_speed.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/move_speed.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.Heals,
+.mod-info-label .InlineAttributeIcon.Healing,
+.mod-info-label .InlineAttributeIcon.Heal,
+.mod-info-label .InlineAttributeIcon.Regen,
+.mod-info-label .InlineAttributeIcon.MaxHealth,
+.mod-info-label .inline-attribute-icon.Heals,
+.mod-info-label .inline-attribute-icon.Healing,
+.mod-info-label .inline-attribute-icon.Heal,
+.mod-info-label .inline-attribute-icon.Regen,
+.mod-info-label .inline-attribute-icon.MaxHealth {
+  background-color: var(--tooltip-armor);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/heal.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/heal.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.CombatBarrier,
+.mod-info-label .inline-attribute-icon.CombatBarrier {
+  background-color: var(--tooltip-off-white);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/upgrades/property_bullet_armor_psd.png");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/upgrades/property_bullet_armor_psd.png");
+}
+
+.mod-info-label .InlineAttributeIcon.DamageAmp,
+.mod-info-label .InlineAttributeIcon.PureDamage,
+.mod-info-label .inline-attribute-icon.DamageAmp,
+.mod-info-label .inline-attribute-icon.PureDamage {
+  background-color: var(--tooltip-off-white);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/damage_psd.png");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/damage_psd.png");
+}
+
+.mod-info-label .InlineAttributeIcon.Debuff,
+.mod-info-label .inline-attribute-icon.Debuff {
+  background-color: var(--tooltip-debuff);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_toxic.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_toxic.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.Stun,
+.mod-info-label .inline-attribute-icon.Stun {
+  background-color: var(--tooltip-off-white);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_stun.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_stun.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.Immobilize,
+.mod-info-label .inline-attribute-icon.Immobilize {
+  background-color: var(--tooltip-off-white);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_immobilize.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_immobilize.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.KnockBack,
+.mod-info-label .InlineAttributeIcon.KnockUp,
+.mod-info-label .InlineAttributeIcon.Pull,
+.mod-info-label .InlineAttributeIcon.Pulls,
+.mod-info-label .InlineAttributeIcon.Pulling,
+.mod-info-label .InlineAttributeIcon.Drag,
+.mod-info-label .inline-attribute-icon.KnockBack,
+.mod-info-label .inline-attribute-icon.KnockUp,
+.mod-info-label .inline-attribute-icon.Pull,
+.mod-info-label .inline-attribute-icon.Pulls,
+.mod-info-label .inline-attribute-icon.Pulling,
+.mod-info-label .inline-attribute-icon.Drag {
+  background-color: var(--tooltip-off-white);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_knockdown.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_knockdown.svg");
+}
+
+.mod-info-label .InlineAttributeIcon.Silence,
+.mod-info-label .inline-attribute-icon.Silence {
+  background-color: var(--tooltip-spirit-bright);
+  mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_silence.svg");
+  -webkit-mask-image: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_silence.svg");
+}
+
+.mod-info-label svg[fill="spiritBrightColor"],
+.mod-info-label svg [fill="spiritBrightColor"] {
+  fill: var(--tooltip-spirit-bright) !important;
+}
+
+.mod-info-label svg[stroke="spiritBrightColor"],
+.mod-info-label svg [stroke="spiritBrightColor"] {
+  stroke: var(--tooltip-spirit-bright) !important;
+}
+
+.mod-info-label svg[fill="courageBrightColor"],
+.mod-info-label svg [fill="courageBrightColor"] {
+  fill: var(--tooltip-courage-bright) !important;
+}
+
+.mod-info-label svg[stroke="courageBrightColor"],
+.mod-info-label svg [stroke="courageBrightColor"] {
+  stroke: var(--tooltip-courage-bright) !important;
+}
+
+.mod-info-label svg[fill="fortitudeBrightColor"],
+.mod-info-label svg [fill="fortitudeBrightColor"] {
+  fill: var(--tooltip-fortitude-bright) !important;
+}
+
+.mod-info-label svg[stroke="fortitudeBrightColor"],
+.mod-info-label svg [stroke="fortitudeBrightColor"] {
+  stroke: var(--tooltip-fortitude-bright) !important;
+}
+
+.mod-info-label svg[fill="armorColor"],
+.mod-info-label svg [fill="armorColor"] {
+  fill: var(--tooltip-armor) !important;
+}
+
+.mod-info-label svg[stroke="armorColor"],
+.mod-info-label svg [stroke="armorColor"] {
+  stroke: var(--tooltip-armor) !important;
+}
+
+.mod-info-label svg[fill="offWhite"],
+.mod-info-label svg [fill="offWhite"] {
+  fill: var(--tooltip-off-white) !important;
+}
+
+.mod-info-label svg[stroke="offWhite"],
+.mod-info-label svg [stroke="offWhite"] {
+  stroke: var(--tooltip-off-white) !important;
+}
+
+.mod-info-label svg[fill="white"],
+.mod-info-label svg [fill="white"] {
+  fill: #ffffff !important;
+}
+
+.mod-info-label svg[stroke="white"],
+.mod-info-label svg [stroke="white"] {
+  stroke: #ffffff !important;
+}
+
 .inline-attribute {
   display: inline-block;
+  width: 20px;
   height: 20px;
   margin-right: 5px;
   vertical-align: middle;
-  width: 20px;
+}
+
+.mod-info-label img.inline-attribute {
+  object-fit: contain;
+  filter: var(--tooltip-filter-off-white);
+}
+
+.mod-info-label img.inline-attribute.Spirit,
+.mod-info-label img.inline-attribute.SpiritIcon,
+.mod-info-label img.inline-attribute.SpiritDamage,
+.mod-info-label img.inline-attribute.BonusSpiritDamage,
+.mod-info-label img.inline-attribute.SpiritDPS,
+.mod-info-label img.inline-attribute.SpiritResist,
+.mod-info-label img.inline-attribute.Silence {
+  filter: var(--tooltip-filter-spirit);
+}
+
+.mod-info-label img.inline-attribute.Courage,
+.mod-info-label img.inline-attribute.MeleeDamage,
+.mod-info-label img.inline-attribute.WeaponDamage,
+.mod-info-label img.inline-attribute.BonusWeaponDamage,
+.mod-info-label img.inline-attribute.BulletDamage,
+.mod-info-label img.inline-attribute.BulletResist,
+.mod-info-label img.inline-attribute.ReducedFireRate,
+.mod-info-label img.inline-attribute.BonusFireRate,
+.mod-info-label img.inline-attribute.FireRate {
+  filter: var(--tooltip-filter-courage);
+}
+
+.mod-info-label img.inline-attribute.Fortitude,
+.mod-info-label img.inline-attribute.Heals,
+.mod-info-label img.inline-attribute.Healing,
+.mod-info-label img.inline-attribute.Heal,
+.mod-info-label img.inline-attribute.Regen,
+.mod-info-label img.inline-attribute.MaxHealth,
+.mod-info-label img.inline-attribute.BonusMoveSpeed,
+.mod-info-label img.inline-attribute.MoveSpeed,
+.mod-info-label img.inline-attribute.BonusSprintSpeed,
+.mod-info-label img.inline-attribute.StaminaRegenPerSecond,
+.mod-info-label img.inline-attribute.Debuff {
+  filter: var(--tooltip-filter-fortitude);
+}
+
+.mod-info-label img.inline-attribute.Slow,
+.mod-info-label img.inline-attribute.Slowing,
+.mod-info-label img.inline-attribute.SlowResistance,
+.mod-info-label img.inline-attribute.CombatBarrier,
+.mod-info-label img.inline-attribute.DamageAmp,
+.mod-info-label img.inline-attribute.Immobilize,
+.mod-info-label img.inline-attribute.KnockBack,
+.mod-info-label img.inline-attribute.KnockUp,
+.mod-info-label img.inline-attribute.Pull,
+.mod-info-label img.inline-attribute.Pulls,
+.mod-info-label img.inline-attribute.Pulling,
+.mod-info-label img.inline-attribute.Drag,
+.mod-info-label img.inline-attribute.Stun,
+.mod-info-label img.inline-attribute.PureDamage {
+  filter: var(--tooltip-filter-off-white);
+}
+
+.mod-info-label img.inline-attribute.DamageAmp {
+  content: url("https://assets-bucket.deadlock-api.com/assets-api-res/images/damage_psd.png");
+}
+
+.mod-info-label img.inline-attribute.Immobilize {
+  content: url("https://assets-bucket.deadlock-api.com/assets-api-res/icons/condition_immobilize.svg");
+}
+
+.prop_duration .important-stat-icon,
+.prop_slow .important-stat-icon,
+.prop_stun .important-stat-icon,
+.prop_silence .important-stat-icon,
+.prop_tech_power .important-stat-icon,
+.prop_spirit .important-stat-icon {
+  filter: var(--tooltip-filter-spirit);
+}
+
+.prop_cooldown .important-stat-icon,
+.prop_charge_cooldown .important-stat-icon {
+  filter: none;
+}
+
+.prop_fire_rate .important-stat-icon,
+.prop_clipsize .important-stat-icon,
+.prop_reload_speed .important-stat-icon,
+.prop_melee_damage .important-stat-icon {
+  filter: var(--tooltip-filter-courage);
+}
+
+/* These API SVGs already include their own palette. */
+.prop_bullet_armor_up .important-stat-icon,
+.prop_bullet_armor_down .important-stat-icon,
+.prop_bullet_damage .important-stat-icon {
+  filter: none;
+}
+
+.prop_health .important-stat-icon,
+.prop_healing .important-stat-icon,
+.prop_move_speed .important-stat-icon,
+.prop_combat_barrier .important-stat-icon {
+  filter: var(--tooltip-filter-fortitude);
+}
+
+.prop_damage .important-stat-icon {
+  filter: brightness(0) saturate(100%) invert(41%) sepia(90%) saturate(1254%) hue-rotate(347deg) brightness(103%) contrast(107%);
+}
+
+.prop_souls .important-stat-icon {
+  filter: brightness(0) saturate(100%) invert(94%) sepia(44%) saturate(481%) hue-rotate(88deg) brightness(104%) contrast(101%);
+}
+
+.prop_distance .important-stat-icon,
+.prop_cast .important-stat-icon {
+  filter: brightness(0) saturate(100%) invert(97%) sepia(12%) saturate(600%) hue-rotate(0deg) brightness(107%);
+}
+
+/* These API SVGs already include their own palette. */
+.prop_range .important-stat-icon,
+.prop_tech_damage .important-stat-icon,
+.prop_tech_armor_up .important-stat-icon,
+.prop_tech_armor_down .important-stat-icon {
+  filter: none;
 }
 
 /* ─── Component items ─── */
+.component-items-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: -1px;
+  background-color: #0f0f1a;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .component-items-section {
-  padding: 8px 15px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.component-items-section + .component-items-section {
-  padding-top: 4px;
-}
-
 .component-items-label {
-  font-size: 12px;
+  width: 100%;
+  padding: 4px 10px 2px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 14px;
   font-weight: 700;
-  color: rgba(200, 200, 210, 0.6);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
+  line-height: 1.2;
   text-align: left;
+  text-transform: uppercase;
 }
 
 .component-items-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  gap: 8px;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 5px 8px;
+  width: 100%;
+  padding: 0 5px 5px 10px;
 }
 
 .component-item {
   display: flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 }
 
 .component-item-icon {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
   flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  opacity: 0.9;
 }
 
 .component-item-name {
+  overflow: hidden;
+  color: rgba(255, 239, 215, 0.75);
   font-size: 14px;
-  font-weight: 600;
-  color: #c8bba8;
+  font-weight: 700;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
