@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.2.2...deadlock-ui-v1.2.3) (2026-05-02)
+
+
+### Bug Fixes
+
+* **dl-shop-panel:** adjust weapon grid to match new background ([#13](https://github.com/deadlock-api/deadlock-ui/issues/13)) ([a37f31a](https://github.com/deadlock-api/deadlock-ui/commit/a37f31a6d864941bf9357a8da274de7a5893898c))
+
 ## [1.2.2](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.2.1...deadlock-ui-v1.2.2) (2026-04-21)
 
 
