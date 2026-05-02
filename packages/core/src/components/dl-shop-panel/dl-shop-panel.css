@@ -97,6 +97,7 @@
 .tiers {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     position: relative;
     flex: 1;
     min-width: 0;
@@ -127,13 +128,15 @@
 
 /* Weapon: T3 wider, T4 narrower */
 .tiers.weapon .tier-section.tier-3 {
-    width: 52%;
-    padding: 5% 1.5% 0 4%;
+    width: 54%;
+    padding-top: 3%;
+    margin-left: 5%;
 }
 
 .tiers.weapon .tier-section.tier-4 {
-    width: 44%;
-    padding: 5% 3.5% 0 1.5%;
+    width: 31%;
+    margin-right: 5%;
+    padding-top: 3%;
 }
 
 /* Vitality & Spirit: T3 narrower, T4 wider */
@@ -168,12 +171,12 @@
     grid-template-columns: repeat(6, 1fr);
 }
 
-/* Weapon: T3=6, T4=5 */
+/* Weapon: T3=6, T4=3 (narrower box on new bg) */
 .tiers.weapon .mods-grid.tier-3 {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
 }
 .tiers.weapon .mods-grid.tier-4 {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 
 /* Vitality & Spirit: T3=5, T4=6 */
@@ -231,18 +234,19 @@
 
 .tier-price.tier-3 {
     font-size: 26px;
-    top: -3%;
-    left: 5%;
+    top: -6%;
+    left: -3%;
 }
 
 .tiers.spirit .tier-price.tier-3, .tiers.vitality .tier-price.tier-3 {
+    left: 5%;
     top: -1%;
 }
 
 .tier-price.tier-4 {
     font-size: 28px;
-    top: -6%;
-    left: 0%;
+    top: -8%;
+    left: -3%;
 }
 
 .tiers.spirit .tier-price.tier-4, .tiers.vitality .tier-price.tier-4 {
