@@ -7,6 +7,8 @@ import { configState, onConfigChange } from '../../store/config-store';
 import { cardBackground } from '../../utils/assets';
 import { injectFonts } from '../../utils/fonts';
 
+const ROMAN_NUMERALS = ['I', 'II', 'III', 'IV', 'V'];
+
 @Component({
   tag: 'dl-item-card',
   styleUrl: 'dl-item-card.css',
@@ -26,6 +28,9 @@ export class DlItemCard {
 
   /** Hover effect on the card. `"none"` does nothing, `"scale"` enlarges on hover. */
   @Prop({ reflect: true, attribute: 'hover-effect' }) hoverEffect: 'none' | 'scale' = 'none';
+
+  /** Visual variant. `"card"` renders the full shop card; `"icon"` renders a compact square icon. */
+  @Prop({ reflect: true }) variant: 'card' | 'icon' = 'card';
 
   /** Show the tier badge on hover. When not set, falls back to the global provider value. */
   @Prop({ attribute: 'show-tier-badge' }) showTierBadge?: boolean;
@@ -410,7 +415,7 @@ export class DlItemCard {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <slot>{this.renderDefaultCard(item, isClickMode)}</slot>
+        <slot>{this.variant === 'icon' ? this.renderIcon(item, isClickMode) : this.renderDefaultCard(item, isClickMode)}</slot>
       </div>,
       !noTooltip && item && (
         <div
@@ -427,6 +432,45 @@ export class DlItemCard {
         </div>
       ),
     ];
+  }
+
+  private renderIcon(item: Item | undefined, isClickMode: boolean) {
+    if (this._loading || !item) {
+      return <div class="icon-box loading"></div>;
+    }
+
+    if (this._error) {
+      return <div class="icon-box error" title={this._error}></div>;
+    }
+
+    const slot = item.item_slot_type;
+    const tier = item.item_tier;
+    const imgSrc = item.shop_image_webp || item.shop_image || item.image_webp || item.image;
+    const isActive = item.is_active_item || (item.activation !== 'passive');
+    const hasImbue = !!item.imbue;
+    return (
+      <div
+        class={{
+          'icon-box': true,
+          'clickable': isClickMode,
+          [`tier-${tier}`]: true,
+          [slot]: true,
+        }}
+      >
+        {(this.showTierBadge ?? true) && (
+          <div class={{ 'tier-badge': true, [slot]: true }}>
+            <span class="tier-badge-number">{ROMAN_NUMERALS[tier - 1] ?? tier}</span>
+          </div>
+        )}
+
+        <div class="icon-image-container">
+          {imgSrc && <img class="icon-image" src={imgSrc} alt={this.displayName} loading="lazy" />}
+        </div>
+
+        {isActive && !hasImbue && <span class="active-tag">Active</span>}
+        {hasImbue && <span class="imbue-tag">Imbue</span>}
+      </div>
+    );
   }
 
   private renderDefaultCard(item: Item | undefined, isClickMode: boolean) {
@@ -456,8 +500,6 @@ export class DlItemCard {
     const isActive = item.is_active_item || (item.activation !== 'passive');
     const hasImbue = !!item.imbue;
     const cardBg = cardBackground(slot, tier);
-    const romanNumerals = ['I', 'II', 'III', 'IV', 'V'];
-
     return (
       <div
         class={{
@@ -471,7 +513,7 @@ export class DlItemCard {
 
         {(this.showTierBadge ?? configState.showTierBadge) && (
           <div class={{ 'tier-badge': true, [slot]: true }}>
-            <span class="tier-badge-number">{romanNumerals[tier - 1] ?? tier}</span>
+            <span class="tier-badge-number">{ROMAN_NUMERALS[tier - 1] ?? tier}</span>
           </div>
         )}
 

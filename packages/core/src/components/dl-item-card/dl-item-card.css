@@ -14,6 +14,13 @@
     display: inline-block;
 }
 
+:host([variant="icon"]) {
+    width: var(--dl-item-icon-size, 48px);
+    height: var(--dl-item-icon-size, 48px);
+    aspect-ratio: 1 / 1;
+    display: inline-block;
+}
+
 .trigger {
     display: block;
     width: 100%;
@@ -233,6 +240,74 @@
 }
 .mod-box.spirit .mod-name::selection {
     background-color: rgba(200, 120, 240, 0.4);
+}
+
+/* Icon variant — compact square */
+.icon-box {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: transform 0.15s ease;
+    cursor: default;
+}
+
+.icon-box.clickable {
+    cursor: pointer;
+}
+
+:host([hover-effect="scale"]) .icon-box:hover {
+    transform: scale(1.15);
+    z-index: 10;
+}
+
+.icon-box.loading {
+    background-color: #1a1a2e;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.icon-image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.icon-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.icon-box .tier-badge {
+    opacity: 1;
+    width: 45%;
+    padding-top: 45%;
+}
+
+.icon-box .tier-badge-number {
+    top: 1px;
+    right: 0;
+    font-size: 8px;
+    width: 10px;
+    text-align: center;
+    letter-spacing: 0;
+}
+
+.icon-box .active-tag,
+.icon-box .imbue-tag {
+    top: auto;
+    bottom: 2px;
+    font-size: 7px;
+    min-width: 0;
+    width: auto;
+    padding: 1px 4px;
 }
 
 /* Tooltip positioning — managed by Floating UI */
