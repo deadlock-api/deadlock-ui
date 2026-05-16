@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.2.3...deadlock-ui-v1.3.0) (2026-05-16)
+
+
+### Features
+
+* **dl-item-card:** add icon variant for compact item rendering ([46ac370](https://github.com/deadlock-api/deadlock-ui/commit/46ac370d76e1b08725265620ad047c58383538ac))
+
 ## [1.2.3](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.2.2...deadlock-ui-v1.2.3) (2026-05-02)
 
 
