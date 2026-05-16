@@ -50,6 +50,11 @@ export namespace Components {
           * Override the tooltip trigger for this card. When not set, falls back to the global provider value.
          */
         "tooltipTrigger"?: TooltipTrigger;
+        /**
+          * Visual variant. `"card"` renders the full shop card; `"icon"` renders a compact square icon.
+          * @default 'card'
+         */
+        "variant": 'card' | 'icon';
     }
     interface DlItemGrid {
         /**
@@ -252,6 +257,11 @@ declare namespace LocalJSX {
           * Override the tooltip trigger for this card. When not set, falls back to the global provider value.
          */
         "tooltipTrigger"?: TooltipTrigger;
+        /**
+          * Visual variant. `"card"` renders the full shop card; `"icon"` renders a compact square icon.
+          * @default 'card'
+         */
+        "variant"?: 'card' | 'icon';
     }
     interface DlItemGrid {
         /**
@@ -356,6 +366,7 @@ declare namespace LocalJSX {
         "itemId": number;
         "itemClassName": ItemClassName;
         "hoverEffect": 'none' | 'scale';
+        "variant": 'card' | 'icon';
         "showTierBadge": boolean;
         "itemNameLanguage": Language;
         "tooltipTrigger": TooltipTrigger;
