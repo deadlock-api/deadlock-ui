@@ -473,6 +473,14 @@ export class DlItemCard {
     );
   }
 
+  private getNameSizeClass() {
+    const length = this.displayName.trim().length;
+    if (length > 24) return 'name-size-xs';
+    if (length > 19) return 'name-size-sm';
+    if (length > 14) return 'name-size-md';
+    return 'name-size-default';
+  }
+
   private renderDefaultCard(item: Item | undefined, isClickMode: boolean) {
     if (this._loading || !item) {
       return (
@@ -525,7 +533,7 @@ export class DlItemCard {
         {hasImbue && <span class="imbue-tag">Imbue</span>}
 
         <div class="mod-name-container">
-          <span class={{ 'mod-name': true, [slot]: true }}>{this.displayName}</span>
+          <span class={{ 'mod-name': true, [slot]: true, [this.getNameSizeClass()]: true }}>{this.displayName}</span>
         </div>
       </div>
     );
