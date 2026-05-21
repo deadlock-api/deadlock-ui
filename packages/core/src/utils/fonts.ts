@@ -20,7 +20,7 @@ import { fontUrl } from './assets';
 
 const STYLE_ID = 'dl-fonts';
 
-const fonts: { file: string; weight: number; style: string; family: string; local?: string[] }[] = [
+const fonts: { file: string; weight: number; style: string; family: string; local: string[] }[] = [
   { file: 'retaildemo-regular', weight: 400, style: 'normal', family: 'Retail Demo', local: ['Retail Demo Regular', 'RetailDemo-Regular'] },
   { file: 'retaildemo-italic', weight: 400, style: 'italic', family: 'Retail Demo', local: ['Retail Demo Italic', 'RetailDemo-Italic'] },
   { file: 'retaildemo-semibold', weight: 600, style: 'normal', family: 'Retail Demo', local: ['Retail Demo Semibold', 'RetailDemo-Semibold'] },
@@ -37,7 +37,7 @@ export function injectFonts(): void {
 
   const css = fonts
     .map(f => {
-      const localSources = (f.local ?? []).map(name => `local('${name}')`);
+      const localSources = f.local.map(name => `local('${name}')`);
       const sources = [...localSources, `url('${fontUrl(f.file)}') format('opentype')`].join(', ');
       return `@font-face {
   font-family: '${f.family}';
