@@ -20,14 +20,14 @@ import { fontUrl } from './assets';
 
 const STYLE_ID = 'dl-fonts';
 
-const fonts: { file: string; weight: number; style: string; family: string }[] = [
-  { file: 'retaildemo-regular', weight: 400, style: 'normal', family: 'Retail Demo' },
-  { file: 'retaildemo-italic', weight: 400, style: 'italic', family: 'Retail Demo' },
-  { file: 'retaildemo-semibold', weight: 600, style: 'normal', family: 'Retail Demo' },
-  { file: 'retaildemo-semibolditalic', weight: 600, style: 'italic', family: 'Retail Demo' },
-  { file: 'retaildemo-bold', weight: 700, style: 'normal', family: 'Retail Demo' },
-  { file: 'retaildemo-bolditalic', weight: 700, style: 'italic', family: 'Retail Demo' },
-  { file: 'tetsubingothic', weight: 400, style: 'normal', family: 'Tetsubingothic' },
+const fonts: { file: string; weight: number; style: string; family: string; local: string[] }[] = [
+  { file: 'retaildemo-regular', weight: 400, style: 'normal', family: 'Retail Demo', local: ['Retail Demo Regular', 'RetailDemo-Regular'] },
+  { file: 'retaildemo-italic', weight: 400, style: 'italic', family: 'Retail Demo', local: ['Retail Demo Italic', 'RetailDemo-Italic'] },
+  { file: 'retaildemo-semibold', weight: 600, style: 'normal', family: 'Retail Demo', local: ['Retail Demo Semibold', 'RetailDemo-Semibold'] },
+  { file: 'retaildemo-semibolditalic', weight: 600, style: 'italic', family: 'Retail Demo', local: ['Retail Demo Semibold Italic', 'RetailDemo-SemiboldItalic'] },
+  { file: 'retaildemo-bold', weight: 700, style: 'normal', family: 'Retail Demo', local: ['Retail Demo Bold', 'RetailDemo-Bold'] },
+  { file: 'retaildemo-bolditalic', weight: 700, style: 'italic', family: 'Retail Demo', local: ['Retail Demo Bold Italic', 'RetailDemo-BoldItalic'] },
+  { file: 'tetsubingothic', weight: 400, style: 'normal', family: 'Tetsubingothic', local: ['Tetsubin Gothic', 'Tetsubingothic'] },
 ];
 
 export function injectFonts(): void {
@@ -36,14 +36,16 @@ export function injectFonts(): void {
   }
 
   const css = fonts
-    .map(
-      f => `@font-face {
+    .map(f => {
+      const localSources = f.local.map(name => `local('${name}')`);
+      const sources = [...localSources, `url('${fontUrl(f.file)}') format('opentype')`].join(', ');
+      return `@font-face {
   font-family: '${f.family}';
   font-style: ${f.style};
   font-weight: ${f.weight};
-  src: url('${fontUrl(f.file)}') format('opentype');
-}`,
-    )
+  src: ${sources};
+}`;
+    })
     .join('\n');
 
   const style = document.createElement('style');

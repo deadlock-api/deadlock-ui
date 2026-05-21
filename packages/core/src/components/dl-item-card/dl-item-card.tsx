@@ -473,6 +473,13 @@ export class DlItemCard {
     );
   }
 
+  private getNameSizeClass(name: string): string | undefined {
+    const length = name.trim().length;
+    if (length > 24) return 'name-size-xs';
+    if (length > 19) return 'name-size-sm';
+    if (length > 14) return 'name-size-md';
+  }
+
   private renderDefaultCard(item: Item | undefined, isClickMode: boolean) {
     if (this._loading || !item) {
       return (
@@ -500,6 +507,8 @@ export class DlItemCard {
     const isActive = item.is_active_item || (item.activation !== 'passive');
     const hasImbue = !!item.imbue;
     const cardBg = cardBackground(slot, tier);
+    const name = this.displayName;
+    const sizeClass = this.getNameSizeClass(name);
     return (
       <div
         class={{
@@ -518,14 +527,14 @@ export class DlItemCard {
         )}
 
         <div class="mod-icon-container">
-          {imgSrc && <img class="mod-icon" src={imgSrc} alt={this.displayName} loading="lazy" />}
+          {imgSrc && <img class="mod-icon" src={imgSrc} alt={name} loading="lazy" />}
         </div>
 
         {isActive && !hasImbue && <span class="active-tag">Active</span>}
         {hasImbue && <span class="imbue-tag">Imbue</span>}
 
         <div class="mod-name-container">
-          <span class={{ 'mod-name': true, [slot]: true }}>{this.displayName}</span>
+          <span class={{ 'mod-name': true, [slot]: true, ...(sizeClass ? { [sizeClass]: true } : {}) }}>{name}</span>
         </div>
       </div>
     );

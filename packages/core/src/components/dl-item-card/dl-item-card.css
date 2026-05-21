@@ -2,7 +2,7 @@
     display: block;
     position: relative;
     width: 73px;
-    aspect-ratio: 80 / 125;
+    aspect-ratio: 82 / 128;
     font-family: var(--dl-font-family);
     color: var(--dl-text-primary);
     line-height: 1.4;
@@ -40,7 +40,7 @@
 }
 
 .mod-box {
-    aspect-ratio: 80 / 125;
+    aspect-ratio: 82 / 128;
     border-radius: 5px;
     box-sizing: border-box;
     cursor: default;
@@ -88,8 +88,10 @@
 /* Icon area */
 .mod-icon-container {
     align-items: center;
+    border-radius: 5px 5px 0 0;
     display: flex;
-    flex-grow: 1;
+    aspect-ratio: 1 / 1;
+    flex: 0 0 64.0625%;
     justify-content: center;
     min-height: 0;
     overflow: hidden;
@@ -103,7 +105,8 @@
 .mod-icon {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    border-radius: 5px 5px 0 0;
+    object-fit: cover;
     user-select: none;
     -webkit-user-drag: none;
 }
@@ -156,7 +159,8 @@
 /* Active / Imbue tags */
 .active-tag {
     position: absolute;
-    top: 56%;
+    top: auto;
+    bottom: 33.8%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 6;
@@ -175,9 +179,10 @@
 
 .imbue-tag {
     position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translateX(-50%);
+    top: auto;
+    bottom: 35.9375%;
+    left: 0;
+    transform: none;
     z-index: 6;
     background-color: #5a3a8a;
     color: #d4b8f0;
@@ -194,8 +199,8 @@
 
 /* Name label */
 .mod-name-container {
-    flex-shrink: 0;
-    height: 30%;
+    border-radius: 0 0 5px 5px;
+    flex: 0 0 35.9375%;
     padding: 2%;
     display: flex;
     align-items: center;
@@ -207,14 +212,26 @@
 }
 
 .mod-name {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
-    line-height: 1.1;
+    line-height: 0.95;
     overflow-wrap: break-word;
     white-space: normal;
     color: #1a1510;
     font-family: 'Retail Demo';
     padding: 0 7px;
+}
+
+.mod-name.name-size-md {
+    font-size: 12px;
+}
+
+.mod-name.name-size-sm {
+    font-size: 11px;
+}
+
+.mod-name.name-size-xs {
+    font-size: 10px;
 }
 
 /* Dark tier name colors */
