@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.3.0...deadlock-ui-v1.3.1) (2026-05-21)
+
+
+### Bug Fixes
+
+* **dl-item-card:** correct shop proportions and add font local() fallbacks ([5808eb6](https://github.com/deadlock-api/deadlock-ui/commit/5808eb60b5f978d64be3f3bc7425e4d9cb639350)), closes [#18](https://github.com/deadlock-api/deadlock-ui/issues/18)
+
 ## [1.3.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.2.3...deadlock-ui-v1.3.0) (2026-05-16)
 
 
