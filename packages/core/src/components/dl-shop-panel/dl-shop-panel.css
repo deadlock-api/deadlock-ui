@@ -31,7 +31,7 @@
     position: sticky;
     top: 0;
     align-self: flex-start;
-    margin-right: -6px;
+    margin-right: -12px;
 }
 
 .category-tab {
@@ -47,7 +47,7 @@
 
 .category-icon-container {
     position: relative;
-    width: 70px;
+    width: 84px;
     height: 73px;
     overflow: hidden;
     border-radius: 8px 0 0 8px;
@@ -58,7 +58,7 @@
 
 .category-icon-container.active {
     height: 175px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 .tab-shape {
@@ -75,10 +75,10 @@
 .tab-icon {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: calc(50% - 6px);
     transform: translate(-50%, -50%);
-    width: 65px;
-    height: 65px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
     pointer-events: none;
 }
