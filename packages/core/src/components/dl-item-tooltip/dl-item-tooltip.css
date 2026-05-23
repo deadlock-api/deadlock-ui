@@ -87,7 +87,7 @@
 
 /* ─── Innate section (no label, just stats) ─── */
 .innate-section {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 0;
 }
 
 /* ─── Active/Passive label ─── */
@@ -390,6 +390,10 @@
 
 .attribute-value.negative {
   color: #ff6a6a;
+}
+
+.value-symbol {
+  color: rgba(200, 200, 210, 0.75);
 }
 
 .attribute-name {

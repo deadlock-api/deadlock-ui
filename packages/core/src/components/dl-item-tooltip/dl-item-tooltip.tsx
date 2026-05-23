@@ -210,7 +210,7 @@ export class DlItemTooltip {
 
   private getPropertyScaling(prop: ItemProperty): { icon: string; kind: 'boon' | 'spirit' | 'weapon'; label: string; arrowCount: number } | null {
     const scaleFunction = prop.scale_function;
-    if (!scaleFunction) return null;
+    if (!scaleFunction || this.isDurationScaleFunction(scaleFunction)) return null;
 
     const scaleTypes = [
       scaleFunction.specific_stat_scale_type,
@@ -223,10 +223,23 @@ export class DlItemTooltip {
     const arrowCount = this.getScalingArrowCount(statScale);
 
     if (scaleTypes.includes('ELevelUpBoons') || scaleClassName.includes('boon') || scaleSubclassName.includes('boon')) return { icon: '↯', kind: 'boon', label, arrowCount };
-    if (scaleTypes.some(type => type === 'ETechPower' || type === 'ETechDamage') || scaleClassName.includes('tech') || scaleSubclassName.includes('tech')) return { icon: '☆', kind: 'spirit', label, arrowCount };
+    if (scaleTypes.some(type => type === 'ETechPower' || type === 'ETechDamage')) return { icon: '☆', kind: 'spirit', label, arrowCount };
     if (scaleTypes.some(type => type === 'EWeaponPower' || type === 'EWeaponDamageScale' || type === 'EBaseWeaponDamageIncrease' || type === 'EBulletDamage') || scaleClassName.includes('weapon') || scaleSubclassName.includes('weapon')) return { icon: '◆', kind: 'weapon', label, arrowCount };
 
     return null;
+  }
+
+  private isDurationScaleFunction(scaleFunction: ItemPropertyScaleFunction): boolean {
+    const scaleTypes = [
+      scaleFunction.specific_stat_scale_type,
+      ...(Array.isArray(scaleFunction.scaling_stats) ? scaleFunction.scaling_stats : []),
+    ].filter((entry): entry is string => typeof entry === 'string');
+    const className = typeof scaleFunction.class_name === 'string' ? scaleFunction.class_name.toLowerCase() : '';
+    const subclassName = typeof scaleFunction.subclass_name === 'string' ? scaleFunction.subclass_name.toLowerCase() : '';
+
+    return className.includes('duration')
+      || subclassName.includes('duration')
+      || scaleTypes.some(type => type === 'ETechDuration' || type === 'EChannelDuration' || type.includes('Duration'));
   }
 
   private getStatScale(scaleFunction: ItemPropertyScaleFunction): number | undefined {
@@ -258,6 +271,19 @@ export class DlItemTooltip {
         {this._showScalingValues && <span class="scaling-badge-label">{scaling.label}</span>}
       </span>
     );
+  }
+
+  private renderValueText(value: string) {
+    const hasLeadingPlus = value.startsWith('+');
+    const hasPercent = value.endsWith('%');
+    if (!hasLeadingPlus && !hasPercent) return value;
+
+    const body = value.slice(hasLeadingPlus ? 1 : 0, hasPercent ? -1 : undefined);
+    return [
+      hasLeadingPlus && <span class="value-symbol">+</span>,
+      body,
+      hasPercent && <span class="value-symbol">%</span>,
+    ];
   }
 
   private renderScalingStrength(scaling: { arrowCount: number } | null) {
@@ -300,7 +326,7 @@ export class DlItemTooltip {
         {scaling && this.renderScalingBadge(scaling)}
         <div class="important-stat-icon-value">
           {prop.icon && <img class="important-stat-icon" src={prop.icon} alt="" />}
-          <div class="important-stat-value">{value}</div>
+          <div class="important-stat-value">{this.renderValueText(value)}</div>
           {this.renderScalingStrength(scaling)}
         </div>
         <div class="important-stat-label">{prop.label ?? key}</div>
@@ -325,7 +351,7 @@ export class DlItemTooltip {
       <div class="attribute-line-item">
         {prop.icon && <img class="prop-icon" src={prop.icon} alt="" />}
         <span class={{ 'attribute-value': true, 'elevated': elevated, 'negative': isNegative }}>
-          {value}
+          {this.renderValueText(value)}
         </span>
         <span class="attribute-name">{prop.label ?? key}</span>
       </div>,
@@ -346,7 +372,7 @@ export class DlItemTooltip {
     return (
       <div class="block-prop-item">
         <span class={{ 'attribute-value': true, 'elevated': elevated, 'negative': isNegative }}>
-          {value}
+          {this.renderValueText(value)}
         </span>
         <span class="attribute-name">{prop.label ?? key}</span>
       </div>
@@ -441,7 +467,7 @@ export class DlItemTooltip {
                   alt=""
                 />
               )}
-              {formatPropertyValue(cooldown.prop)}
+              {this.renderValueText(formatPropertyValue(cooldown.prop))}
             </span>
           )}
         </div>
