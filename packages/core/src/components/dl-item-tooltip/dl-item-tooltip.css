@@ -87,10 +87,14 @@
 
 /* ─── Innate section (no label, just stats) ─── */
 .innate-section {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 0;
 }
 
 /* ─── Active/Passive label ─── */
+.section:has(.ability-type-label) {
+  padding-top: 0;
+}
+
 .ability-type-label {
   align-items: center;
   background-color: rgba(16, 19, 13, 0.56);
@@ -210,6 +214,7 @@
   align-items: center;
   justify-content: center;
   min-height: 70px;
+  position: relative;
 }
 
 .important-stat-box.status-effect .important-stat-value {
@@ -248,6 +253,103 @@
   text-overflow: ellipsis;
 }
 
+.important-stat-box.prop-health .important-stat-label,
+.important-stat-box.prop-healing .important-stat-label,
+.important-stat-box.prop-regeneration .important-stat-label {
+  color: #00ff9a;
+}
+
+.important-stat-box.prop-bullet_damage .important-stat-label,
+.important-stat-box.prop-weapon_damage .important-stat-label {
+  color: #ec9719;
+}
+
+.important-stat-box.prop-spirit_damage .important-stat-label,
+.important-stat-box.prop-tech_damage .important-stat-label {
+  color: #ce90ff;
+}
+
+.important-stat-box.prop-health .important-stat-icon,
+.important-stat-box.prop-healing .important-stat-icon,
+.important-stat-box.prop-regeneration .important-stat-icon {
+  filter: brightness(0) saturate(100%) invert(74%) sepia(100%) saturate(1334%) hue-rotate(95deg) brightness(104%) contrast(108%);
+}
+
+.scaling-badge {
+  align-items: center;
+  display: inline-flex;
+  font-size: 15px;
+  font-weight: 1000;
+  gap: 3px;
+  letter-spacing: .02em;
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  right: 4px;
+  text-shadow: 0 1px 0 #000;
+  top: 4px;
+  z-index: 2;
+}
+
+.scaling-badge-icon {
+  display: inline-grid;
+  font-size: 22px;
+  line-height: 1;
+  place-items: center;
+  transform: translateY(-1px);
+}
+
+.scaling-badge.is-boon { color: #00ff9a; }
+.scaling-badge.is-spirit { color: #ce90ff; }
+.scaling-badge.is-weapon { color: #ec9719; }
+
+.scaling-badge.is-boon .scaling-badge-icon,
+.scaling-badge.is-boon .scaling-badge-label {
+  -webkit-text-stroke: 1.4px #004d2e;
+  paint-order: stroke fill;
+  text-shadow: 0 1px 0 #004d2e, 1px 0 0 #004d2e, -1px 0 0 #004d2e, 0 -1px 0 #004d2e;
+}
+
+.scaling-badge.is-boon .scaling-badge-icon {
+  font-size: 15px;
+  transform: translateY(-1px) rotate(180deg);
+}
+
+.scaling-badge.is-spirit .scaling-badge-icon,
+.scaling-badge.is-spirit .scaling-badge-label {
+  -webkit-text-stroke: 1.4px #361947;
+  paint-order: stroke fill;
+  text-shadow: 0 1px 0 #361947, 1px 0 0 #361947, -1px 0 0 #361947, 0 -1px 0 #361947;
+}
+
+.scaling-badge-label {
+  color: currentColor;
+  font-size: 14px;
+}
+
+.scaling-strength {
+  align-items: center;
+  color: #00ff9a;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  margin-left: 5px;
+  transform: translateY(-1px);
+  vertical-align: middle;
+}
+
+.scaling-strength-arrow {
+  border-bottom: 6px solid currentColor;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  display: block;
+  filter: drop-shadow(0 1px 0 #000);
+  height: 0;
+  margin-top: -1px;
+  width: 0;
+}
+
 .important-stat-conditional {
   font-style: italic;
   font-weight: 500;
@@ -283,11 +385,15 @@
 }
 
 .attribute-value.elevated {
-  color: var(--slot-color);
+  color: var(--dl-text-primary);
 }
 
 .attribute-value.negative {
   color: #ff6a6a;
+}
+
+.value-symbol {
+  color: rgba(200, 200, 210, 0.75);
 }
 
 .attribute-name {
