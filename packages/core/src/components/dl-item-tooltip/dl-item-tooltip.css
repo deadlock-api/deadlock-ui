@@ -91,6 +91,10 @@
 }
 
 /* ─── Active/Passive label ─── */
+.section:has(.ability-type-label) {
+  padding-top: 0;
+}
+
 .ability-type-label {
   align-items: center;
   background-color: rgba(16, 19, 13, 0.56);
