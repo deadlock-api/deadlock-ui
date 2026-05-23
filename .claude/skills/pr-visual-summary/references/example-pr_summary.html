@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PR Visual Summary</title>
+    <style>
+      :root { color-scheme: dark; --bg:#101319; --panel:#171d24; --line:#34404d; --text:#f4efe6; --muted:#aeb8c5; --accent:#e2b45e; }
+      * { box-sizing: border-box; }
+      body { margin:0; background:var(--bg); color:var(--text); font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+      main { width:min(1180px, calc(100vw - 36px)); margin:0 auto; padding:32px 0 48px; }
+      header, .case { margin-bottom:28px; }
+      h1, h2, p { margin:0; }
+      h1 { font-size:28px; line-height:1.1; }
+      h2 { margin-bottom:8px; color:var(--accent); font-size:18px; }
+      p { color:var(--muted); font-size:14px; line-height:1.5; }
+      .meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+      .pill { border:1px solid var(--line); border-radius:6px; padding:6px 9px; font-size:12px; font-weight:700; }
+      .case-note { margin-bottom:12px; }
+      .compare { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; }
+      figure { margin:0; border:1px solid var(--line); border-radius:8px; background:var(--panel); overflow:hidden; }
+      figcaption { border-bottom:1px solid var(--line); padding:10px 12px; font-size:13px; font-weight:750; }
+      img { display:block; max-width:100%; height:auto; margin:0 auto; background:#0e1116; }
+      @media (max-width:900px) { .compare { grid-template-columns:1fr; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>PR Visual Summary: Short Scope Name</h1>
+        <p>One paragraph explaining what changed and how these screenshots were produced.</p>
+        <div class="meta">
+          <span class="pill">Main: abc1234</span>
+          <span class="pill">PR: def5678</span>
+          <span class="pill">Capture: agent-browser</span>
+        </div>
+      </header>
+
+      <section class="case">
+        <h2>Specific Affected State</h2>
+        <p class="case-note">Explain the motivation and why this example proves the visual consequence.</p>
+        <div class="compare">
+          <figure>
+            <figcaption>Main</figcaption>
+            <img src="visual-regression/screenshots/main-specific-state.png" alt="Main specific state" />
+          </figure>
+          <figure>
+            <figcaption>PR</figcaption>
+            <img src="visual-regression/screenshots/pr-specific-state.png" alt="PR specific state" />
+          </figure>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
