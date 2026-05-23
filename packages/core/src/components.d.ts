@@ -108,6 +108,11 @@ export namespace Components {
          */
         "language": Language;
         /**
+          * Show numeric scaling multipliers in item tooltips. When false, only scaling icons and strength arrows are shown.
+          * @default false
+         */
+        "showScalingValues": boolean;
+        /**
           * Show tier badge on item cards globally. Individual cards can override this.
           * @default true
          */
@@ -315,6 +320,11 @@ declare namespace LocalJSX {
          */
         "language"?: Language;
         /**
+          * Show numeric scaling multipliers in item tooltips. When false, only scaling icons and strength arrows are shown.
+          * @default false
+         */
+        "showScalingValues"?: boolean;
+        /**
           * Show tier badge on item cards globally. Individual cards can override this.
           * @default true
          */
@@ -389,6 +399,7 @@ declare namespace LocalJSX {
         "tooltipFollowCursor": boolean;
         "tooltipDelay": number;
         "showTierBadge": boolean;
+        "showScalingValues": boolean;
     }
     interface DlShopPanelAttributes {
         "activeTab": ItemSlotType;

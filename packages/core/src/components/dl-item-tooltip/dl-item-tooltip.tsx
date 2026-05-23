@@ -1,5 +1,5 @@
 import { Component, Prop, State, Watch, h } from '@stencil/core';
-import { Item, ItemProperty, ItemClassName, Language, TooltipSection } from '../../types';
+import { Item, ItemProperty, ItemPropertyScaleFunction, ItemClassName, Language, TooltipSection } from '../../types';
 import { formatPropertyValue, isPropertyVisible, formatCost, getSlotColor } from '../../utils/format';
 import { tooltipHeaderBg, tooltipBodyBg, soulIcon } from '../../utils/assets';
 import { fetchItem, fetchItems } from '../../api/client';
@@ -50,8 +50,10 @@ export class DlItemTooltip {
   @State() private _nameOverride?: string;
   @State() private _loading = false;
   @State() private _error?: string;
+  @State() private _showScalingValues = configState.showScalingValues;
 
   private _unsubLanguage?: () => void;
+  private _unsubShowScalingValues?: () => void;
 
   // ─── Resolved item (prop takes precedence over fetched) ──────────────────
 
@@ -79,10 +81,14 @@ export class DlItemTooltip {
         this.fetchItemData();
       }
     });
+    this._unsubShowScalingValues = onConfigChange('showScalingValues', value => {
+      this._showScalingValues = value;
+    });
   }
 
   disconnectedCallback() {
     this._unsubLanguage?.();
+    this._unsubShowScalingValues?.();
   }
 
   @Watch('itemId')
@@ -91,6 +97,15 @@ export class DlItemTooltip {
     if (this.itemKey && !this.itemData) {
       this.fetchItemData();
     }
+  }
+
+  @Watch('itemData')
+  itemDataChanged() {
+    this._componentItems = undefined;
+    this._parentItems = undefined;
+    this.resolveComponentItems();
+    this.resolveParentItems();
+    this.resolveNameOverride();
   }
 
   @Watch('itemNameLanguage')
@@ -193,6 +208,67 @@ export class DlItemTooltip {
     StatusEffectInfiniteClip: { label: 'Infinite Clip', sublabel: '' },
   };
 
+  private getPropertyScaling(prop: ItemProperty): { icon: string; kind: 'boon' | 'spirit' | 'weapon'; label: string; arrowCount: number } | null {
+    const scaleFunction = prop.scale_function;
+    if (!scaleFunction) return null;
+
+    const scaleTypes = [
+      scaleFunction.specific_stat_scale_type,
+      ...(Array.isArray(scaleFunction.scaling_stats) ? scaleFunction.scaling_stats : []),
+    ].filter((entry): entry is string => typeof entry === 'string');
+    const scaleClassName = typeof scaleFunction.class_name === 'string' ? scaleFunction.class_name.toLowerCase() : '';
+    const scaleSubclassName = typeof scaleFunction.subclass_name === 'string' ? scaleFunction.subclass_name.toLowerCase() : '';
+    const statScale = this.getStatScale(scaleFunction);
+    const label = Number.isFinite(statScale) ? `×${this.formatScalingMultiplier(statScale!)}` : 'scales';
+    const arrowCount = this.getScalingArrowCount(statScale);
+
+    if (scaleTypes.includes('ELevelUpBoons') || scaleClassName.includes('boon') || scaleSubclassName.includes('boon')) return { icon: '↯', kind: 'boon', label, arrowCount };
+    if (scaleTypes.some(type => type === 'ETechPower' || type === 'ETechDamage') || scaleClassName.includes('tech') || scaleSubclassName.includes('tech')) return { icon: '☆', kind: 'spirit', label, arrowCount };
+    if (scaleTypes.some(type => type === 'EWeaponPower' || type === 'EWeaponDamageScale' || type === 'EBaseWeaponDamageIncrease' || type === 'EBulletDamage') || scaleClassName.includes('weapon') || scaleSubclassName.includes('weapon')) return { icon: '◆', kind: 'weapon', label, arrowCount };
+
+    return null;
+  }
+
+  private getStatScale(scaleFunction: ItemPropertyScaleFunction): number | undefined {
+    if (typeof scaleFunction.stat_scale === 'number') return scaleFunction.stat_scale;
+    if (typeof scaleFunction.stat_scale === 'string') {
+      const parsed = Number(scaleFunction.stat_scale);
+      return Number.isFinite(parsed) ? parsed : undefined;
+    }
+    return undefined;
+  }
+
+  private getScalingArrowCount(value: number | undefined) {
+    if (!Number.isFinite(value)) return 1;
+    if (value! < 0.5) return 1;
+    if (value! < 2) return 2;
+    return 3;
+  }
+
+  private formatScalingMultiplier(value: number) {
+    return Math.abs(value) >= 1
+      ? value.toFixed(2).replace(/\.00$/, '')
+      : value.toFixed(3).replace(/0+$/, '').replace(/\.$/, '');
+  }
+
+  private renderScalingBadge(scaling: { icon: string; kind: 'boon' | 'spirit' | 'weapon'; label: string }) {
+    return (
+      <span class={{ 'scaling-badge': true, [`is-${scaling.kind}`]: true }}>
+        <span class="scaling-badge-icon">{scaling.icon}</span>
+        {this._showScalingValues && <span class="scaling-badge-label">{scaling.label}</span>}
+      </span>
+    );
+  }
+
+  private renderScalingStrength(scaling: { arrowCount: number } | null) {
+    if (!scaling) return null;
+    return (
+      <span class="scaling-strength">
+        {Array.from({ length: scaling.arrowCount }, () => <span class="scaling-strength-arrow"></span>)}
+      </span>
+    );
+  }
+
   private renderImportantProp(key: string) {
     const item = this.item;
     if (!item?.properties) return null;
@@ -213,12 +289,19 @@ export class DlItemTooltip {
     }
 
     const value = formatPropertyValue(prop);
+    const scaling = this.getPropertyScaling(prop);
 
     return (
-      <div class={{ 'important-stat-box': true, [`prop-${prop.css_class ?? ''}`]: !!prop.css_class }}>
+      <div class={{
+        'important-stat-box': true,
+        [`prop-${prop.css_class ?? ''}`]: !!prop.css_class,
+        [`scaling-${scaling?.kind ?? ''}`]: !!scaling,
+      }}>
+        {scaling && this.renderScalingBadge(scaling)}
         <div class="important-stat-icon-value">
           {prop.icon && <img class="important-stat-icon" src={prop.icon} alt="" />}
           <div class="important-stat-value">{value}</div>
+          {this.renderScalingStrength(scaling)}
         </div>
         <div class="important-stat-label">{prop.label ?? key}</div>
         {(prop.conditional || prop.usage_flags?.includes('ConditionallyApplied')) && (

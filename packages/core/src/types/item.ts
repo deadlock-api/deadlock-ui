@@ -16,6 +16,15 @@ export type ActivationType =
   | 'press_toggle'
   | 'instant_cast_toggle';
 
+export interface ItemPropertyScaleFunction {
+  class_name?: string | null;
+  subclass_name?: string | null;
+  specific_stat_scale_type?: string | null;
+  scaling_stats?: string[] | null;
+  stat_scale?: number | string | null;
+  street_brawl_stat_scale?: number | string | null;
+}
+
 export interface ItemProperty {
   value: string | number | null;
   can_set_token_override?: boolean | null;
@@ -31,6 +40,7 @@ export interface ItemProperty {
   conditional?: string | null;
   icon?: string | null;
   usage_flags?: string[] | null;
+  scale_function?: ItemPropertyScaleFunction | null;
 }
 
 export interface PropertyUpgrade {

@@ -4,6 +4,7 @@ export type { ItemClassName } from './item-class-name';
 export type {
   Item,
   ItemProperty,
+  ItemPropertyScaleFunction,
   ItemSlotType,
   ItemTier,
   ItemType,

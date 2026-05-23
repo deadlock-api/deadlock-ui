@@ -8,6 +8,7 @@ interface ConfigState {
   tooltipFollowCursor: boolean;
   tooltipDelay: number;
   showTierBadge: boolean;
+  showScalingValues: boolean;
 }
 
 const { state, onChange } = createStore<ConfigState>({
@@ -17,6 +18,7 @@ const { state, onChange } = createStore<ConfigState>({
   tooltipFollowCursor: false,
   tooltipDelay: 100,
   showTierBadge: true,
+  showScalingValues: false,
 });
 
 export { state as configState, onChange as onConfigChange };

@@ -26,6 +26,9 @@ export class DlProvider {
   /** Show tier badge on item cards globally. Individual cards can override this. */
   @Prop({ attribute: 'show-tier-badge' }) showTierBadge: boolean = true;
 
+  /** Show numeric scaling multipliers in item tooltips. When false, only scaling icons and strength arrows are shown. */
+  @Prop({ attribute: 'show-scaling-values' }) showScalingValues: boolean = false;
+
   connectedCallback() {
     injectFonts();
     configState.language = this.language;
@@ -34,6 +37,7 @@ export class DlProvider {
     configState.tooltipFollowCursor = this.tooltipFollowCursor;
     configState.tooltipDelay = this.tooltipDelay;
     configState.showTierBadge = this.showTierBadge;
+    configState.showScalingValues = this.showScalingValues;
   }
 
   @Watch('language')
@@ -64,6 +68,11 @@ export class DlProvider {
   @Watch('showTierBadge')
   showTierBadgeChanged(newVal: boolean) {
     configState.showTierBadge = newVal;
+  }
+
+  @Watch('showScalingValues')
+  showScalingValuesChanged(newVal: boolean) {
+    configState.showScalingValues = newVal;
   }
 
   render() {
