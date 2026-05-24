@@ -10,7 +10,7 @@ const config = {
     githubUrl: "https://github.com/deadlock-api/deadlock-ui",
     projectName: "Deadlock UI",
     docsUrl: "https://ui.deadlock-api.com",
-    apiItemsUrl: "https://assets.deadlock-api.com/v2/items?language=english",
+    apiItemsUrl: "https://api.deadlock-api.com/v1/assets/items?language=english",
 };
 
 export default config;

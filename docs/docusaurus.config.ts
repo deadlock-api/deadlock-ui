@@ -98,7 +98,7 @@ const config: Config = {
         {
           title: 'Resources',
           items: [
-            { label: 'Deadlock API', href: 'https://assets.deadlock-api.com/' },
+            { label: 'Deadlock API', href: 'https://deadlock-api.com/' },
             { label: 'StencilJS', href: 'https://stenciljs.com/' },
           ],
         },
