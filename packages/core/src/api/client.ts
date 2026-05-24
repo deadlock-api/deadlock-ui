@@ -1,6 +1,6 @@
 import { Item, ItemClassName, ItemSlotType, Language } from '../types';
 
-const API_BASE = 'https://assets.deadlock-api.com/v2';
+const API_BASE = 'https://api.deadlock-api.com/v1/assets';
 
 const cache = new Map<Language, Promise<Item[]>>();
 

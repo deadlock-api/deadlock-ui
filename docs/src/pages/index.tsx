@@ -5,7 +5,7 @@ import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-const API_URL = 'https://assets.deadlock-api.com/v2/items?language=english';
+const API_URL = 'https://api.deadlock-api.com/v1/assets/items?language=english';
 const CARD_COUNT = 6;
 
 function pickRandom<T>(arr: T[], n: number): T[] {

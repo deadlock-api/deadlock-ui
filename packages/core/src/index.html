@@ -164,7 +164,7 @@
       <h1>Deadlock Items</h1>
       <p class="subtitle">
         Open-source Web Components for Deadlock game items. Powered by
-        <a href="https://assets.deadlock-api.com/" target="_blank">Deadlock API</a>
+        <a href="https://deadlock-api.com/" target="_blank">Deadlock API</a>
         and <a href="https://stenciljs.com/" target="_blank">StencilJS</a>.
       </p>
 
@@ -434,7 +434,7 @@
         var provider = document.getElementById('provider-item');
         var lang = provider.getAttribute('language') || 'english';
 
-        fetch('https://assets.deadlock-api.com/v2/items?language=' + lang).then(function(res) { return res.json(); }).then(function(items) {
+        fetch('https://api.deadlock-api.com/v1/assets/items?language=' + lang).then(function(res) { return res.json(); }).then(function(items) {
           var shopable = items.filter(function(i) { return i.shopable === true; });
           var groups = { weapon: [], vitality: [], spirit: [] };
           shopable.forEach(function(i) {
