@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.3.1...deadlock-ui-v1.3.2) (2026-05-24)
+
+
+### Bug Fixes
+
+* **api:** update API base URLs to v1 for consistency and accuracy ([98b2f03](https://github.com/deadlock-api/deadlock-ui/commit/98b2f03b34830604f751f001a8f5ad56e9c49f5e))
+
 ## [1.3.1](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.3.0...deadlock-ui-v1.3.1) (2026-05-21)
 
 
