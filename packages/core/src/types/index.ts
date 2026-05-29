@@ -3,6 +3,7 @@ export type { TooltipTrigger, TooltipPlacement, TooltipSection, TooltipSectionAt
 export type { ItemClassName } from './item-class-name';
 export type {
   Item,
+  ItemCardVariant,
   ItemProperty,
   ItemPropertyScaleFunction,
   ItemSlotType,

@@ -7,6 +7,8 @@ export type ItemTier = 1 | 2 | 3 | 4 | 5;
 
 export type ItemType = 'weapon' | 'ability' | 'upgrade' | 'tech' | 'armor';
 
+export type ItemCardVariant = 'card' | 'icon' | 'image' | 'image-name' | 'inline' | 'inline-text' | 'inline-image';
+
 export type ActivationType =
   | 'hold_toggle'
   | 'instant_cast'
