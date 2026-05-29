@@ -43,6 +43,8 @@ export interface ItemProperty {
   icon?: string | null;
   usage_flags?: string[] | null;
   scale_function?: ItemPropertyScaleFunction | null;
+  tooltip_is_elevated?: boolean | null;
+  tooltip_is_important?: boolean | null;
 }
 
 export interface PropertyUpgrade {
