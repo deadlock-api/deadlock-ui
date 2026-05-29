@@ -50,9 +50,9 @@
 }
 
 .mod-cost {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
   margin-top: 3px;
   font-size: 20px;
   font-weight: 700;
@@ -61,10 +61,16 @@
 }
 
 .soul-icon {
-  height: 26px;
+  align-self: baseline;
+  display: inline-block;
+  height: 0.78em;
   width: auto;
-  display: block;
-  filter: brightness(0) saturate(100%) invert(92%) sepia(21%) saturate(695%) hue-rotate(84deg) brightness(100%) contrast(103%);
+  margin: 0 0.32em 0 0;
+  object-fit: contain;
+  position: static;
+  transform: translateY(0.08em);
+  vertical-align: baseline;
+  filter: none;
 }
 
 /* ─── Properties body ─── */
@@ -197,6 +203,29 @@
   color: rgba(200, 200, 210, 0.65);
 }
 
+.block-prop-item.elevated-stat-box {
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 3px;
+  display: flex;
+  gap: 6px;
+  margin: 10px 0;
+  min-height: 56px;
+  padding: 10px 18px;
+  width: 100%;
+}
+
+.block-prop-item.elevated-stat-box .attribute-value {
+  color: #fff6e8;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.block-prop-item.elevated-stat-box .attribute-name {
+  color: #fff6e8;
+  font-size: 17px;
+  font-weight: 850;
+}
+
 /* ─── Important stat boxes ─── */
 .important-stats-wrapper {
   display: grid;
@@ -273,6 +302,13 @@
 .important-stat-box.prop-healing .important-stat-icon,
 .important-stat-box.prop-regeneration .important-stat-icon {
   filter: brightness(0) saturate(100%) invert(74%) sepia(100%) saturate(1334%) hue-rotate(95deg) brightness(104%) contrast(108%);
+}
+
+.important-stat-box.prop-souls .important-stat-icon,
+.block-prop-item.prop-souls .prop-icon,
+.attribute-line-item.prop-souls .prop-icon {
+  filter: none;
+  object-fit: contain;
 }
 
 .scaling-badge {
