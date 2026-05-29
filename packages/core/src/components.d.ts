@@ -5,10 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Item, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
+import { Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
 import { ComponentItemInfo } from "./components/dl-item-tooltip/dl-item-tooltip";
 import { ComponentItemInfo as ComponentItemInfo1 } from "./components/dl-item-tooltip/dl-item-tooltip";
-export { Item, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
+export { Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
 export { ComponentItemInfo } from "./components/dl-item-tooltip/dl-item-tooltip";
 export { ComponentItemInfo as ComponentItemInfo1 } from "./components/dl-item-tooltip/dl-item-tooltip";
 export namespace Components {
@@ -51,10 +51,10 @@ export namespace Components {
          */
         "tooltipTrigger"?: TooltipTrigger;
         /**
-          * Visual variant. `"card"` renders the full shop card; `"icon"` renders a compact square icon.
+          * Visual variant. `"card"` renders the full shop card; `"image"` renders only the square item image; inline variants render text/image triggers.
           * @default 'card'
          */
-        "variant": 'card' | 'icon';
+        "variant": ItemCardVariant;
     }
     interface DlItemGrid {
         /**
@@ -263,10 +263,10 @@ declare namespace LocalJSX {
          */
         "tooltipTrigger"?: TooltipTrigger;
         /**
-          * Visual variant. `"card"` renders the full shop card; `"icon"` renders a compact square icon.
+          * Visual variant. `"card"` renders the full shop card; `"image"` renders only the square item image; inline variants render text/image triggers.
           * @default 'card'
          */
-        "variant"?: 'card' | 'icon';
+        "variant"?: ItemCardVariant;
     }
     interface DlItemGrid {
         /**
@@ -376,7 +376,7 @@ declare namespace LocalJSX {
         "itemId": number;
         "itemClassName": ItemClassName;
         "hoverEffect": 'none' | 'scale';
-        "variant": 'card' | 'icon';
+        "variant": ItemCardVariant;
         "showTierBadge": boolean;
         "itemNameLanguage": Language;
         "tooltipTrigger": TooltipTrigger;

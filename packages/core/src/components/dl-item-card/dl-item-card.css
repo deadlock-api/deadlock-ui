@@ -8,13 +8,19 @@
     line-height: 1.4;
 }
 
-:host(.custom-trigger) {
+:host(.custom-trigger),
+:host([variant="image-name"]),
+:host([variant="inline"]),
+:host([variant="inline-text"]),
+:host([variant="inline-image"]) {
     width: auto;
+    height: auto;
     aspect-ratio: auto;
     display: inline-block;
 }
 
-:host([variant="icon"]) {
+:host([variant="icon"]),
+:host([variant="image"]) {
     width: var(--dl-item-icon-size, 48px);
     height: var(--dl-item-icon-size, 48px);
     aspect-ratio: 1 / 1;
@@ -27,7 +33,11 @@
     height: 100%;
 }
 
-:host(.custom-trigger) .trigger {
+:host(.custom-trigger) .trigger,
+:host([variant="image-name"]) .trigger,
+:host([variant="inline"]) .trigger,
+:host([variant="inline-text"]) .trigger,
+:host([variant="inline-image"]) .trigger {
     display: inline-block;
     width: auto;
     height: auto;
@@ -201,7 +211,8 @@
 .mod-name-container {
     border-radius: 0 0 5px 5px;
     flex: 0 0 35.9375%;
-    padding: 2%;
+    height: 35.9375%;
+    padding: 0 4%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -212,14 +223,15 @@
 }
 
 .mod-name {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 0.95;
+    font-size: var(--dl-item-name-size, 13px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 0.88;
     overflow-wrap: break-word;
     white-space: normal;
     color: #1a1510;
     font-family: 'Retail Demo';
-    padding: 0 7px;
+    padding: 0 4px;
 }
 
 .mod-name.name-size-md {
@@ -264,7 +276,7 @@
     width: 100%;
     height: 100%;
     position: relative;
-    border-radius: 4px;
+    border-radius: 0;
     overflow: hidden;
     box-sizing: border-box;
     transition: transform 0.15s ease;
@@ -325,6 +337,98 @@
     min-width: 0;
     width: auto;
     padding: 1px 4px;
+}
+
+.item-image-only {
+    cursor: default;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.item-image-only.clickable,
+.item-image-name.clickable,
+.item-inline-trigger.clickable {
+    cursor: pointer;
+}
+
+.item-image-only.loading,
+.item-image-name.loading,
+.item-inline-trigger.loading {
+    background-color: #1a1a2e;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.item-image-only-img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.item-image-name {
+    --item-accent-color: var(--dl-item-accent-color, #8b9bae);
+    align-items: center;
+    color: var(--dl-item-name-color, var(--item-accent-color));
+    display: inline-flex;
+    gap: var(--dl-item-image-name-gap, 10px);
+    font-family: var(--dl-font-family, 'Retail Demo', sans-serif);
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.item-image-name.weapon,
+.item-inline-trigger.weapon { --item-accent-color: var(--dl-item-accent-color, #d99a3a); }
+.item-image-name.vitality,
+.item-inline-trigger.vitality { --item-accent-color: var(--dl-item-accent-color, #a9d84a); }
+.item-image-name.spirit,
+.item-inline-trigger.spirit { --item-accent-color: var(--dl-item-accent-color, #c878f0); }
+
+.item-image-name-img {
+    display: block;
+    height: var(--dl-item-image-name-size, 68px);
+    object-fit: cover;
+    width: var(--dl-item-image-name-size, 68px);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.item-image-name-text {
+    color: inherit;
+    font-size: var(--dl-item-image-name-font-size, 18px);
+}
+
+.item-inline-trigger {
+    --item-accent-color: var(--dl-item-accent-color, #8b9bae);
+    align-items: center;
+    color: var(--dl-item-name-color, var(--item-accent-color));
+    display: inline-flex;
+    font-family: var(--dl-font-family, 'Retail Demo', sans-serif);
+    font-weight: 700;
+    gap: var(--dl-item-inline-gap, 0.32em);
+    line-height: 1;
+    vertical-align: baseline;
+}
+
+.item-inline-trigger-img {
+    display: inline-block;
+    height: var(--dl-item-inline-image-size, 1.18em);
+    object-fit: cover;
+    width: var(--dl-item-inline-image-size, 1.18em);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.item-inline-trigger.image-only .item-inline-trigger-img {
+    height: var(--dl-item-inline-image-only-size, 1.45em);
+    width: var(--dl-item-inline-image-only-size, 1.45em);
+}
+
+.item-inline-trigger-name {
+    color: inherit;
+    font-size: var(--dl-item-inline-font-size, 1em);
 }
 
 /* Tooltip positioning — managed by Floating UI */

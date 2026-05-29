@@ -1,6 +1,6 @@
 import { Component, Prop, State, Watch, Element, Event, EventEmitter, h } from '@stencil/core';
 import { computePosition, flip, shift, offset, autoUpdate, Placement, VirtualElement } from '@floating-ui/dom';
-import { Item, ItemClassName, Language, TooltipTrigger } from '../../types';
+import { Item, ItemCardVariant, ItemClassName, Language, TooltipTrigger } from '../../types';
 import { fetchItem, fetchItems } from '../../api/client';
 import { ComponentItemInfo } from '../dl-item-tooltip/dl-item-tooltip';
 import { configState, onConfigChange } from '../../store/config-store';
@@ -29,8 +29,8 @@ export class DlItemCard {
   /** Hover effect on the card. `"none"` does nothing, `"scale"` enlarges on hover. */
   @Prop({ reflect: true, attribute: 'hover-effect' }) hoverEffect: 'none' | 'scale' = 'none';
 
-  /** Visual variant. `"card"` renders the full shop card; `"icon"` renders a compact square icon. */
-  @Prop({ reflect: true }) variant: 'card' | 'icon' = 'card';
+  /** Visual variant. `"card"` renders the full shop card; `"image"` renders only the square item image; inline variants render text/image triggers. */
+  @Prop({ reflect: true }) variant: ItemCardVariant = 'card';
 
   /** Show the tier badge on hover. When not set, falls back to the global provider value. */
   @Prop({ attribute: 'show-tier-badge' }) showTierBadge?: boolean;
@@ -415,7 +415,7 @@ export class DlItemCard {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <slot>{this.variant === 'icon' ? this.renderIcon(item, isClickMode) : this.renderDefaultCard(item, isClickMode)}</slot>
+        <slot>{this.renderVariant(item, isClickMode)}</slot>
       </div>,
       !noTooltip && item && (
         <div
@@ -434,6 +434,72 @@ export class DlItemCard {
     ];
   }
 
+  private renderVariant(item: Item | undefined, isClickMode: boolean) {
+    switch (this.variant) {
+      case 'icon':
+        return this.renderIcon(item, isClickMode);
+      case 'image':
+        return this.renderImageOnly(item, isClickMode);
+      case 'image-name':
+        return this.renderImageName(item, isClickMode);
+      case 'inline':
+        return this.renderInlineItem(item, isClickMode, { image: true, name: true });
+      case 'inline-text':
+        return this.renderInlineItem(item, isClickMode, { image: false, name: true });
+      case 'inline-image':
+        return this.renderInlineItem(item, isClickMode, { image: true, name: false });
+      case 'card':
+      default:
+        return this.renderDefaultCard(item, isClickMode);
+    }
+  }
+
+  private getImageSrc(item: Item): string | undefined {
+    return item.shop_image_webp || item.shop_image || item.image_webp || item.image || undefined;
+  }
+
+  private getSlotClass(item: Item | undefined): string {
+    return item?.item_slot_type ?? 'neutral';
+  }
+
+  private renderImageOnly(item: Item | undefined, isClickMode: boolean) {
+    if (this._loading || !item) return <div class="item-image-only loading"></div>;
+    if (this._error) return <div class="item-image-only error" title={this._error}></div>;
+
+    const imgSrc = this.getImageSrc(item);
+    return (
+      <div class={{ 'item-image-only': true, 'clickable': isClickMode, [this.getSlotClass(item)]: true }}>
+        {imgSrc && <img class="item-image-only-img" src={imgSrc} alt={this.displayName} loading="lazy" />}
+      </div>
+    );
+  }
+
+  private renderImageName(item: Item | undefined, isClickMode: boolean) {
+    if (this._loading || !item) return <div class="item-image-name loading"></div>;
+    if (this._error) return <div class="item-image-name error" title={this._error}>{this._error}</div>;
+
+    const imgSrc = this.getImageSrc(item);
+    return (
+      <div class={{ 'item-image-name': true, 'clickable': isClickMode, [this.getSlotClass(item)]: true }}>
+        {imgSrc && <img class="item-image-name-img" src={imgSrc} alt="" loading="lazy" />}
+        <span class="item-image-name-text">{this.displayName}</span>
+      </div>
+    );
+  }
+
+  private renderInlineItem(item: Item | undefined, isClickMode: boolean, parts: { image: boolean; name: boolean }) {
+    if (this._loading || !item) return <span class="item-inline-trigger loading"></span>;
+    if (this._error) return <span class="item-inline-trigger error" title={this._error}>{parts.name ? this._error : null}</span>;
+
+    const imgSrc = this.getImageSrc(item);
+    return (
+      <span class={{ 'item-inline-trigger': true, 'clickable': isClickMode, 'image-only': parts.image && !parts.name, [this.getSlotClass(item)]: true }}>
+        {parts.image && imgSrc && <img class="item-inline-trigger-img" src={imgSrc} alt={parts.name ? '' : this.displayName} loading="lazy" />}
+        {parts.name && <span class="item-inline-trigger-name">{this.displayName}</span>}
+      </span>
+    );
+  }
+
   private renderIcon(item: Item | undefined, isClickMode: boolean) {
     if (this._loading || !item) {
       return <div class="icon-box loading"></div>;
@@ -445,7 +511,7 @@ export class DlItemCard {
 
     const slot = item.item_slot_type;
     const tier = item.item_tier;
-    const imgSrc = item.shop_image_webp || item.shop_image || item.image_webp || item.image;
+    const imgSrc = this.getImageSrc(item);
     const isActive = item.is_active_item || (item.activation !== 'passive');
     const hasImbue = !!item.imbue;
     return (
@@ -503,7 +569,7 @@ export class DlItemCard {
 
     const slot = item.item_slot_type;
     const tier = item.item_tier;
-    const imgSrc = item.shop_image_webp || item.shop_image || item.image_webp || item.image;
+    const imgSrc = this.getImageSrc(item);
     const isActive = item.is_active_item || (item.activation !== 'passive');
     const hasImbue = !!item.imbue;
     const cardBg = cardBackground(slot, tier);
