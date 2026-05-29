@@ -370,7 +370,11 @@ export class DlItemTooltip {
     const isNegative = prop.negative_attribute === true;
 
     return (
-      <div class="block-prop-item">
+      <div class={{
+        'block-prop-item': true,
+        'elevated-stat-box': elevated,
+        [`prop-${prop.css_class ?? ''}`]: !!prop.css_class,
+      }}>
         <span class={{ 'attribute-value': true, 'elevated': elevated, 'negative': isNegative }}>
           {this.renderValueText(value)}
         </span>
@@ -385,7 +389,7 @@ export class DlItemTooltip {
       const regularProps = [
         ...(attr.properties ?? []),
         ...(attr.elevated_properties ?? []),
-      ].filter(k => !importantKeys.has(k) && k !== excludeKey);
+      ].filter(k => !importantKeys.has(k) && !this.shouldExcludePropertyFromSection(k, excludeKey));
       const elevatedSet = new Set(attr.elevated_properties ?? []);
       const importantList = attr.important_properties ?? [];
       const hasImportant = importantList.length > 0;
@@ -421,11 +425,24 @@ export class DlItemTooltip {
     );
   }
 
+  private shouldExcludePropertyFromSection(key: string, excludeKey?: string): boolean {
+    if (!excludeKey) return false;
+    if (key === excludeKey) return true;
+
+    const item = this.item;
+    const prop = item?.properties?.[key];
+    return !!prop && key !== 'AbilityCooldown' && this.isSectionCooldownProperty(key, prop) && excludeKey === 'AbilityCooldown';
+  }
+
   private isCooldownKey(key: string, prop: ItemProperty): boolean {
-    return prop.css_class === 'cooldown'
-      || key === 'AbilityCooldown'
+    return key === 'AbilityCooldown'
       || key === 'ProcCooldown'
-      || key === 'AbilityChargeUpTime';
+      || key === 'AbilityChargeUpTime'
+      || prop.provided_property_type === 'MODIFIER_VALUE_COOLDOWN';
+  }
+
+  private isSectionCooldownProperty(key: string, prop: ItemProperty): boolean {
+    return this.isCooldownKey(key, prop) && prop.tooltip_is_elevated !== true && prop.tooltip_is_important !== true;
   }
 
   private findSectionCooldown(section: TooltipSection) {
@@ -436,7 +453,7 @@ export class DlItemTooltip {
       const allProps = [...(attr.properties ?? []), ...(attr.elevated_properties ?? [])];
       for (const key of allProps) {
         const prop = item.properties[key];
-        if (prop && this.isCooldownKey(key, prop) && isPropertyVisible(prop)) {
+        if (prop && this.isSectionCooldownProperty(key, prop) && isPropertyVisible(prop)) {
           return { key, prop };
         }
       }

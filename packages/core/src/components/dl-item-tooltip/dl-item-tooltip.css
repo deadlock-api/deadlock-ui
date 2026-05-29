@@ -197,6 +197,29 @@
   color: rgba(200, 200, 210, 0.65);
 }
 
+.block-prop-item.elevated-stat-box {
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 3px;
+  display: flex;
+  gap: 6px;
+  margin: 10px 0;
+  min-height: 56px;
+  padding: 10px 18px;
+  width: 100%;
+}
+
+.block-prop-item.elevated-stat-box .attribute-value {
+  color: #fff6e8;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.block-prop-item.elevated-stat-box .attribute-name {
+  color: #fff6e8;
+  font-size: 17px;
+  font-weight: 850;
+}
+
 /* ─── Important stat boxes ─── */
 .important-stats-wrapper {
   display: grid;
