@@ -192,11 +192,13 @@
 /* Tier price labels overlaid near the background tier banners */
 .tier-price {
     position: absolute;
-    display: flex;
-    align-items: center;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0;
     font-family: 'Retail Demo';
     font-size: 24px;
     font-weight: 700;
+    line-height: 1;
     color: rgb(107, 166, 128);
     text-shadow: rgba(0, 0, 0, 0.7) 0px 1px 3px;
     z-index: 1;
@@ -207,12 +209,17 @@
 }
 
 .tier-price .soul-icon {
-    width: 1em;
-    height: 1em;
+    align-self: baseline;
+    display: inline-block;
+    width: auto;
+    height: 0.78em;
     flex-shrink: 0;
-    right: -4px;
-    position: relative;
-    filter: brightness(0) saturate(100%) invert(64%) sepia(20%) saturate(600%) hue-rotate(100deg) brightness(95%);
+    margin: 0 0.32em 0 0;
+    object-fit: contain;
+    position: static;
+    transform: translateY(0.08em);
+    vertical-align: baseline;
+    filter: none;
 }
 
 /* Position each tier price to align with the background TIER labels */

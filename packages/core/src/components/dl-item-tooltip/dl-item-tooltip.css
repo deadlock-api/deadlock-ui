@@ -50,9 +50,9 @@
 }
 
 .mod-cost {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
   margin-top: 3px;
   font-size: 20px;
   font-weight: 700;
@@ -61,10 +61,16 @@
 }
 
 .soul-icon {
-  height: 26px;
+  align-self: baseline;
+  display: inline-block;
+  height: 0.78em;
   width: auto;
-  display: block;
-  filter: brightness(0) saturate(100%) invert(92%) sepia(21%) saturate(695%) hue-rotate(84deg) brightness(100%) contrast(103%);
+  margin: 0 0.32em 0 0;
+  object-fit: contain;
+  position: static;
+  transform: translateY(0.08em);
+  vertical-align: baseline;
+  filter: none;
 }
 
 /* ─── Properties body ─── */

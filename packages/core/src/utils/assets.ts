@@ -34,7 +34,11 @@ export function shopTabEdgeOverlay(): string {
 }
 
 export function soulIcon(): string {
-  return cdn('icons/icon_soul.svg');
+  return shopCurrencyIcon();
+}
+
+export function shopCurrencyIcon(): string {
+  return cdn('images/shop/catalog/price_currency.png');
 }
 
 export function fontUrl(name: string): string {
