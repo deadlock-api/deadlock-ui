@@ -8,6 +8,12 @@ import { cardBackground } from '../../utils/assets';
 import { injectFonts } from '../../utils/fonts';
 
 const ROMAN_NUMERALS = ['I', 'II', 'III', 'IV', 'V'];
+const AUTO_SIZE_VARIANTS = new Set<ItemCardVariant>(['image-name', 'inline', 'inline-text', 'inline-image']);
+const SQUARE_SIZE_VARIANTS = new Set<ItemCardVariant>(['icon', 'image']);
+
+type InlineItemParts = { image: boolean; name: boolean };
+type RenderTag = 'div' | 'span';
+type ClassMap = { [className: string]: boolean };
 
 @Component({
   tag: 'dl-item-card',
@@ -67,6 +73,8 @@ export class DlItemCard {
   private _rafId?: number;
   private _cleanupAutoUpdate?: () => void;
   private _unsubLanguage?: () => void;
+  private _tooltipItemsPromise?: Promise<void>;
+  private _tooltipItemsResolved = false;
 
   private get item(): Item | undefined {
     return this.itemData ?? this._item;
@@ -133,11 +141,10 @@ export class DlItemCard {
   connectedCallback() {
     injectFonts();
     this.detectCustomTrigger();
+    this.updateVariantClasses();
     if (this.itemKey && !this.itemData) {
       this.fetchItemData();
     } else if (this.itemData) {
-      this.resolveComponentItems();
-      this.resolveParentItems();
       this.resolveNameOverride();
     }
     this._unsubLanguage = onConfigChange('language', () => {
@@ -150,6 +157,11 @@ export class DlItemCard {
   private detectCustomTrigger() {
     const hasSlottedContent = this.el.childNodes.length > 0;
     this.el.classList.toggle('custom-trigger', hasSlottedContent);
+  }
+
+  private updateVariantClasses() {
+    this.el.classList.toggle('variant-auto-size', AUTO_SIZE_VARIANTS.has(this.variant));
+    this.el.classList.toggle('variant-square-size', SQUARE_SIZE_VARIANTS.has(this.variant));
   }
 
   disconnectedCallback() {
@@ -169,7 +181,16 @@ export class DlItemCard {
 
   @Watch('itemNameLanguage')
   onItemNameLanguageChange() {
+    this._componentItems = undefined;
+    this._parentItems = undefined;
+    this._tooltipItemsResolved = false;
+    this._tooltipItemsPromise = undefined;
     this.resolveNameOverride();
+  }
+
+  @Watch('variant')
+  onVariantChange() {
+    this.updateVariantClasses();
   }
 
   private async fetchItemData() {
@@ -177,12 +198,15 @@ export class DlItemCard {
     if (!key) return;
     this._loading = true;
     this._error = undefined;
+    this._componentItems = undefined;
+    this._parentItems = undefined;
+    this._tooltipItemsResolved = false;
+    this._tooltipItemsPromise = undefined;
     try {
       this._item = await fetchItem(key, configState.language);
-      this.resolveComponentItems();
-      this.resolveParentItems();
       this.resolveNameOverride();
     } catch (e) {
+      this._item = undefined;
       this._error = e instanceof Error ? e.message : 'Failed to load item';
     } finally {
       this._loading = false;
@@ -210,7 +234,7 @@ export class DlItemCard {
         if (!comp) continue;
         resolved.push({
           name: nameOverrides?.get(cn) ?? comp.name,
-          image: comp.shop_image_webp || comp.shop_image || comp.image_webp || comp.image || undefined,
+          image: this.getImageSrc(comp),
         });
       }
       this._componentItems = resolved;
@@ -237,7 +261,7 @@ export class DlItemCard {
         if (other.component_items?.includes(item.class_name)) {
           parents.push({
             name: nameOverrides?.get(other.class_name) ?? other.name,
-            image: other.shop_image_webp || other.shop_image || other.image_webp || other.image || undefined,
+            image: this.getImageSrc(other),
           });
         }
       }
@@ -245,6 +269,22 @@ export class DlItemCard {
     } catch {
       // silently fail
     }
+  }
+
+  private async ensureTooltipItemsResolved() {
+    if (this.resolvedTrigger === 'none' || this._tooltipItemsResolved || this._tooltipItemsPromise) return;
+    if (!this.item) return;
+
+    this._tooltipItemsPromise = Promise.all([
+      this.resolveComponentItems(),
+      this.resolveParentItems(),
+    ]).then(() => {
+      this._tooltipItemsResolved = true;
+    }).finally(() => {
+      this._tooltipItemsPromise = undefined;
+    });
+
+    await this._tooltipItemsPromise;
   }
 
   private async resolveNameOverride() {
@@ -315,19 +355,23 @@ export class DlItemCard {
   private showFollowCursorMode() {
     this._open = true;
     this.emitTooltipOpen();
-    this.updatePositionFromMouse();
+    void this.ensureTooltipItemsResolved();
+    requestAnimationFrame(() => this.updatePositionFromMouse());
   }
 
   private showAnchoredMode() {
     this._open = true;
     this.emitTooltipOpen();
+    void this.ensureTooltipItemsResolved();
 
-    const card = this.cardEl;
-    const floating = this.floatingEl;
-    if (!card || !floating) return;
+    requestAnimationFrame(() => {
+      const card = this.cardEl;
+      const floating = this.floatingEl;
+      if (!card || !floating || !this._open) return;
 
-    this.updatePositionFromCard();
-    this._cleanupAutoUpdate = autoUpdate(card, floating, this.updatePositionFromCard);
+      this.updatePositionFromCard();
+      this._cleanupAutoUpdate = autoUpdate(card, floating, this.updatePositionFromCard);
+    });
   }
 
   private hideTooltip() {
@@ -407,6 +451,7 @@ export class DlItemCard {
     const item = this.item;
     const isClickMode = this.resolvedTrigger === 'click';
     const noTooltip = this.resolvedTrigger === 'none';
+    const shouldRenderTooltip = !noTooltip && !!item && this._open;
 
     return [
       <div
@@ -417,7 +462,7 @@ export class DlItemCard {
       >
         <slot>{this.renderVariant(item, isClickMode)}</slot>
       </div>,
-      !noTooltip && item && (
+      shouldRenderTooltip && item && (
         <div
           class={{ 'tooltip-wrapper': true, 'open': this._open }}
           onMouseEnter={this.handleMouseEnter}
@@ -462,38 +507,69 @@ export class DlItemCard {
     return item?.item_slot_type ?? 'neutral';
   }
 
-  private renderImageOnly(item: Item | undefined, isClickMode: boolean) {
-    if (this._loading || !item) return <div class="item-image-only loading"></div>;
-    if (this._error) return <div class="item-image-only error" title={this._error}></div>;
+  private getTriggerClasses(baseClass: string, item: Item | undefined, isClickMode: boolean, extra: ClassMap = {}): ClassMap {
+    return {
+      [baseClass]: true,
+      'clickable': isClickMode,
+      [this.getSlotClass(item)]: true,
+      ...extra,
+    };
+  }
 
-    const imgSrc = this.getImageSrc(item);
+  private renderStateFallback(tag: RenderTag, baseClass: string, item: Item | undefined, options: { showErrorText?: boolean; extraClasses?: ClassMap } = {}) {
+    const className = {
+      [baseClass]: true,
+      ...(options.extraClasses ?? {}),
+    };
+
+    if (this._loading || (!item && !this._error)) {
+      return h(tag, { class: { ...className, 'loading': true } });
+    }
+
+    if (this._error) {
+      const content = options.showErrorText
+        ? this._error
+        : <span class="item-error-glyph" aria-hidden="true">!</span>;
+      return h(tag, { class: { ...className, 'error': true }, title: this._error, 'aria-label': this._error }, content);
+    }
+  }
+
+  private renderImageOnly(item: Item | undefined, isClickMode: boolean) {
+    const fallback = this.renderStateFallback('div', 'item-image-only', item);
+    if (fallback) return fallback;
+
+    const imgSrc = this.getImageSrc(item!);
     return (
-      <div class={{ 'item-image-only': true, 'clickable': isClickMode, [this.getSlotClass(item)]: true }}>
+      <div class={this.getTriggerClasses('item-image-only', item, isClickMode)}>
         {imgSrc && <img class="item-image-only-img" src={imgSrc} alt={this.displayName} loading="lazy" />}
       </div>
     );
   }
 
   private renderImageName(item: Item | undefined, isClickMode: boolean) {
-    if (this._loading || !item) return <div class="item-image-name loading"></div>;
-    if (this._error) return <div class="item-image-name error" title={this._error}>{this._error}</div>;
+    const fallback = this.renderStateFallback('div', 'item-image-name', item, { showErrorText: true });
+    if (fallback) return fallback;
 
-    const imgSrc = this.getImageSrc(item);
+    const imgSrc = this.getImageSrc(item!);
     return (
-      <div class={{ 'item-image-name': true, 'clickable': isClickMode, [this.getSlotClass(item)]: true }}>
+      <div class={this.getTriggerClasses('item-image-name', item, isClickMode)}>
         {imgSrc && <img class="item-image-name-img" src={imgSrc} alt="" loading="lazy" />}
         <span class="item-image-name-text">{this.displayName}</span>
       </div>
     );
   }
 
-  private renderInlineItem(item: Item | undefined, isClickMode: boolean, parts: { image: boolean; name: boolean }) {
-    if (this._loading || !item) return <span class="item-inline-trigger loading"></span>;
-    if (this._error) return <span class="item-inline-trigger error" title={this._error}>{parts.name ? this._error : null}</span>;
+  private renderInlineItem(item: Item | undefined, isClickMode: boolean, parts: InlineItemParts) {
+    const imageOnly = parts.image && !parts.name;
+    const fallback = this.renderStateFallback('span', 'item-inline-trigger', item, {
+      showErrorText: parts.name,
+      extraClasses: { 'image-only': imageOnly },
+    });
+    if (fallback) return fallback;
 
-    const imgSrc = this.getImageSrc(item);
+    const imgSrc = this.getImageSrc(item!);
     return (
-      <span class={{ 'item-inline-trigger': true, 'clickable': isClickMode, 'image-only': parts.image && !parts.name, [this.getSlotClass(item)]: true }}>
+      <span class={this.getTriggerClasses('item-inline-trigger', item, isClickMode, { 'image-only': imageOnly })}>
         {parts.image && imgSrc && <img class="item-inline-trigger-img" src={imgSrc} alt={parts.name ? '' : this.displayName} loading="lazy" />}
         {parts.name && <span class="item-inline-trigger-name">{this.displayName}</span>}
       </span>
@@ -501,19 +577,14 @@ export class DlItemCard {
   }
 
   private renderIcon(item: Item | undefined, isClickMode: boolean) {
-    if (this._loading || !item) {
-      return <div class="icon-box loading"></div>;
-    }
+    const fallback = this.renderStateFallback('div', 'icon-box', item);
+    if (fallback) return fallback;
 
-    if (this._error) {
-      return <div class="icon-box error" title={this._error}></div>;
-    }
-
-    const slot = item.item_slot_type;
-    const tier = item.item_tier;
-    const imgSrc = this.getImageSrc(item);
-    const isActive = item.is_active_item || (item.activation !== 'passive');
-    const hasImbue = !!item.imbue;
+    const slot = item!.item_slot_type;
+    const tier = item!.item_tier;
+    const imgSrc = this.getImageSrc(item!);
+    const isActive = item!.is_active_item || (item!.activation !== 'passive');
+    const hasImbue = !!item!.imbue;
     return (
       <div
         class={{
@@ -547,7 +618,7 @@ export class DlItemCard {
   }
 
   private renderDefaultCard(item: Item | undefined, isClickMode: boolean) {
-    if (this._loading || !item) {
+    if (this._loading || (!item && !this._error)) {
       return (
         <div class="mod-box loading">
           <div class="mod-icon-container"></div>
@@ -567,11 +638,12 @@ export class DlItemCard {
       );
     }
 
-    const slot = item.item_slot_type;
-    const tier = item.item_tier;
-    const imgSrc = this.getImageSrc(item);
-    const isActive = item.is_active_item || (item.activation !== 'passive');
-    const hasImbue = !!item.imbue;
+    const resolvedItem = item!;
+    const slot = resolvedItem.item_slot_type;
+    const tier = resolvedItem.item_tier;
+    const imgSrc = this.getImageSrc(resolvedItem);
+    const isActive = resolvedItem.is_active_item || (resolvedItem.activation !== 'passive');
+    const hasImbue = !!resolvedItem.imbue;
     const cardBg = cardBackground(slot, tier);
     const name = this.displayName;
     const sizeClass = this.getNameSizeClass(name);
