@@ -9,18 +9,14 @@
 }
 
 :host(.custom-trigger),
-:host([variant="image-name"]),
-:host([variant="inline"]),
-:host([variant="inline-text"]),
-:host([variant="inline-image"]) {
+:host(.variant-auto-size) {
     width: auto;
     height: auto;
     aspect-ratio: auto;
     display: inline-block;
 }
 
-:host([variant="icon"]),
-:host([variant="image"]) {
+:host(.variant-square-size) {
     width: var(--dl-item-icon-size, 48px);
     height: var(--dl-item-icon-size, 48px);
     aspect-ratio: 1 / 1;
@@ -34,10 +30,7 @@
 }
 
 :host(.custom-trigger) .trigger,
-:host([variant="image-name"]) .trigger,
-:host([variant="inline"]) .trigger,
-:host([variant="inline-text"]) .trigger,
-:host([variant="inline-image"]) .trigger {
+:host(.variant-auto-size) .trigger {
     display: inline-block;
     width: auto;
     height: auto;
@@ -61,7 +54,11 @@
     transition: transform 0.15s ease;
 }
 
-.mod-box.clickable {
+.mod-box.clickable,
+.icon-box.clickable,
+.item-image-only.clickable,
+.item-image-name.clickable,
+.item-inline-trigger.clickable {
     cursor: pointer;
 }
 
@@ -276,25 +273,16 @@
     width: 100%;
     height: 100%;
     position: relative;
-    border-radius: 0;
+    border-radius: var(--dl-item-icon-border-radius, 0);
     overflow: hidden;
     box-sizing: border-box;
     transition: transform 0.15s ease;
     cursor: default;
 }
 
-.icon-box.clickable {
-    cursor: pointer;
-}
-
 :host([hover-effect="scale"]) .icon-box:hover {
     transform: scale(1.15);
     z-index: 10;
-}
-
-.icon-box.loading {
-    background-color: #1a1a2e;
-    animation: shimmer 1.5s ease-in-out infinite;
 }
 
 .icon-image-container {
@@ -346,17 +334,27 @@
     width: 100%;
 }
 
-.item-image-only.clickable,
-.item-image-name.clickable,
-.item-inline-trigger.clickable {
-    cursor: pointer;
-}
-
+.icon-box.loading,
 .item-image-only.loading,
 .item-image-name.loading,
 .item-inline-trigger.loading {
     background-color: #1a1a2e;
     animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.item-image-name.loading {
+    min-height: var(--dl-item-image-name-size, 68px);
+    min-width: var(--dl-item-image-name-loading-width, 160px);
+}
+
+.item-inline-trigger.loading {
+    min-height: var(--dl-item-inline-loading-height, 1em);
+    min-width: var(--dl-item-inline-loading-width, 6em);
+}
+
+.item-inline-trigger.loading.image-only {
+    min-height: var(--dl-item-inline-image-only-size, 1.45em);
+    min-width: var(--dl-item-inline-image-only-size, 1.45em);
 }
 
 .item-image-only-img {
@@ -368,14 +366,18 @@
     -webkit-user-drag: none;
 }
 
-.item-image-name {
+.item-image-name,
+.item-inline-trigger {
     --item-accent-color: var(--dl-item-accent-color, #8b9bae);
     align-items: center;
     color: var(--dl-item-name-color, var(--item-accent-color));
     display: inline-flex;
-    gap: var(--dl-item-image-name-gap, 10px);
     font-family: var(--dl-font-family, 'Retail Demo', sans-serif);
     font-weight: 700;
+}
+
+.item-image-name {
+    gap: var(--dl-item-image-name-gap, 10px);
     line-height: 1.05;
 }
 
@@ -401,12 +403,6 @@
 }
 
 .item-inline-trigger {
-    --item-accent-color: var(--dl-item-accent-color, #8b9bae);
-    align-items: center;
-    color: var(--dl-item-name-color, var(--item-accent-color));
-    display: inline-flex;
-    font-family: var(--dl-font-family, 'Retail Demo', sans-serif);
-    font-weight: 700;
     gap: var(--dl-item-inline-gap, 0.32em);
     line-height: 1;
     vertical-align: baseline;
@@ -429,6 +425,32 @@
 .item-inline-trigger-name {
     color: inherit;
     font-size: var(--dl-item-inline-font-size, 1em);
+}
+
+.icon-box.error,
+.item-image-only.error,
+.item-image-name.error,
+.item-inline-trigger.error {
+    align-items: center;
+    background-color: #2a1720;
+    border: 1px solid rgba(255, 128, 128, 0.5);
+    color: #ffb8b8;
+    display: inline-flex;
+    font-family: var(--dl-font-family, sans-serif);
+    font-weight: 700;
+    justify-content: center;
+}
+
+.icon-box.error,
+.item-image-only.error {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.item-error-glyph {
+    font-size: 0.9em;
+    line-height: 1;
 }
 
 /* Tooltip positioning — managed by Floating UI */
