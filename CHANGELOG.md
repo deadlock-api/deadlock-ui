@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.3.2...deadlock-ui-v1.4.0) (2026-06-02)
+
+
+### Features
+
+* **dl-item-tooltip:** restore in-game tooltip styling ([6e369f5](https://github.com/deadlock-api/deadlock-ui/commit/6e369f5cc111559e0c09520e317d46180d837842))
+
 ## [1.3.2](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.3.1...deadlock-ui-v1.3.2) (2026-05-24)
 
 
