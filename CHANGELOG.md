@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.4.0...deadlock-ui-v1.4.1) (2026-07-20)
+
+
+### Bug Fixes
+
+* **dl-item-card:** derive item name from language map to avoid stale names ([#29](https://github.com/deadlock-api/deadlock-ui/issues/29)) ([d41067f](https://github.com/deadlock-api/deadlock-ui/commit/d41067f3f40f52856344f965f6d07012ceef1012))
+
 ## [1.4.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.3.2...deadlock-ui-v1.4.0) (2026-06-02)
 
 
