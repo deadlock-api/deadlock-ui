@@ -65,7 +65,8 @@ export class DlItemCard {
   @State() private _loading = false;
   @State() private _error?: string;
   @State() private _open = false;
-  @State() private _nameOverride?: string;
+  /** class_name → name in the override language; display names are derived at render time */
+  @State() private _nameMap?: Map<string, string>;
 
   private _hoverTimeout?: ReturnType<typeof setTimeout>;
   private _mouseX = 0;
@@ -144,13 +145,13 @@ export class DlItemCard {
     this.updateVariantClasses();
     if (this.itemKey && !this.itemData) {
       this.fetchItemData();
-    } else if (this.itemData) {
-      this.resolveNameOverride();
     }
+    this.loadNameMap();
     this._unsubLanguage = onConfigChange('language', () => {
       if (this.itemKey && !this.itemData) {
         this.fetchItemData();
       }
+      this.loadNameMap();
     });
   }
 
@@ -185,7 +186,15 @@ export class DlItemCard {
     this._parentItems = undefined;
     this._tooltipItemsResolved = false;
     this._tooltipItemsPromise = undefined;
-    this.resolveNameOverride();
+    this.loadNameMap();
+  }
+
+  @Watch('itemData')
+  onItemDataChange() {
+    this._componentItems = undefined;
+    this._parentItems = undefined;
+    this._tooltipItemsResolved = false;
+    this._tooltipItemsPromise = undefined;
   }
 
   @Watch('variant')
@@ -204,7 +213,6 @@ export class DlItemCard {
     this._tooltipItemsPromise = undefined;
     try {
       this._item = await fetchItem(key, configState.language);
-      this.resolveNameOverride();
     } catch (e) {
       this._item = undefined;
       this._error = e instanceof Error ? e.message : 'Failed to load item';
@@ -218,22 +226,18 @@ export class DlItemCard {
     if (!item?.component_items?.length || this.componentItemsData) return;
 
     try {
-      const allItems = await fetchItems(configState.language);
+      const [allItems] = await Promise.all([
+        fetchItems(configState.language),
+        this.loadNameMap(),
+      ]);
       const byClassName = new Map<string, Item>(allItems.map(i => [i.class_name, i]));
-
-      // Resolve name overrides for component items
-      let nameOverrides: Map<string, string> | undefined;
-      if (this.itemNameLanguage && this.itemNameLanguage !== configState.language) {
-        const nameItems = await fetchItems(this.itemNameLanguage);
-        nameOverrides = new Map(nameItems.map(i => [i.class_name, i.name]));
-      }
 
       const resolved: ComponentItemInfo[] = [];
       for (const cn of item.component_items) {
         const comp = byClassName.get(cn);
         if (!comp) continue;
         resolved.push({
-          name: nameOverrides?.get(cn) ?? comp.name,
+          name: this.getNameOverride(comp) ?? comp.name,
           image: this.getImageSrc(comp),
         });
       }
@@ -248,19 +252,16 @@ export class DlItemCard {
     if (!item || this.parentItemsData) return;
 
     try {
-      const allItems = await fetchItems(configState.language);
-
-      let nameOverrides: Map<string, string> | undefined;
-      if (this.itemNameLanguage && this.itemNameLanguage !== configState.language) {
-        const nameItems = await fetchItems(this.itemNameLanguage);
-        nameOverrides = new Map(nameItems.map(i => [i.class_name, i.name]));
-      }
+      const [allItems] = await Promise.all([
+        fetchItems(configState.language),
+        this.loadNameMap(),
+      ]);
 
       const parents: ComponentItemInfo[] = [];
       for (const other of allItems) {
         if (other.component_items?.includes(item.class_name)) {
           parents.push({
-            name: nameOverrides?.get(other.class_name) ?? other.name,
+            name: this.getNameOverride(other) ?? other.name,
             image: this.getImageSrc(other),
           });
         }
@@ -287,23 +288,29 @@ export class DlItemCard {
     await this._tooltipItemsPromise;
   }
 
-  private async resolveNameOverride() {
-    const item = this.item;
-    if (!item || !this.itemNameLanguage || this.itemNameLanguage === configState.language) {
-      this._nameOverride = undefined;
+  private async loadNameMap() {
+    const lang = this.itemNameLanguage;
+    if (!lang || lang === configState.language) {
+      this._nameMap = undefined;
       return;
     }
     try {
-      const items = await fetchItems(this.itemNameLanguage);
-      const match = items.find(i => i.class_name === item.class_name);
-      this._nameOverride = match?.name;
+      const items = await fetchItems(lang);
+      if (lang !== this.itemNameLanguage) return; // stale response for a previous language
+      this._nameMap = new Map(items.map(i => [i.class_name, i.name]));
     } catch {
-      // silently fail — fall back to default name
+      // silently fail — fall back to default names
     }
   }
 
+  private getNameOverride(item: Item): string | undefined {
+    return this._nameMap?.get(item.class_name);
+  }
+
   private get displayName(): string {
-    return this._nameOverride ?? this.item?.name ?? '';
+    const item = this.item;
+    if (!item) return '';
+    return this.getNameOverride(item) ?? item.name;
   }
 
   private computeFloatingPosition(reference: Element | VirtualElement) {
@@ -470,7 +477,7 @@ export class DlItemCard {
         >
           <dl-item-tooltip
             itemData={item}
-            nameOverride={this._nameOverride}
+            nameOverride={this.getNameOverride(item)}
             componentItemsData={this.componentItemsData ?? this._componentItems}
             parentItemsData={this.parentItemsData ?? this._parentItems}
           ></dl-item-tooltip>
