@@ -5,13 +5,74 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
+import { Hero, HeroCardPose, HeroCardVariant, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
 import { ComponentItemInfo } from "./components/dl-item-tooltip/dl-item-tooltip";
 import { ComponentItemInfo as ComponentItemInfo1 } from "./components/dl-item-tooltip/dl-item-tooltip";
-export { Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
+export { Hero, HeroCardPose, HeroCardVariant, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
 export { ComponentItemInfo } from "./components/dl-item-tooltip/dl-item-tooltip";
 export { ComponentItemInfo as ComponentItemInfo1 } from "./components/dl-item-tooltip/dl-item-tooltip";
 export namespace Components {
+    interface DlHeroCard {
+        /**
+          * Hero class name (e.g. `"hero_inferno"`). Alternative to `hero-id` / `hero-name`.
+         */
+        "heroClassName"?: HeroClassName;
+        /**
+          * Pre-loaded hero data object. When provided, skips the API fetch.
+         */
+        "heroData"?: Hero;
+        /**
+          * Hero numeric ID. Alternative to `class-name` / `hero-name`.
+         */
+        "heroId"?: number;
+        /**
+          * Hero display name in English (e.g. `"Infernus"`). Alternative to `hero-id` / `class-name`.
+         */
+        "heroName"?: string;
+        /**
+          * Hero portrait art. `"default"` is the regular card art; `"gloat"` and `"critical"` are the win/loss pose arts. Combinable with any `variant`.
+          * @default 'default'
+         */
+        "pose": HeroCardPose;
+        /**
+          * Overlay the hero's name branding artwork at the bottom of the card. Combinable with any `variant`.
+          * @default false
+         */
+        "showBranding": boolean;
+        /**
+          * Keep the border color unchanged on hover.
+          * @default false
+         */
+        "staticBorder": boolean;
+        /**
+          * Card style. All variants share the in-game 130/210 card ratio: `"card"` is the pick screen frame; `"borderless"` drops the frame border; `"background"` uses the hero's themed background art; `"flat"` is a clean rounded card without the in-game masks.
+          * @default 'card'
+         */
+        "variant": HeroCardVariant;
+    }
+    interface DlHeroMinimapIcon {
+        /**
+          * Hero class name (e.g. `"hero_inferno"`). Alternative to `hero-id` / `hero-name`.
+         */
+        "heroClassName"?: HeroClassName;
+        /**
+          * Pre-loaded hero data object. When provided, skips the API fetch.
+         */
+        "heroData"?: Hero;
+        /**
+          * Hero numeric ID. Alternative to `class-name` / `hero-name`.
+         */
+        "heroId"?: number;
+        /**
+          * Hero display name in English (e.g. `"Infernus"`). Alternative to `hero-id` / `class-name`.
+         */
+        "heroName"?: string;
+        /**
+          * Render a circular backing in the hero's color behind the icon.
+          * @default false
+         */
+        "showBackground": boolean;
+    }
     interface DlItemCard {
         /**
           * Resolved component items data. When provided, skips automatic resolution.
@@ -67,7 +128,7 @@ export namespace Components {
          */
         "slotType"?: ItemSlotType;
         /**
-          * Filter items by tier (1–4).
+          * Filter items by tier (1-4).
          */
         "tier"?: ItemTier;
     }
@@ -160,11 +221,57 @@ export namespace Components {
         "itemNameLanguage"?: Language;
     }
 }
+export interface DlHeroCardCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDlHeroCardElement;
+}
+export interface DlHeroMinimapIconCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDlHeroMinimapIconElement;
+}
 export interface DlItemCardCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDlItemCardElement;
 }
 declare global {
+    interface HTMLDlHeroCardElementEventMap {
+        "heroClick": Hero;
+        "heroEnter": Hero;
+        "heroLeave": Hero;
+    }
+    interface HTMLDlHeroCardElement extends Components.DlHeroCard, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLDlHeroCardElementEventMap>(type: K, listener: (this: HTMLDlHeroCardElement, ev: DlHeroCardCustomEvent<HTMLDlHeroCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLDlHeroCardElementEventMap>(type: K, listener: (this: HTMLDlHeroCardElement, ev: DlHeroCardCustomEvent<HTMLDlHeroCardElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLDlHeroCardElement: {
+        prototype: HTMLDlHeroCardElement;
+        new (): HTMLDlHeroCardElement;
+    };
+    interface HTMLDlHeroMinimapIconElementEventMap {
+        "heroClick": Hero;
+        "heroEnter": Hero;
+        "heroLeave": Hero;
+    }
+    interface HTMLDlHeroMinimapIconElement extends Components.DlHeroMinimapIcon, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLDlHeroMinimapIconElementEventMap>(type: K, listener: (this: HTMLDlHeroMinimapIconElement, ev: DlHeroMinimapIconCustomEvent<HTMLDlHeroMinimapIconElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLDlHeroMinimapIconElementEventMap>(type: K, listener: (this: HTMLDlHeroMinimapIconElement, ev: DlHeroMinimapIconCustomEvent<HTMLDlHeroMinimapIconElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLDlHeroMinimapIconElement: {
+        prototype: HTMLDlHeroMinimapIconElement;
+        new (): HTMLDlHeroMinimapIconElement;
+    };
     interface HTMLDlItemCardElementEventMap {
         "tooltipOpen": string;
         "tooltipClose": string;
@@ -208,6 +315,8 @@ declare global {
         new (): HTMLDlShopPanelElement;
     };
     interface HTMLElementTagNameMap {
+        "dl-hero-card": HTMLDlHeroCardElement;
+        "dl-hero-minimap-icon": HTMLDlHeroMinimapIconElement;
         "dl-item-card": HTMLDlItemCardElement;
         "dl-item-grid": HTMLDlItemGridElement;
         "dl-item-tooltip": HTMLDlItemTooltipElement;
@@ -216,6 +325,91 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface DlHeroCard {
+        /**
+          * Hero class name (e.g. `"hero_inferno"`). Alternative to `hero-id` / `hero-name`.
+         */
+        "heroClassName"?: HeroClassName;
+        /**
+          * Pre-loaded hero data object. When provided, skips the API fetch.
+         */
+        "heroData"?: Hero;
+        /**
+          * Hero numeric ID. Alternative to `class-name` / `hero-name`.
+         */
+        "heroId"?: number;
+        /**
+          * Hero display name in English (e.g. `"Infernus"`). Alternative to `hero-id` / `class-name`.
+         */
+        "heroName"?: string;
+        /**
+          * Emitted when the card is clicked. Detail is the resolved `Hero`.
+         */
+        "onHeroClick"?: (event: DlHeroCardCustomEvent<Hero>) => void;
+        /**
+          * Emitted when the pointer enters the card (hover start). Detail is the resolved `Hero`.
+         */
+        "onHeroEnter"?: (event: DlHeroCardCustomEvent<Hero>) => void;
+        /**
+          * Emitted when the pointer leaves the card (hover end). Detail is the resolved `Hero`.
+         */
+        "onHeroLeave"?: (event: DlHeroCardCustomEvent<Hero>) => void;
+        /**
+          * Hero portrait art. `"default"` is the regular card art; `"gloat"` and `"critical"` are the win/loss pose arts. Combinable with any `variant`.
+          * @default 'default'
+         */
+        "pose"?: HeroCardPose;
+        /**
+          * Overlay the hero's name branding artwork at the bottom of the card. Combinable with any `variant`.
+          * @default false
+         */
+        "showBranding"?: boolean;
+        /**
+          * Keep the border color unchanged on hover.
+          * @default false
+         */
+        "staticBorder"?: boolean;
+        /**
+          * Card style. All variants share the in-game 130/210 card ratio: `"card"` is the pick screen frame; `"borderless"` drops the frame border; `"background"` uses the hero's themed background art; `"flat"` is a clean rounded card without the in-game masks.
+          * @default 'card'
+         */
+        "variant"?: HeroCardVariant;
+    }
+    interface DlHeroMinimapIcon {
+        /**
+          * Hero class name (e.g. `"hero_inferno"`). Alternative to `hero-id` / `hero-name`.
+         */
+        "heroClassName"?: HeroClassName;
+        /**
+          * Pre-loaded hero data object. When provided, skips the API fetch.
+         */
+        "heroData"?: Hero;
+        /**
+          * Hero numeric ID. Alternative to `class-name` / `hero-name`.
+         */
+        "heroId"?: number;
+        /**
+          * Hero display name in English (e.g. `"Infernus"`). Alternative to `hero-id` / `class-name`.
+         */
+        "heroName"?: string;
+        /**
+          * Emitted when the icon is clicked. Detail is the resolved `Hero`.
+         */
+        "onHeroClick"?: (event: DlHeroMinimapIconCustomEvent<Hero>) => void;
+        /**
+          * Emitted when the pointer enters the icon (hover start). Detail is the resolved `Hero`.
+         */
+        "onHeroEnter"?: (event: DlHeroMinimapIconCustomEvent<Hero>) => void;
+        /**
+          * Emitted when the pointer leaves the icon (hover end). Detail is the resolved `Hero`.
+         */
+        "onHeroLeave"?: (event: DlHeroMinimapIconCustomEvent<Hero>) => void;
+        /**
+          * Render a circular backing in the hero's color behind the icon.
+          * @default false
+         */
+        "showBackground"?: boolean;
+    }
     interface DlItemCard {
         /**
           * Resolved component items data. When provided, skips automatic resolution.
@@ -279,7 +473,7 @@ declare namespace LocalJSX {
          */
         "slotType"?: ItemSlotType;
         /**
-          * Filter items by tier (1–4).
+          * Filter items by tier (1-4).
          */
         "tier"?: ItemTier;
     }
@@ -372,6 +566,21 @@ declare namespace LocalJSX {
         "itemNameLanguage"?: Language;
     }
 
+    interface DlHeroCardAttributes {
+        "heroId": number;
+        "heroClassName": HeroClassName;
+        "heroName": string;
+        "variant": HeroCardVariant;
+        "showBranding": boolean;
+        "staticBorder": boolean;
+        "pose": HeroCardPose;
+    }
+    interface DlHeroMinimapIconAttributes {
+        "heroId": number;
+        "heroClassName": HeroClassName;
+        "heroName": string;
+        "showBackground": boolean;
+    }
     interface DlItemCardAttributes {
         "itemId": number;
         "itemClassName": ItemClassName;
@@ -409,6 +618,8 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
+        "dl-hero-card": Omit<DlHeroCard, keyof DlHeroCardAttributes> & { [K in keyof DlHeroCard & keyof DlHeroCardAttributes]?: DlHeroCard[K] } & { [K in keyof DlHeroCard & keyof DlHeroCardAttributes as `attr:${K}`]?: DlHeroCardAttributes[K] } & { [K in keyof DlHeroCard & keyof DlHeroCardAttributes as `prop:${K}`]?: DlHeroCard[K] };
+        "dl-hero-minimap-icon": Omit<DlHeroMinimapIcon, keyof DlHeroMinimapIconAttributes> & { [K in keyof DlHeroMinimapIcon & keyof DlHeroMinimapIconAttributes]?: DlHeroMinimapIcon[K] } & { [K in keyof DlHeroMinimapIcon & keyof DlHeroMinimapIconAttributes as `attr:${K}`]?: DlHeroMinimapIconAttributes[K] } & { [K in keyof DlHeroMinimapIcon & keyof DlHeroMinimapIconAttributes as `prop:${K}`]?: DlHeroMinimapIcon[K] };
         "dl-item-card": Omit<DlItemCard, keyof DlItemCardAttributes> & { [K in keyof DlItemCard & keyof DlItemCardAttributes]?: DlItemCard[K] } & { [K in keyof DlItemCard & keyof DlItemCardAttributes as `attr:${K}`]?: DlItemCardAttributes[K] } & { [K in keyof DlItemCard & keyof DlItemCardAttributes as `prop:${K}`]?: DlItemCard[K] };
         "dl-item-grid": Omit<DlItemGrid, keyof DlItemGridAttributes> & { [K in keyof DlItemGrid & keyof DlItemGridAttributes]?: DlItemGrid[K] } & { [K in keyof DlItemGrid & keyof DlItemGridAttributes as `attr:${K}`]?: DlItemGridAttributes[K] } & { [K in keyof DlItemGrid & keyof DlItemGridAttributes as `prop:${K}`]?: DlItemGrid[K] };
         "dl-item-tooltip": Omit<DlItemTooltip, keyof DlItemTooltipAttributes> & { [K in keyof DlItemTooltip & keyof DlItemTooltipAttributes]?: DlItemTooltip[K] } & { [K in keyof DlItemTooltip & keyof DlItemTooltipAttributes as `attr:${K}`]?: DlItemTooltipAttributes[K] } & { [K in keyof DlItemTooltip & keyof DlItemTooltipAttributes as `prop:${K}`]?: DlItemTooltip[K] };
@@ -420,6 +631,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "dl-hero-card": LocalJSX.IntrinsicElements["dl-hero-card"] & JSXBase.HTMLAttributes<HTMLDlHeroCardElement>;
+            "dl-hero-minimap-icon": LocalJSX.IntrinsicElements["dl-hero-minimap-icon"] & JSXBase.HTMLAttributes<HTMLDlHeroMinimapIconElement>;
             "dl-item-card": LocalJSX.IntrinsicElements["dl-item-card"] & JSXBase.HTMLAttributes<HTMLDlItemCardElement>;
             "dl-item-grid": LocalJSX.IntrinsicElements["dl-item-grid"] & JSXBase.HTMLAttributes<HTMLDlItemGridElement>;
             "dl-item-tooltip": LocalJSX.IntrinsicElements["dl-item-tooltip"] & JSXBase.HTMLAttributes<HTMLDlItemTooltipElement>;

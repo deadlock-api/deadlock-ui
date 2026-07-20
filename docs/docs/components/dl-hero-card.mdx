@@ -1,0 +1,109 @@
+---
+sidebar_position: 5
+---
+
+import HeroPreview from '@site/src/components/HeroPreview';
+
+# dl-hero-card
+
+Recreates the in-game hero select card: the hand-drawn card frame from the pick screen and the hero portrait, with the in-game hover behavior (the card pops, the portrait brightens, and the frame lights up). Heroes can be referenced by class name, numeric ID, or English display name.
+
+:::info
+This component does not render a tooltip yet - a dedicated [`dl-hero-tooltip`](/docs/components/dl-hero-tooltip) is planned.
+:::
+
+## Usage
+
+Reference a hero by `class-name` (`hero-id` and `hero-name` are alternatives, see Properties):
+
+<HeroPreview template={`
+<dl-hero-card class-name="__HERO1_CLASS__"></dl-hero-card>
+<dl-hero-card class-name="__HERO2_CLASS__"></dl-hero-card>
+<dl-hero-card class-name="__HERO3_CLASS__"></dl-hero-card>
+<dl-hero-card class-name="__HERO4_CLASS__"></dl-hero-card>
+`} />
+
+## Properties
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `class-name` | `string` | - | Hero class name (e.g. `"hero_inferno"`) |
+| `hero-id` | `number` | - | Hero numeric ID (alternative to `class-name`) |
+| `hero-name` | `string` | - | Hero display name in English (e.g. `"Infernus"`, case-insensitive) |
+| `hero-data` | `Hero` | - | Pre-loaded hero data object. When provided, skips the API fetch |
+| `variant` | `"card"` \| `"borderless"` \| `"background"` \| `"flat"` | `"card"` | Card style. All variants share the in-game 130/210 card ratio |
+| `pose` | `"default"` \| `"gloat"` \| `"critical"` | `"default"` | Hero portrait art: regular, win pose, or loss pose. Combinable with any `variant` |
+| `show-branding` | `boolean` | `false` | Overlay the hero's name branding artwork at the bottom of the card. Combinable with any `variant` |
+| `static-border` | `boolean` | `false` | Keep the border color unchanged on hover |
+
+## Variants
+
+Variants only change the card style; every one keeps the same proportion:
+
+- `card` (default): the in-game pick screen frame.
+- `borderless`: same frame shape without the border overlay.
+- `background`: uses the hero's themed background art instead of the flat color.
+- `flat`: a clean rounded card without the in-game masks, for modern UIs.
+
+<HeroPreview template={`
+<dl-hero-card class-name="__HERO__" variant="card"></dl-hero-card>
+<dl-hero-card class-name="__HERO__" variant="borderless"></dl-hero-card>
+<dl-hero-card class-name="__HERO__" variant="background" static-border></dl-hero-card>
+<dl-hero-card class-name="__HERO__" variant="flat"></dl-hero-card>
+`} />
+
+## Branding
+
+Enable `show-branding` to overlay the hero's name branding artwork at the bottom of the card. It is off by default and combines with any variant.
+
+<HeroPreview template={`
+<dl-hero-card class-name="__HERO__" show-branding></dl-hero-card>
+<dl-hero-card class-name="__HERO__" variant="background" show-branding></dl-hero-card>
+<dl-hero-card class-name="__HERO__" variant="flat" show-branding></dl-hero-card>
+`} />
+
+## Pose
+
+The portrait art is a separate axis, chosen with `pose`: `default` (regular card art), `gloat` (win pose), or `critical` (loss pose). Any pose combines with any variant.
+
+<HeroPreview template={`
+<dl-hero-card class-name="__HERO__" pose="default"></dl-hero-card>
+<dl-hero-card class-name="__HERO__" pose="gloat"></dl-hero-card>
+<dl-hero-card class-name="__HERO__" pose="critical"></dl-hero-card>
+
+<!-- combines with any variant and with show-branding -->
+<dl-hero-card class-name="__HERO__" show-branding pose="gloat"></dl-hero-card>
+`} />
+
+## Events
+
+| Event | Detail | Description |
+|---|---|---|
+| `heroClick` | `Hero` | Emitted when the card is clicked |
+| `heroEnter` | `Hero` | Emitted when the pointer enters the card (hover start) |
+| `heroLeave` | `Hero` | Emitted when the pointer leaves the card (hover end) |
+
+All events carry the resolved `Hero` object as `detail` (the full hero entry from `/v1/assets/heroes`) and only fire once the hero data is loaded. The framework wrappers expose them idiomatically:
+
+```tsx
+// React (@deadlock-api/ui-react)
+<DlHeroCard heroClassName="hero_inferno" onHeroClick={(e) => console.log(e.detail.name)} />
+```
+
+```html
+<!-- Vue (@deadlock-api/ui-vue) -->
+<DlHeroCard class-name="hero_inferno" @hero-click="onHeroClick" @hero-enter="onHeroHover" />
+```
+
+```js
+// Vanilla
+document.querySelector('dl-hero-card').addEventListener('heroClick', (e) => {
+  console.log(e.detail.class_name);
+});
+```
+
+## CSS Custom Properties
+
+| Property | Default | Description |
+|---|---|---|
+| `--dl-hero-card-width` | `95px` | Card width (height follows the in-game 130/210 frame ratio) |

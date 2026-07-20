@@ -1,8 +1,10 @@
-import { Item, ItemClassName, ItemSlotType, Language } from '../types';
+import { Hero, HeroClassName, Item, ItemClassName, ItemSlotType, Language } from '../types';
 
 const API_BASE = 'https://api.deadlock-api.com/v1/assets';
 
 const cache = new Map<Language, Promise<Item[]>>();
+
+const heroCache = new Map<Language, Promise<Hero[]>>();
 
 let genericDataCache: Promise<GenericData> | null = null;
 
@@ -68,4 +70,52 @@ export async function fetchItem(
   );
   if (!item) throw new Error(`Item not found: ${idOrClassName}`);
   return item;
+}
+
+function loadHeroes(language: Language): Promise<Hero[]> {
+  const cached = heroCache.get(language);
+  if (cached) return cached;
+
+  const promise = fetch(`${API_BASE}/heroes?language=${language}`)
+    .then(res => {
+      if (!res.ok) throw new Error(`Failed to load heroes: ${res.status} ${res.statusText}`);
+      return res.json();
+    })
+    .catch(err => {
+      heroCache.delete(language);
+      throw err;
+    });
+
+  heroCache.set(language, promise);
+  return promise;
+}
+
+export async function fetchHeroes(language: Language = Language.EN): Promise<Hero[]> {
+  return loadHeroes(language);
+}
+
+function findHero(heroes: Hero[], idOrName: string | number): Hero | undefined {
+  if (typeof idOrName === 'number') {
+    return heroes.find(h => h.id === idOrName);
+  }
+  const lower = idOrName.toLowerCase();
+  return (
+    heroes.find(h => h.class_name === idOrName)
+    ?? heroes.find(h => h.name.toLowerCase() === lower)
+  );
+}
+
+export async function fetchHero(
+  idOrName: HeroClassName | string | number,
+  language: Language = Language.EN,
+): Promise<Hero> {
+  const heroes = await loadHeroes(language);
+  let hero = findHero(heroes, idOrName);
+  if (!hero && typeof idOrName === 'string' && language !== Language.EN) {
+    // English display names should resolve even when the list is localized
+    const enHero = findHero(await loadHeroes(Language.EN), idOrName);
+    if (enHero) hero = heroes.find(h => h.id === enHero.id);
+  }
+  if (!hero) throw new Error(`Hero not found: ${idOrName}`);
+  return hero;
 }

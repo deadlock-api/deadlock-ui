@@ -80,6 +80,14 @@
     "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/arctic_blast.webp"
   },
   {
+    "class_name": "upgrade_auto_cleanse",
+    "name": "Indomitable",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 4,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/indomitable.webp"
+  },
+  {
     "class_name": "upgrade_banshee_slugs",
     "name": "Crippling Headshot",
     "type": "upgrade",
@@ -228,7 +236,7 @@
     "name": "Shadow Weave",
     "type": "upgrade",
     "item_slot_type": "weapon",
-    "item_tier": 4,
+    "item_tier": 3,
     "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/weapon/shadow_weave.webp"
   },
   {
@@ -502,6 +510,14 @@
     "item_slot_type": "spirit",
     "item_tier": 3,
     "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/spirit/disarming_hex.webp"
+  },
+  {
+    "class_name": "upgrade_grit",
+    "name": "Grit",
+    "type": "upgrade",
+    "item_slot_type": "vitality",
+    "item_tier": 1,
+    "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/grit.webp"
   },
   {
     "class_name": "upgrade_guardian_ward",
@@ -1276,7 +1292,7 @@
     "name": "Trophy Collector",
     "type": "upgrade",
     "item_slot_type": "vitality",
-    "item_tier": 3,
+    "item_tier": 2,
     "image": "https://assets-bucket.deadlock-api.com/assets-api-res/images/items/vitality/trophy_collector.webp"
   },
   {

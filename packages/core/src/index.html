@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deadlock Items — Demo</title>
+    <title>Deadlock Items - Demo</title>
     <style>
       * {
         box-sizing: border-box;
@@ -259,6 +259,40 @@
         </div>
       </div>
 
+      <!-- Showcase: Hero Card + Minimap Icon -->
+      <div class="showcase" id="showcase-hero">
+        <div class="showcase-header">
+          <span class="showcase-title">&lt;dl-hero-card&gt; + &lt;dl-hero-minimap-icon&gt;</span>
+          <button class="btn-toggle-code" data-target="code-hero" aria-label="Toggle code">
+            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </button>
+        </div>
+        <div class="showcase-code" id="code-hero">
+          <pre><span class="comment">&lt;!-- Lookup by class name, English name, or numeric ID --&gt;</span>
+<span class="tag">&lt;dl-hero-card</span> <span class="attr">class-name</span>=<span class="val">"hero_inferno"</span><span class="tag">&gt;&lt;/dl-hero-card&gt;</span>
+<span class="tag">&lt;dl-hero-card</span> <span class="attr">hero-name</span>=<span class="val">"Lady Geist"</span><span class="tag">&gt;&lt;/dl-hero-card&gt;</span>
+<span class="tag">&lt;dl-hero-card</span> <span class="attr">hero-id</span>=<span class="val">"6"</span><span class="tag">&gt;&lt;/dl-hero-card&gt;</span>
+
+<span class="tag">&lt;dl-hero-minimap-icon</span> <span class="attr">class-name</span>=<span class="val">"hero_inferno"</span><span class="tag">&gt;&lt;/dl-hero-minimap-icon&gt;</span>
+<span class="tag">&lt;dl-hero-minimap-icon</span> <span class="attr">hero-name</span>=<span class="val">"Wraith"</span> <span class="attr">show-background</span><span class="tag">&gt;&lt;/dl-hero-minimap-icon&gt;</span></pre>
+        </div>
+        <div class="showcase-preview" style="display: flex; flex-direction: column; gap: 32px; align-items: center; background: #101010; border-radius: 6px;">
+          <div style="display: flex; gap: 10px; justify-content: center; padding-top: 40px;">
+            <dl-hero-card class-name="hero_inferno"></dl-hero-card>
+            <dl-hero-card hero-name="Lady Geist"></dl-hero-card>
+            <dl-hero-card hero-id="6"></dl-hero-card>
+            <dl-hero-card hero-name="Wraith"></dl-hero-card>
+          </div>
+          <div style="display: flex; gap: 12px; justify-content: center; align-items: center; padding-bottom: 24px; --dl-minimap-icon-size: 40px;">
+            <dl-hero-minimap-icon class-name="hero_inferno"></dl-hero-minimap-icon>
+            <dl-hero-minimap-icon class-name="hero_gigawatt"></dl-hero-minimap-icon>
+            <dl-hero-minimap-icon hero-name="Lady Geist"></dl-hero-minimap-icon>
+            <dl-hero-minimap-icon hero-name="Wraith" show-background></dl-hero-minimap-icon>
+            <dl-hero-minimap-icon hero-id="6" show-background></dl-hero-minimap-icon>
+          </div>
+        </div>
+      </div>
+
       <!-- Showcase: Shop Panel -->
       <div class="showcase" id="showcase-shop">
         <div class="showcase-header">
@@ -464,7 +498,7 @@
             groups[slot].forEach(function(item) {
               var opt = document.createElement('option');
               opt.value = item.class_name;
-              var costStr = item.cost ? ' — ' + item.cost.toLocaleString() + ' souls' : '';
+              var costStr = item.cost ? ' - ' + item.cost.toLocaleString() + ' souls' : '';
               opt.textContent = item.name + costStr;
               optgroup.appendChild(opt);
             });

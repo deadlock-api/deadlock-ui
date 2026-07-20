@@ -11,8 +11,9 @@ const sidebars: SidebarsConfig = {
       items: [
         { type: 'doc', id: 'components/dl-ability-order', label: 'AbilityOrder', customProps: { icon: 'Box', badge: 'WIP' } },
         { type: 'doc', id: 'components/dl-build-panel', label: 'BuildPanel', customProps: { icon: 'Box', badge: 'WIP' } },
-        { type: 'doc', id: 'components/dl-hero-card', label: 'HeroCard', customProps: { icon: 'Box', badge: 'WIP' } },
-        { type: 'doc', id: 'components/dl-hero-minimap-icon', label: 'HeroMinimapIcon', customProps: { icon: 'Box', badge: 'WIP' } },
+        { type: 'doc', id: 'components/dl-hero-card', label: 'HeroCard', customProps: { icon: 'Box' } },
+        { type: 'doc', id: 'components/dl-hero-minimap-icon', label: 'HeroMinimapIcon', customProps: { icon: 'Box' } },
+        { type: 'doc', id: 'components/dl-hero-tooltip', label: 'HeroTooltip', customProps: { icon: 'Box', badge: 'WIP' } },
         { type: 'doc', id: 'components/dl-item-card', label: 'ItemCard', customProps: { icon: 'Box' } },
         { type: 'doc', id: 'components/dl-provider', label: 'Provider', customProps: { icon: 'Box' } },
         { type: 'doc', id: 'components/dl-shop-panel', label: 'ShopPanel', customProps: { icon: 'Box' } },

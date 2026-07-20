@@ -1,0 +1,70 @@
+---
+sidebar_position: 6
+---
+
+import LivePreview from '@site/src/components/LivePreview';
+import HeroPreview from '@site/src/components/HeroPreview';
+
+# dl-hero-minimap-icon
+
+Displays a hero minimap icon, matching the in-game minimap style. Heroes can be referenced by class name, numeric ID, or English display name.
+
+## Usage
+
+Reference a hero by `class-name` (`hero-id` and `hero-name` are alternatives, see Properties):
+
+<HeroPreview template={`
+<dl-hero-minimap-icon class-name="__HERO1_CLASS__"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="__HERO2_CLASS__"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="__HERO3_CLASS__"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="__HERO4_CLASS__"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="__HERO5_CLASS__"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="__HERO6_CLASS__"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="__HERO7_CLASS__"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="__HERO8_CLASS__"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="__HERO9_CLASS__"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="__HERO10_CLASS__"></dl-hero-minimap-icon>
+`} />
+
+## Properties
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `class-name` | `string` | - | Hero class name (e.g. `"hero_inferno"`) |
+| `hero-id` | `number` | - | Hero numeric ID (alternative to `class-name`) |
+| `hero-name` | `string` | - | Hero display name in English (e.g. `"Infernus"`, case-insensitive) |
+| `hero-data` | `Hero` | - | Pre-loaded hero data object. When provided, skips the API fetch |
+| `show-background` | `boolean` | `false` | Render a circular backing in the hero's color behind the icon |
+
+## Background
+
+The in-game minimap image already includes the hero's colored outline. Enable `show-background` to add a solid circular backing in the hero's color - useful over busy backgrounds like map screenshots.
+
+<LivePreview html={`
+  <div style="display: flex; gap: 12px; justify-content: center; align-items: center;">
+    <dl-hero-minimap-icon class-name="hero_synth" style="--dl-minimap-icon-size: 48px;"></dl-hero-minimap-icon>
+    <dl-hero-minimap-icon class-name="hero_synth" show-background style="--dl-minimap-icon-size: 48px;"></dl-hero-minimap-icon>
+  </div>
+`} />
+
+```html
+<dl-hero-minimap-icon class-name="hero_synth"></dl-hero-minimap-icon>
+<dl-hero-minimap-icon class-name="hero_synth" show-background></dl-hero-minimap-icon>
+```
+
+## Events
+
+| Event | Detail | Description |
+|---|---|---|
+| `heroClick` | `Hero` | Emitted when the icon is clicked |
+| `heroEnter` | `Hero` | Emitted when the pointer enters the icon (hover start) |
+| `heroLeave` | `Hero` | Emitted when the pointer leaves the icon (hover end) |
+
+All events carry the resolved `Hero` object as `detail` and only fire once the hero data is loaded. In React use `onHeroClick` / `onHeroEnter` / `onHeroLeave`; in Vue use `@hero-click` / `@hero-enter` / `@hero-leave`.
+
+## CSS Custom Properties
+
+| Property | Default | Description |
+|---|---|---|
+| `--dl-minimap-icon-size` | `32px` | Icon size |
+| `--dl-minimap-icon-bg` | hero color | Background color when `show-background` is set |
