@@ -1,6 +1,15 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Layout from '@theme/Layout';
-import items from '../data/items.json';
+
+interface ItemEntry {
+  class_name: string;
+  name: string;
+  item_slot_type?: string | null;
+  item_tier?: number | null;
+  image?: string | null;
+}
+
+const ITEMS_API_URL = 'https://api.deadlock-api.com/v1/assets/items?language=english';
 
 const SLOTS = ['all', 'weapon', 'vitality', 'spirit'] as const;
 const TIERS = ['all', '1', '2', '3', '4'] as const;
@@ -35,6 +44,38 @@ function Items(): React.JSX.Element {
   const [search, setSearch] = useState('');
   const [slotFilter, setSlotFilter] = useState<string>('all');
   const [tierFilter, setTierFilter] = useState<string>('all');
+  const [items, setItems] = useState<ItemEntry[]>([]);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(ITEMS_API_URL)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to load items: ${res.status}`);
+        return res.json();
+      })
+      .then((all: Array<ItemEntry & { type?: string; shopable?: boolean; shop_image?: string | null; shop_image_webp?: string | null; image_webp?: string | null }>) => {
+        if (cancelled) return;
+        setItems(
+          all
+            .filter((i) => i.type === 'upgrade' && i.shopable)
+            .map((i) => ({
+              class_name: i.class_name,
+              name: i.name,
+              item_slot_type: i.item_slot_type,
+              item_tier: i.item_tier,
+              image: i.shop_image_webp || i.shop_image || i.image_webp || i.image || null,
+            }))
+            .sort((a, b) => a.class_name.localeCompare(b.class_name)),
+        );
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const filtered = useMemo(() => {
     return items.filter((item) => {
@@ -46,7 +87,7 @@ function Items(): React.JSX.Element {
       }
       return true;
     });
-  }, [search, slotFilter, tierFilter]);
+  }, [items, search, slotFilter, tierFilter]);
 
   return (
     <Layout title="Items" description="All available items for Deadlock UI components">
@@ -56,7 +97,11 @@ function Items(): React.JSX.Element {
           Use these values in the <code>class-name</code> attribute of <code>&lt;dl-item-card&gt;</code>.
         </p>
         <p style={{ color: 'var(--ifm-color-emphasis-500)', marginBottom: '24px', fontSize: '14px' }}>
-          {items.length} shop items available. Generated from the Deadlock API.
+          {error
+            ? 'Failed to load items from the Deadlock API. Try reloading the page.'
+            : items.length === 0
+              ? 'Loading items from the Deadlock API...'
+              : `${items.length} shop items available. Loaded live from the Deadlock API.`}
         </p>
 
         <div style={{
