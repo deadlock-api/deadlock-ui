@@ -32,6 +32,4 @@ export type {
   HeroColors,
   HeroDescription,
   HeroImages,
-  HeroLevelInfo,
-  HeroStartingStat,
 } from './types';

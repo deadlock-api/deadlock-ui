@@ -34,17 +34,7 @@ export interface HeroColors {
   style_hex?: string | null;
 }
 
-export interface HeroStartingStat {
-  value: number;
-  display_stat_name?: string | null;
-}
-
-export interface HeroLevelInfo {
-  use_standard_upgrade?: boolean | null;
-  bonus_currencies?: string[] | null;
-  required_gold?: number | null;
-}
-
+/** The subset of the `/v1/assets/heroes` entry that the components consume. */
 export interface Hero {
   id: number;
   class_name: HeroClassName;
@@ -53,29 +43,6 @@ export interface Hero {
   player_selectable?: boolean | null;
   disabled?: boolean | null;
   in_development?: boolean | null;
-  needs_testing?: boolean | null;
-  assigned_players_only?: boolean | null;
-  tags?: string[] | null;
-  gun_tag?: string | null;
-  hero_type?: string | null;
-  hideout_rich_presence?: string | null;
-  prerelease_only?: boolean | null;
-  limited_testing?: boolean | null;
-  complexity?: number | null;
-  skin?: number | null;
   images?: HeroImages | null;
-  items?: Record<string, string> | null;
-  starting_stats?: Record<string, HeroStartingStat> | null;
   colors?: HeroColors | null;
-  level_info?: Record<string, HeroLevelInfo> | null;
-  item_slot_info?: Record<string, { max_purchases_for_tier?: number[] | null }> | null;
-  physics?: Record<string, number> | null;
-  shop_stat_display?: Record<string, unknown> | null;
-  stats_display?: Record<string, unknown> | null;
-  hero_stats_ui?: Record<string, unknown> | null;
-  cost_bonuses?: Record<string, unknown> | null;
-  purchase_bonuses?: Record<string, unknown> | null;
-  scaling_stats?: Record<string, unknown> | null;
-  standard_level_up_upgrades?: Record<string, number> | null;
-  item_draft_bucketing?: Record<string, { bucket?: string | null; weight?: number | null }> | null;
 }

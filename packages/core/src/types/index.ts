@@ -9,8 +9,6 @@ export type {
   HeroColors,
   HeroDescription,
   HeroImages,
-  HeroLevelInfo,
-  HeroStartingStat,
 } from './hero';
 export type {
   Item,
