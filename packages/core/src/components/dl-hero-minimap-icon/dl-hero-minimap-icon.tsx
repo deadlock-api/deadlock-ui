@@ -26,6 +26,9 @@ export class DlHeroMinimapIcon {
   /** Render a circular backing in the hero's color behind the icon. */
   @Prop({ reflect: true, attribute: 'show-background' }) showBackground = false;
 
+  /** Disable the scale-up effect on hover. */
+  @Prop({ reflect: true, attribute: 'no-hover-scale' }) noHoverScale = false;
+
   /** Emitted when the icon is clicked. Detail is the resolved `Hero`. */
   @Event({ eventName: 'heroClick' }) heroClick!: EventEmitter<Hero>;
 

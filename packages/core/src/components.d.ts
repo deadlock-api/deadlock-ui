@@ -68,6 +68,11 @@ export namespace Components {
          */
         "heroName"?: string;
         /**
+          * Disable the scale-up effect on hover.
+          * @default false
+         */
+        "noHoverScale": boolean;
+        /**
           * Render a circular backing in the hero's color behind the icon.
           * @default false
          */
@@ -393,6 +398,11 @@ declare namespace LocalJSX {
          */
         "heroName"?: string;
         /**
+          * Disable the scale-up effect on hover.
+          * @default false
+         */
+        "noHoverScale"?: boolean;
+        /**
           * Emitted when the icon is clicked. Detail is the resolved `Hero`.
          */
         "onHeroClick"?: (event: DlHeroMinimapIconCustomEvent<Hero>) => void;
@@ -580,6 +590,7 @@ declare namespace LocalJSX {
         "heroClassName": HeroClassName;
         "heroName": string;
         "showBackground": boolean;
+        "noHoverScale": boolean;
     }
     interface DlItemCardAttributes {
         "itemId": number;
