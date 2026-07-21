@@ -5,14 +5,24 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Hero, HeroCardPose, HeroCardVariant, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
+import { Hero, HeroCardBackground, HeroCardPose, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
 import { ComponentItemInfo } from "./components/dl-item-tooltip/dl-item-tooltip";
 import { ComponentItemInfo as ComponentItemInfo1 } from "./components/dl-item-tooltip/dl-item-tooltip";
-export { Hero, HeroCardPose, HeroCardVariant, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
+export { Hero, HeroCardBackground, HeroCardPose, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
 export { ComponentItemInfo } from "./components/dl-item-tooltip/dl-item-tooltip";
 export { ComponentItemInfo as ComponentItemInfo1 } from "./components/dl-item-tooltip/dl-item-tooltip";
 export namespace Components {
     interface DlHeroCard {
+        /**
+          * Card fill behind the portrait: `"color"` is the hero-colored gradient; `"image"` uses the hero's themed background art; `"none"` keeps the gradient without the hero color; `"transparent"` removes the fill entirely.
+          * @default 'color'
+         */
+        "background": HeroCardBackground;
+        /**
+          * Hide the frame border overlay.
+          * @default false
+         */
+        "borderNone": boolean;
         /**
           * Hero class name (e.g. `"hero_inferno"`). Alternative to `hero-id` / `hero-name`.
          */
@@ -30,25 +40,20 @@ export namespace Components {
          */
         "heroName"?: string;
         /**
-          * Hero portrait art. `"default"` is the regular card art; `"gloat"` and `"critical"` are the win/loss pose arts. Combinable with any `variant`.
+          * Hero portrait art. `"default"` is the regular card art; `"gloat"` and `"critical"` are the win/loss pose arts.
           * @default 'default'
          */
         "pose": HeroCardPose;
         /**
-          * Overlay the hero's name branding artwork at the bottom of the card. Combinable with any `variant`.
+          * Round the card corners (drops the irregular in-game card mask). Combine with `border-none` for a fully clean card.
+          * @default false
+         */
+        "rounded": boolean;
+        /**
+          * Overlay the hero's name branding artwork at the bottom of the card.
           * @default false
          */
         "showBranding": boolean;
-        /**
-          * Keep the border color unchanged on hover.
-          * @default false
-         */
-        "staticBorder": boolean;
-        /**
-          * Card style. All variants share the in-game 130/210 card ratio: `"card"` is the pick screen frame; `"borderless"` drops the frame border; `"background"` uses the hero's themed background art; `"flat"` is a clean rounded card without the in-game masks.
-          * @default 'card'
-         */
-        "variant": HeroCardVariant;
     }
     interface DlHeroMinimapIcon {
         /**
@@ -332,6 +337,16 @@ declare global {
 declare namespace LocalJSX {
     interface DlHeroCard {
         /**
+          * Card fill behind the portrait: `"color"` is the hero-colored gradient; `"image"` uses the hero's themed background art; `"none"` keeps the gradient without the hero color; `"transparent"` removes the fill entirely.
+          * @default 'color'
+         */
+        "background"?: HeroCardBackground;
+        /**
+          * Hide the frame border overlay.
+          * @default false
+         */
+        "borderNone"?: boolean;
+        /**
           * Hero class name (e.g. `"hero_inferno"`). Alternative to `hero-id` / `hero-name`.
          */
         "heroClassName"?: HeroClassName;
@@ -360,25 +375,20 @@ declare namespace LocalJSX {
          */
         "onHeroLeave"?: (event: DlHeroCardCustomEvent<Hero>) => void;
         /**
-          * Hero portrait art. `"default"` is the regular card art; `"gloat"` and `"critical"` are the win/loss pose arts. Combinable with any `variant`.
+          * Hero portrait art. `"default"` is the regular card art; `"gloat"` and `"critical"` are the win/loss pose arts.
           * @default 'default'
          */
         "pose"?: HeroCardPose;
         /**
-          * Overlay the hero's name branding artwork at the bottom of the card. Combinable with any `variant`.
+          * Round the card corners (drops the irregular in-game card mask). Combine with `border-none` for a fully clean card.
+          * @default false
+         */
+        "rounded"?: boolean;
+        /**
+          * Overlay the hero's name branding artwork at the bottom of the card.
           * @default false
          */
         "showBranding"?: boolean;
-        /**
-          * Keep the border color unchanged on hover.
-          * @default false
-         */
-        "staticBorder"?: boolean;
-        /**
-          * Card style. All variants share the in-game 130/210 card ratio: `"card"` is the pick screen frame; `"borderless"` drops the frame border; `"background"` uses the hero's themed background art; `"flat"` is a clean rounded card without the in-game masks.
-          * @default 'card'
-         */
-        "variant"?: HeroCardVariant;
     }
     interface DlHeroMinimapIcon {
         /**
@@ -580,9 +590,10 @@ declare namespace LocalJSX {
         "heroId": number;
         "heroClassName": HeroClassName;
         "heroName": string;
-        "variant": HeroCardVariant;
+        "borderNone": boolean;
+        "rounded": boolean;
+        "background": HeroCardBackground;
         "showBranding": boolean;
-        "staticBorder": boolean;
         "pose": HeroCardPose;
     }
     interface DlHeroMinimapIconAttributes {

@@ -1,5 +1,5 @@
 import { Component, Prop, State, Watch, Element, Event, EventEmitter, h } from '@stencil/core';
-import { Hero, HeroCardPose, HeroCardVariant, HeroClassName } from '../../types';
+import { Hero, HeroCardBackground, HeroCardPose, HeroClassName } from '../../types';
 import { fetchHero } from '../../api/client';
 import { configState, onConfigChange } from '../../store/config-store';
 import { heroCardBacker, heroCardBorder } from '../../utils/assets';
@@ -25,16 +25,19 @@ export class DlHeroCard {
   /** Pre-loaded hero data object. When provided, skips the API fetch. */
   @Prop({ attribute: 'hero-data' }) heroData?: Hero;
 
-  /** Card style. All variants share the in-game 130/210 card ratio: `"card"` is the pick screen frame; `"borderless"` drops the frame border; `"background"` uses the hero's themed background art; `"flat"` is a clean rounded card without the in-game masks. */
-  @Prop({ reflect: true }) variant: HeroCardVariant = 'card';
+  /** Hide the frame border overlay. */
+  @Prop({ reflect: true, attribute: 'border-none' }) borderNone = false;
 
-  /** Overlay the hero's name branding artwork at the bottom of the card. Combinable with any `variant`. */
+  /** Round the card corners (drops the irregular in-game card mask). Combine with `border-none` for a fully clean card. */
+  @Prop({ reflect: true }) rounded = false;
+
+  /** Card fill behind the portrait: `"color"` is the hero-colored gradient; `"image"` uses the hero's themed background art; `"none"` keeps the gradient without the hero color; `"transparent"` removes the fill entirely. */
+  @Prop({ reflect: true }) background: HeroCardBackground = 'color';
+
+  /** Overlay the hero's name branding artwork at the bottom of the card. */
   @Prop({ reflect: true, attribute: 'show-branding' }) showBranding = false;
 
-  /** Keep the border color unchanged on hover. */
-  @Prop({ reflect: true, attribute: 'static-border' }) staticBorder = false;
-
-  /** Hero portrait art. `"default"` is the regular card art; `"gloat"` and `"critical"` are the win/loss pose arts. Combinable with any `variant`. */
+  /** Hero portrait art. `"default"` is the regular card art; `"gloat"` and `"critical"` are the win/loss pose arts. */
   @Prop({ reflect: true }) pose: HeroCardPose = 'default';
 
   /** Emitted when the card is clicked. Detail is the resolved `Hero`. */
@@ -113,7 +116,7 @@ export class DlHeroCard {
   }
 
   private getBackgroundSrc(hero: Hero): string | undefined {
-    if (this.variant !== 'background') return undefined;
+    if (this.background !== 'image') return undefined;
     return hero.images?.background_image_webp || hero.images?.background_image || undefined;
   }
 

@@ -1,12 +1,8 @@
 import { HeroClassName } from './hero-class-name';
 
-export type HeroCardVariant =
-  | 'card'
-  | 'borderless'
-  | 'background'
-  | 'flat';
-
 export type HeroCardPose = 'default' | 'gloat' | 'critical';
+
+export type HeroCardBackground = 'color' | 'image' | 'none' | 'transparent';
 
 export interface HeroDescription {
   lore?: string | null;

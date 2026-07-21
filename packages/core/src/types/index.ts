@@ -4,8 +4,8 @@ export type { ItemClassName } from './item-class-name';
 export type { HeroClassName } from './hero-class-name';
 export type {
   Hero,
+  HeroCardBackground,
   HeroCardPose,
-  HeroCardVariant,
   HeroColors,
   HeroDescription,
   HeroImages,

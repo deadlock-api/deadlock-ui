@@ -57,6 +57,15 @@
     mask-repeat: no-repeat;
 }
 
+/* "none" is the absence of the hero color: the same gradient on its neutral fallback */
+:host([background="none"]) .card-fill {
+    --dl-hero-color: #131313;
+}
+
+:host([background="transparent"]) .card-fill {
+    background: none;
+}
+
 .hero-portrait {
     position: relative;
     width: 100%;
@@ -84,16 +93,11 @@
     mask-size: 100% 100%;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    transition: background 0.14s ease-out;
 }
 
-:host(:not([static-border])) .hero-box:hover .card-border {
-    background: #d9d9d4;
-}
+/* ---------- style modifiers ---------- */
 
-/* ---------- variants (all share the 130/210 card ratio) ---------- */
-
-:host([variant="borderless"]) .card-border {
+:host([border-none]) .card-border {
     display: none;
 }
 
@@ -103,7 +107,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: right;
     user-select: none;
     -webkit-user-drag: none;
 }
@@ -128,14 +132,17 @@
     -webkit-mask-image: linear-gradient(180deg, black 68%, rgba(0, 0, 0, 0.35) 100%);
 }
 
-:host([variant="flat"]) .card-fill {
+:host([rounded]) .card-fill {
     -webkit-mask-image: none;
     mask-image: none;
     border-radius: 8px;
+    overflow: hidden;
 }
 
-:host([variant="flat"]) .card-border {
-    display: none;
+/* Clip the border art's corner tips to follow the rounded fill */
+:host([rounded]) .card-border {
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 /* ---------- hover effect layer ---------- */
