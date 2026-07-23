@@ -53,6 +53,9 @@ export class DlItemCard {
   /** Override the tooltip trigger for this card. When not set, falls back to the global provider value. */
   @Prop({ attribute: 'tooltip-trigger' }) tooltipTrigger?: TooltipTrigger;
 
+  /** Override whether numeric scaling multipliers are shown in this card's tooltip. */
+  @Prop({ attribute: 'show-scaling-values' }) showScalingValues?: boolean;
+
   /** Emitted when the tooltip opens. Detail contains the item's `class_name`. */
   @Event({ eventName: 'tooltipOpen' }) tooltipOpen!: EventEmitter<string>;
 
@@ -65,6 +68,7 @@ export class DlItemCard {
   @State() private _loading = false;
   @State() private _error?: string;
   @State() private _open = false;
+  @State() private _tooltipMounted = false;
   /** class_name → name in the override language; display names are derived at render time */
   @State() private _nameMap?: Map<string, string>;
 
@@ -74,6 +78,8 @@ export class DlItemCard {
   private _rafId?: number;
   private _cleanupAutoUpdate?: () => void;
   private _unsubLanguage?: () => void;
+  private _openRequest = 0;
+  private _opening = false;
   private _tooltipItemsPromise?: Promise<void>;
   private _tooltipItemsResolved = false;
 
@@ -168,7 +174,6 @@ export class DlItemCard {
   disconnectedCallback() {
     this.hideTooltip();
     this.el.removeEventListener('mousemove', this.handleMouseMove);
-    document.removeEventListener('click', this._onOutsideClick);
     this._unsubLanguage?.();
   }
 
@@ -359,18 +364,54 @@ export class DlItemCard {
     }
   };
 
-  private showFollowCursorMode() {
+  private async prepareTooltipForOpen(request: number): Promise<boolean> {
+    this._tooltipMounted = true;
+    await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+
+    const tooltip = this.el.shadowRoot?.querySelector('dl-item-tooltip') as HTMLDlItemTooltipElement | null;
+    if (!tooltip) return false;
+    await tooltip.componentOnReady();
+    return request === this._openRequest;
+  }
+
+  private async showFollowCursorMode() {
+    if (this._open || this._opening) return;
+    const trigger = this.resolvedTrigger;
+    if (trigger !== 'hover') return;
+    this._opening = true;
+    const request = ++this._openRequest;
+    void this.ensureTooltipItemsResolved();
+    const ready = await this.prepareTooltipForOpen(request);
+    if (!ready || this.resolvedTrigger !== trigger) {
+      if (request === this._openRequest) this._opening = false;
+      return;
+    }
+
+    this._opening = false;
     this._open = true;
     this.emitTooltipOpen();
-    void this.ensureTooltipItemsResolved();
     requestAnimationFrame(() => this.updatePositionFromMouse());
   }
 
-  private showAnchoredMode() {
-    this._open = true;
-    this.emitTooltipOpen();
+  private async showAnchoredMode() {
+    if (this._open || this._opening) return;
+    const trigger = this.resolvedTrigger;
+    if (trigger === 'none') return;
+    this._opening = true;
+    const request = ++this._openRequest;
     void this.ensureTooltipItemsResolved();
+    const ready = await this.prepareTooltipForOpen(request);
+    if (!ready || this.resolvedTrigger !== trigger) {
+      if (request === this._openRequest) this._opening = false;
+      return;
+    }
 
+    this._opening = false;
+    this._open = true;
+    if (trigger === 'click') {
+      document.addEventListener('click', this._onOutsideClick);
+    }
+    this.emitTooltipOpen();
     requestAnimationFrame(() => {
       const card = this.cardEl;
       const floating = this.floatingEl;
@@ -383,6 +424,8 @@ export class DlItemCard {
 
   private hideTooltip() {
     const wasOpen = this._open;
+    this._openRequest += 1;
+    this._opening = false;
     this._open = false;
     clearTimeout(this._hoverTimeout);
     if (this._rafId != null) {
@@ -391,6 +434,7 @@ export class DlItemCard {
     }
     this._cleanupAutoUpdate?.();
     this._cleanupAutoUpdate = undefined;
+    document.removeEventListener('click', this._onOutsideClick);
     if (wasOpen) {
       this.tooltipClose.emit(this.item?.class_name);
     }
@@ -413,15 +457,15 @@ export class DlItemCard {
       this._mouseY = e.clientY;
       this.el.addEventListener('mousemove', this.handleMouseMove);
       if (delay > 0) {
-        this._hoverTimeout = setTimeout(() => this.showFollowCursorMode(), delay);
+        this._hoverTimeout = setTimeout(() => void this.showFollowCursorMode(), delay);
       } else {
-        this.showFollowCursorMode();
+        void this.showFollowCursorMode();
       }
     } else {
       if (delay > 0) {
-        this._hoverTimeout = setTimeout(() => this.showAnchoredMode(), delay);
+        this._hoverTimeout = setTimeout(() => void this.showAnchoredMode(), delay);
       } else {
-        this.showAnchoredMode();
+        void this.showAnchoredMode();
       }
     }
   };
@@ -436,21 +480,16 @@ export class DlItemCard {
 
   private handleCardClick = () => {
     if (this.resolvedTrigger !== 'click') return;
-    if (this._open) {
+    if (this._open || this._opening) {
       this.hideTooltip();
-      document.removeEventListener('click', this._onOutsideClick);
     } else {
-      this.showAnchoredMode();
-      requestAnimationFrame(() => {
-        document.addEventListener('click', this._onOutsideClick);
-      });
+      void this.showAnchoredMode();
     }
   };
 
   private _onOutsideClick = (e: MouseEvent) => {
     if (!this.el.contains(e.target as Node)) {
       this.hideTooltip();
-      document.removeEventListener('click', this._onOutsideClick);
     }
   };
 
@@ -458,7 +497,7 @@ export class DlItemCard {
     const item = this.item;
     const isClickMode = this.resolvedTrigger === 'click';
     const noTooltip = this.resolvedTrigger === 'none';
-    const shouldRenderTooltip = !noTooltip && !!item && this._open;
+    const shouldRenderTooltip = !noTooltip && !!item && this._tooltipMounted;
 
     return [
       <div
@@ -480,6 +519,7 @@ export class DlItemCard {
             nameOverride={this.getNameOverride(item)}
             componentItemsData={this.componentItemsData ?? this._componentItems}
             parentItemsData={this.parentItemsData ?? this._parentItems}
+            showScalingValues={this.showScalingValues}
           ></dl-item-tooltip>
         </div>
       ),
