@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.4.1...deadlock-ui-v1.5.0) (2026-07-24)
+
+
+### Features
+
+* add dl-hero-card and dl-hero-minimap-icon components ([#31](https://github.com/deadlock-api/deadlock-ui/issues/31)) ([84d2921](https://github.com/deadlock-api/deadlock-ui/commit/84d292177369caf82ff20caaaf7a3aa384de7407))
+
 ## [1.4.1](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.4.0...deadlock-ui-v1.4.1) (2026-07-20)
 
 
