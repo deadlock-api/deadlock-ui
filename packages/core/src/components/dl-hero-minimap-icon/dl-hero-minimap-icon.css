@@ -1,0 +1,90 @@
+:host {
+    display: inline-block;
+    width: var(--dl-minimap-icon-size, 32px);
+    height: var(--dl-minimap-icon-size, 32px);
+    aspect-ratio: 1 / 1;
+    vertical-align: middle;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.minimap-icon {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.14s ease-out;
+}
+
+.minimap-icon:not(.loading):not(.error):hover {
+    transform: scale(1.12);
+}
+
+:host([no-hover-scale]) .minimap-icon:hover {
+    transform: none;
+}
+
+:host([show-background]) .minimap-icon {
+    border-radius: 50%;
+    background: var(--dl-minimap-icon-bg, var(--dl-hero-color, var(--dl-bg-primary, #1a1a2e)));
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+    transition: transform 0.14s ease-out, box-shadow 0.14s ease-out;
+}
+
+:host([show-background]) .minimap-icon:not(.loading):not(.error):hover {
+    box-shadow:
+        inset 0 0 0 1px rgba(0, 0, 0, 0.35),
+        0 0 6px 1px color-mix(in srgb, var(--dl-hero-color, #d9d9d4) 60%, transparent);
+}
+
+.minimap-icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: filter 0.14s ease-out;
+}
+
+.minimap-icon:hover .minimap-icon-img {
+    filter: brightness(1.08);
+}
+
+:host([show-background]) .minimap-icon-img {
+    width: 88%;
+    height: 88%;
+}
+
+/* Loading skeleton */
+.minimap-icon.loading {
+    border-radius: 50%;
+    background: var(--dl-bg-primary, #1a1a2e);
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
+
+/* Error state */
+.minimap-icon.error {
+    border-radius: 50%;
+    background: var(--dl-bg-primary, #1a1a2e);
+    box-shadow: inset 0 0 0 1px rgba(224, 69, 69, 0.6);
+}
+
+.error-glyph {
+    color: #e04545;
+    font-family: var(--dl-font-family, sans-serif);
+    font-size: calc(var(--dl-minimap-icon-size, 32px) * 0.5);
+    font-weight: 700;
+    line-height: 1;
+    user-select: none;
+}

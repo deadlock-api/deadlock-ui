@@ -1,0 +1,107 @@
+---
+sidebar_position: 5
+---
+
+import HeroPreview from '@site/src/components/HeroPreview';
+
+# dl-hero-card
+
+Recreates the in-game hero select card: the hand-drawn card frame from the pick screen and the hero portrait, with the in-game hover behavior (the card pops and the portrait brightens). Heroes can be referenced by class name, numeric ID, or English display name.
+
+:::info
+This component does not render a tooltip yet - a dedicated [`dl-hero-tooltip`](/docs/components/dl-hero-tooltip) is planned.
+:::
+
+## Usage
+
+Reference a hero by `class-name` (`hero-id` and `hero-name` are alternatives, see Properties):
+
+<HeroPreview template={`
+<dl-hero-card class-name="__HERO1_CLASS__"></dl-hero-card>
+<dl-hero-card class-name="__HERO2_CLASS__"></dl-hero-card>
+<dl-hero-card class-name="__HERO3_CLASS__"></dl-hero-card>
+<dl-hero-card class-name="__HERO4_CLASS__"></dl-hero-card>
+`} />
+
+## Properties
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `class-name` | `string` | - | Hero class name (e.g. `"hero_inferno"`) |
+| `hero-id` | `number` | - | Hero numeric ID (alternative to `class-name`) |
+| `hero-name` | `string` | - | Hero display name in English (e.g. `"Infernus"`, case-insensitive) |
+| `hero-data` | `Hero` | - | Pre-loaded hero data object. When provided, skips the API fetch |
+| `pose` | `"default"` \| `"gloat"` \| `"critical"` | `"default"` | Hero portrait art: regular, win pose, or loss pose |
+| `border-none` | `boolean` | `false` | Hide the frame border overlay |
+| `rounded` | `boolean` | `false` | Round the card corners (drops the irregular in-game card mask) |
+| `background` | `"color"` \| `"image"` \| `"none"` \| `"transparent"` | `"color"` | Card fill behind the portrait: hero-colored gradient, themed background art, neutral gradient, or no fill |
+| `show-branding` | `boolean` | `false` | Overlay the hero's name branding artwork at the bottom of the card |
+
+## Style modifiers
+
+The card keeps the in-game 130/210 proportion; its look is composed from independent boolean props, combinable with each other:
+
+- `border-none`: hides the frame border overlay.
+- `rounded`: rounds the card corners, dropping the irregular in-game card mask. Combine with `border-none` for a fully clean card, for modern UIs.
+- `background`: the card fill behind the portrait. `color` (default) is the hero-colored gradient, `image` uses the hero's themed background art, `none` keeps the gradient without the hero color, and `transparent` removes the fill entirely.
+
+<HeroPreview template={`
+<dl-hero-card class-name="__HERO__"></dl-hero-card>
+<dl-hero-card class-name="__HERO__" background="image"></dl-hero-card>
+<dl-hero-card class-name="__HERO__" background="none"></dl-hero-card>
+<dl-hero-card class-name="__HERO__" border-none rounded></dl-hero-card>
+`} />
+
+## Branding
+
+Enable `show-branding` to overlay the hero's name branding artwork at the bottom of the card. It is off by default and combines with everything above.
+
+<HeroPreview template={`
+<dl-hero-card class-name="__HERO1_CLASS__" show-branding></dl-hero-card>
+<dl-hero-card class-name="__HERO2_CLASS__" show-branding></dl-hero-card>
+<dl-hero-card class-name="__HERO3_CLASS__" show-branding></dl-hero-card>
+<dl-hero-card class-name="__HERO4_CLASS__" show-branding></dl-hero-card>
+`} />
+
+## Pose
+
+The portrait art is a separate axis, chosen with `pose`: `default` (regular card art), `gloat` (win pose), or `critical` (loss pose). Any pose combines with the style modifiers and with `show-branding`.
+
+<HeroPreview template={`
+<dl-hero-card class-name="__HERO__" border-none background="transparent" pose="default"></dl-hero-card>
+<dl-hero-card class-name="__HERO__" border-none background="transparent" pose="gloat"></dl-hero-card>
+<dl-hero-card class-name="__HERO__" border-none background="transparent" pose="critical"></dl-hero-card>
+`} />
+
+## Events
+
+| Event | Detail | Description |
+|---|---|---|
+| `heroClick` | `Hero` | Emitted when the card is clicked |
+| `heroEnter` | `Hero` | Emitted when the pointer enters the card (hover start) |
+| `heroLeave` | `Hero` | Emitted when the pointer leaves the card (hover end) |
+
+All events carry the resolved `Hero` object as `detail` (the full hero entry from `/v1/assets/heroes`) and only fire once the hero data is loaded. The framework wrappers expose them idiomatically:
+
+```tsx
+// React (@deadlock-api/ui-react)
+<DlHeroCard heroClassName="hero_inferno" onHeroClick={(e) => console.log(e.detail.name)} />
+```
+
+```html
+<!-- Vue (@deadlock-api/ui-vue) -->
+<DlHeroCard class-name="hero_inferno" @hero-click="onHeroClick" @hero-enter="onHeroHover" />
+```
+
+```js
+// Vanilla
+document.querySelector('dl-hero-card').addEventListener('heroClick', (e) => {
+  console.log(e.detail.class_name);
+});
+```
+
+## CSS Custom Properties
+
+| Property | Default | Description |
+|---|---|---|
+| `--dl-hero-card-width` | `95px` | Card width (height follows the in-game 130/210 frame ratio) |

@@ -12,7 +12,7 @@ export class DlItemGrid {
   /** Filter items by slot type: `"weapon"`, `"vitality"`, or `"spirit"`. */
   @Prop({ attribute: 'slot-type' }) slotType?: ItemSlotType;
 
-  /** Filter items by tier (1–4). */
+  /** Filter items by tier (1-4). */
   @Prop() tier?: ItemTier;
 
   /** When `true`, only shows items available in the shop. */

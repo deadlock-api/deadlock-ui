@@ -79,6 +79,11 @@ const config: Config = {
           position: 'left',
         },
         {
+          to: '/heroes',
+          label: 'Heroes',
+          position: 'left',
+        },
+        {
           href: repoConfig.githubUrl,
           label: 'GitHub',
           position: 'right',

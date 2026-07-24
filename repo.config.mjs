@@ -11,6 +11,7 @@ const config = {
     projectName: "Deadlock UI",
     docsUrl: "https://ui.deadlock-api.com",
     apiItemsUrl: "https://api.deadlock-api.com/v1/assets/items?language=english",
+    apiHeroesUrl: "https://api.deadlock-api.com/v1/assets/heroes?language=english",
 };
 
 export default config;

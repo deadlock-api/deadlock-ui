@@ -14,8 +14,7 @@
     "build:vue": "npm -w @deadlock-api/ui-vue run build",
     "docs": "npm run build:core && npm -w docs run start",
     "docs:build": "npm run build:core && npm -w docs run build",
-    "start": "npm -w @deadlock-api/ui-core run start",
-    "codegen": "node scripts/generate-class-names.mjs"
+    "start": "npm -w @deadlock-api/ui-core run start"
   },
   "engines": {
     "node": ">=22",

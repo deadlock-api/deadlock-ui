@@ -37,6 +37,14 @@ export function soulIcon(): string {
   return cdn('images/shop/catalog/price_currency.png');
 }
 
+export function heroCardBacker(): string {
+  return cdn('images/main_menu/pick_screen/card_backer.png');
+}
+
+export function heroCardBorder(): string {
+  return cdn('images/main_menu/pick_screen/card_border.png');
+}
+
 export function fontUrl(name: string): string {
   return cdn(`fonts/${name}.otf`);
 }

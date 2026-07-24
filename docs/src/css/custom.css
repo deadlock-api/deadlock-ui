@@ -177,6 +177,21 @@
   margin: 16px 0;
 }
 
+/* Reserve component footprints before the web components bundle hydrates,
+   so previews don't shift layout (CLS). Values mirror each component's :host. */
+dl-hero-card {
+  display: block;
+  width: var(--dl-hero-card-width, 95px);
+  aspect-ratio: 130 / 210;
+}
+
+dl-hero-minimap-icon {
+  display: inline-block;
+  width: var(--dl-minimap-icon-size, 32px);
+  height: var(--dl-minimap-icon-size, 32px);
+  aspect-ratio: 1 / 1;
+}
+
 /* Scrollbar */
 [data-theme='dark'] ::-webkit-scrollbar {
   width: 8px;
