@@ -14,7 +14,8 @@ Global configuration wrapper. All child components inherit these settings.
   tooltip-trigger="hover"
   tooltip-placement="auto"
   tooltip-delay="150"
-  show-tier-badge="true">
+  show-tier-badge="true"
+  show-scaling-values="false">
 
   <!-- child components here -->
 
@@ -31,3 +32,4 @@ Global configuration wrapper. All child components inherit these settings.
 | `tooltip-follow-cursor` | `boolean` | `false` | When `true`, tooltip follows the cursor instead of anchoring to the card. Only applies when `tooltip-trigger` is `"hover"` |
 | `tooltip-delay` | `number` | `100` | Delay in ms before showing tooltip on hover |
 | `show-tier-badge` | `boolean` | `true` | Show tier badge on item cards globally |
+| `show-scaling-values` | `boolean` | `false` | Show numeric multipliers next to item-stat scaling indicators |

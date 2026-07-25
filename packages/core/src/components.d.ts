@@ -114,6 +114,10 @@ export namespace Components {
          */
         "parentItemsData"?: ComponentItemInfo[];
         /**
+          * Override whether numeric scaling multipliers are shown in this card's tooltip.
+         */
+        "showScalingValues"?: boolean;
+        /**
           * Show the tier badge on hover. When not set, falls back to the global provider value.
          */
         "showTierBadge"?: boolean;
@@ -171,6 +175,10 @@ export namespace Components {
           * Resolved parent items (items this item is a component of).
          */
         "parentItemsData"?: ComponentItemInfo1[];
+        /**
+          * Override whether numeric scaling multipliers are shown for this tooltip.
+         */
+        "showScalingValues"?: boolean;
     }
     interface DlProvider {
         /**
@@ -469,6 +477,10 @@ declare namespace LocalJSX {
          */
         "parentItemsData"?: ComponentItemInfo[];
         /**
+          * Override whether numeric scaling multipliers are shown in this card's tooltip.
+         */
+        "showScalingValues"?: boolean;
+        /**
           * Show the tier badge on hover. When not set, falls back to the global provider value.
          */
         "showTierBadge"?: boolean;
@@ -526,6 +538,10 @@ declare namespace LocalJSX {
           * Resolved parent items (items this item is a component of).
          */
         "parentItemsData"?: ComponentItemInfo1[];
+        /**
+          * Override whether numeric scaling multipliers are shown for this tooltip.
+         */
+        "showScalingValues"?: boolean;
     }
     interface DlProvider {
         /**
@@ -611,6 +627,7 @@ declare namespace LocalJSX {
         "showTierBadge": boolean;
         "itemNameLanguage": Language;
         "tooltipTrigger": TooltipTrigger;
+        "showScalingValues": boolean;
     }
     interface DlItemGridAttributes {
         "slotType": ItemSlotType;
@@ -622,6 +639,7 @@ declare namespace LocalJSX {
         "itemClassName": ItemClassName;
         "nameOverride": string;
         "itemNameLanguage": Language;
+        "showScalingValues": boolean;
     }
     interface DlProviderAttributes {
         "language": Language;

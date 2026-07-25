@@ -1,5 +1,5 @@
 export { Language, SUPPORTED_LANGUAGES } from './language';
-export type { TooltipTrigger, TooltipPlacement, TooltipSection, TooltipSectionAttribute, TooltipSectionType } from './tooltip';
+export type { TooltipTrigger, TooltipPlacement, TooltipImportantPropertyIcon, TooltipSection, TooltipSectionAttribute, TooltipSectionType } from './tooltip';
 export type { ItemClassName } from './item-class-name';
 export type { HeroClassName } from './hero-class-name';
 export type {
