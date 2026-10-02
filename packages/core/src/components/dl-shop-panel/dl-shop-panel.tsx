@@ -15,6 +15,10 @@ const VALID_TABS = new Set<string>(CATEGORIES.map(c => c.slot));
 
 const TIERS = [1, 2, 3, 4] as const;
 
+/**
+ * @slot loading - Content shown while items are loading. Replaces the default "Loading items..." text.
+ * @part loading - The wrapper around the loading content.
+ */
 @Component({
   tag: 'dl-shop-panel',
   styleUrl: 'dl-shop-panel.css',
@@ -240,7 +244,13 @@ export class DlShopPanel {
 
   render() {
     if (this._loading) {
-      return <div class="shop"><div class="loading">Loading items...</div></div>;
+      return (
+        <div class="shop">
+          <div class="loading" part="loading">
+            <slot name="loading">Loading items...</slot>
+          </div>
+        </div>
+      );
     }
 
     return (

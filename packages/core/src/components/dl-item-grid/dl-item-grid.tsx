@@ -3,6 +3,10 @@ import { Item, ItemSlotType, ItemTier } from '../../types';
 import { fetchItemsBySlotType, fetchItems } from '../../api/client';
 import { configState, onConfigChange } from '../../store/config-store';
 
+/**
+ * @slot loading - Content shown while items are loading. Replaces the default "Loading items..." text.
+ * @part loading - The wrapper around the loading content.
+ */
 @Component({
   tag: 'dl-item-grid',
   styleUrl: 'dl-item-grid.css',
@@ -66,7 +70,11 @@ export class DlItemGrid {
 
   render() {
     if (this._loading) {
-      return <div class="loading">Loading items...</div>;
+      return (
+        <div class="loading" part="loading">
+          <slot name="loading">Loading items...</slot>
+        </div>
+      );
     }
 
     if (!this._items.length) {
