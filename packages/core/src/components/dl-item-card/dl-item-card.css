@@ -118,7 +118,13 @@
     -webkit-user-drag: none;
 }
 
-/* Active items get a round icon, like the in-game shop */
+/* Active items get a round icon, like the in-game shop. The card top follows
+   the circle: horizontal radius is half the width, vertical radius is the same
+   length as a share of the 82/128 height (50% * 82 / 128). */
+.mod-box.active {
+    border-radius: 50% 50% 5px 5px / 32% 32% 5px 5px;
+}
+
 .mod-box.active .mod-icon-container {
     padding: 3%;
 }
