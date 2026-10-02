@@ -612,7 +612,6 @@ export class DlItemCard {
           {imgSrc && <img class="icon-image" src={imgSrc} alt={this.displayName} loading="lazy" />}
         </div>
 
-        {isActive && !hasImbue && <span class="active-tag">Active</span>}
         {hasImbue && <span class="imbue-tag">Imbue</span>}
       </div>
     );
@@ -677,7 +676,6 @@ export class DlItemCard {
           {imgSrc && <img class="mod-icon" src={imgSrc} alt={name} loading="lazy" />}
         </div>
 
-        {isActive && !hasImbue && <span class="active-tag">Active</span>}
         {hasImbue && <span class="imbue-tag">Imbue</span>}
 
         <div class="mod-name-container">

@@ -179,27 +179,7 @@
     letter-spacing: 0.5px;
 }
 
-/* Active / Imbue tags */
-.active-tag {
-    position: absolute;
-    top: auto;
-    bottom: 33.8%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 6;
-    background-color: #181818;
-    color: rgba(255, 239, 215, 0.9);
-    font-size: 9px;
-    font-weight: 700;
-    min-width: 60%;
-    padding: 1px 3px;
-    text-align: center;
-    text-transform: uppercase;
-    border-radius: 2px;
-    letter-spacing: 0.5px;
-    user-select: none;
-}
-
+/* Imbue tag */
 .imbue-tag {
     position: absolute;
     top: auto;
@@ -337,7 +317,6 @@
     letter-spacing: 0;
 }
 
-.icon-box .active-tag,
 .icon-box .imbue-tag {
     top: auto;
     bottom: 2px;
