@@ -2,7 +2,7 @@ import { Component, Prop, State, Watch, Element, h } from '@stencil/core';
 import { Item, ItemSlotType, Language } from '../../types';
 import { fetchItems, fetchGenericData } from '../../api/client';
 import { configState, onConfigChange } from '../../store/config-store';
-import { shopBackground, shopTabShape, shopTabIcon, shopTabEdgeOverlay, soulIcon } from '../../utils/assets';
+import { shopBackground, shopTabShape, shopTabIcon, shopTabEdgeOverlay } from '../../utils/assets';
 import { ComponentItemInfo } from '../dl-item-tooltip/dl-item-tooltip';
 
 const CATEGORIES: { label: string; slot: ItemSlotType; color: string }[] = [
@@ -283,8 +283,7 @@ export class DlShopPanel {
               <div class={{ 'tier-section': true, [`tier-${tier}`]: true }}>
                 {price != null && (
                   <div class={{ 'tier-price': true, [`tier-${tier}`]: true }}>
-                    <img class="soul-icon" src={soulIcon()} alt="" />
-                    <span>{price.toLocaleString()}</span>
+                    {price.toLocaleString()}
                   </div>
                 )}
                 {items.length > 0 && (

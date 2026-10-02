@@ -112,7 +112,6 @@
     display: flex;
     flex-direction: column;
     margin: 1%;
-    position: relative;
 }
 
 /* Tier sizing — all categories */
@@ -189,12 +188,13 @@
     grid-template-columns: repeat(6, 1fr);
 }
 
-/* Tier price labels overlaid near the background tier banners */
+/* Tier price labels, centered on the dark plates printed in the background.
+   Positions are the plate centers in the 1825x1618 background art, as a share
+   of .tiers (same aspect ratio), so they hold at any panel width. */
 .tier-price {
     position: absolute;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0;
+    left: var(--price-x);
+    top: var(--price-y);
     font-family: 'Retail Demo';
     font-size: 24px;
     font-weight: 700;
@@ -204,62 +204,32 @@
     z-index: 1;
     pointer-events: none;
     white-space: nowrap;
-    transform: rotate(-5deg);
+    transform: translate(-50%, -50%) rotate(-5deg);
     user-select: none;
 }
 
-.tier-price .soul-icon {
-    align-self: baseline;
-    display: inline-block;
-    width: auto;
-    height: 0.78em;
-    flex-shrink: 0;
-    margin: 0 0.32em 0 0;
-    object-fit: contain;
-    position: static;
-    transform: translateY(0.08em);
-    vertical-align: baseline;
-    filter: none;
-}
-
-/* Position each tier price to align with the background TIER labels */
-.tier-price.tier-1 {
-    top: 29%;
-    left: 4%;
-}
-
-.tiers.spirit .tier-price.tier-1, .tiers.vitality .tier-price.tier-1 {
-    top: 31%;
-    left: 5%;
-}
-
-.tier-price.tier-2 {
-    font-size: 26px;
-    top: 2%;
-    left: -0.8rem;
-}
-
+.tier-price.tier-2,
 .tier-price.tier-3 {
     font-size: 26px;
-    top: -6%;
-    left: -3%;
-}
-
-.tiers.spirit .tier-price.tier-3, .tiers.vitality .tier-price.tier-3 {
-    left: 5%;
-    top: -1%;
 }
 
 .tier-price.tier-4 {
     font-size: 28px;
-    top: -8%;
-    left: -3%;
 }
 
-.tiers.spirit .tier-price.tier-4, .tiers.vitality .tier-price.tier-4 {
-    top: -3.7%;
-    left: -3%;
-}
+.tiers.weapon .tier-price.tier-1 { --price-x: 6.58%; --price-y: 17.24%; }
+.tiers.weapon .tier-price.tier-2 { --price-x: 51.56%; --price-y: 3.89%; }
+.tiers.weapon .tier-price.tier-3 { --price-x: 8.49%; --price-y: 52.97%; }
+.tiers.weapon .tier-price.tier-4 { --price-x: 68.55%; --price-y: 52.41%; }
+
+.tiers.spirit .tier-price.tier-1,
+.tiers.vitality .tier-price.tier-1 { --price-x: 6.85%; --price-y: 17.43%; }
+.tiers.spirit .tier-price.tier-2,
+.tiers.vitality .tier-price.tier-2 { --price-x: 51.48%; --price-y: 4.05%; }
+.tiers.spirit .tier-price.tier-3,
+.tiers.vitality .tier-price.tier-3 { --price-x: 8.38%; --price-y: 52.97%; }
+.tiers.spirit .tier-price.tier-4,
+.tiers.vitality .tier-price.tier-4 { --price-x: 52.49%; --price-y: 51.92%; }
 
 /* Highlight / dim effect on hover */
 .item-wrapper {
