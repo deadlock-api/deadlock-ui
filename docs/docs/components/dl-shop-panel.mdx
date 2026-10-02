@@ -43,3 +43,47 @@ Override item names to a different language while keeping tooltip content in the
 ```html
 <dl-shop-panel item-name-language="brazilian"></dl-shop-panel>
 ```
+
+## Custom Loading State
+
+While items are loading, the panel shows a plain "Loading items..." text. Put any element with `slot="loading"` inside the panel to replace it. It is only displayed during loading and hidden once the items arrive.
+
+```html
+<dl-shop-panel>
+  <div slot="loading" class="my-spinner"></div>
+</dl-shop-panel>
+```
+
+The same works through the framework wrappers, since children are passed to the web component as-is. Put `slot` on a native element: a framework component only works if it forwards the attribute to its root element.
+
+```tsx
+// React
+<DlShopPanel>
+  <div slot="loading">
+    <Spinner />
+  </div>
+</DlShopPanel>
+```
+
+```html
+<!-- Vue -->
+<DlShopPanel>
+  <div slot="loading">
+    <Spinner />
+  </div>
+</DlShopPanel>
+```
+
+:::note
+In Vue, `eslint-plugin-vue` may flag `slot="loading"` with the `vue/no-deprecated-slot-attribute` rule. That rule targets Vue 2 component slots; on web components the attribute is the native slot API, so the rule can be disabled for these usages.
+:::
+
+The wrapper around the loading content is exposed as the `loading` part, so its default padding and alignment can be changed from outside:
+
+```css
+dl-shop-panel::part(loading) {
+  padding: 24px;
+}
+```
+
+`dl-item-grid` supports the same `loading` slot and part.
