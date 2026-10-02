@@ -599,6 +599,7 @@ export class DlItemCard {
           'clickable': isClickMode,
           [`tier-${tier}`]: true,
           [slot]: true,
+          'active': isActive,
         }}
       >
         {(this.showTierBadge ?? true) && (
@@ -661,6 +662,7 @@ export class DlItemCard {
           'clickable': isClickMode,
           [`tier-${tier}`]: true,
           [slot]: true,
+          'active': isActive,
         }}
       >
         {cardBg && <img class="card-background" src={cardBg} alt="" />}

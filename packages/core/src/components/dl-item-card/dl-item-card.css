@@ -118,6 +118,16 @@
     -webkit-user-drag: none;
 }
 
+/* Active items get a round icon, like the in-game shop */
+.mod-box.active .mod-icon-container {
+    padding: 3%;
+}
+
+.mod-box.active .mod-icon {
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
 /* Tier number badge — visible only on hover */
 .tier-badge {
     position: absolute;
@@ -300,6 +310,10 @@
     object-fit: cover;
     user-select: none;
     -webkit-user-drag: none;
+}
+
+.icon-box.active .icon-image {
+    border-radius: 50%;
 }
 
 .icon-box .tier-badge {
