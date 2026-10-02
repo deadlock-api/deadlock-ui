@@ -2,7 +2,7 @@ import { Component, Prop, State, Watch, h } from '@stencil/core';
 import type { VNode } from '@stencil/core';
 import { Item, ItemProperty, ItemClassName, Language, TooltipSection } from '../../types';
 import { isPropertyVisible, getSlotColor } from '../../utils/format';
-import { tooltipHeaderBg, tooltipBodyBg, soulIcon } from '../../utils/assets';
+import { tooltipHeaderBg, tooltipBacker, soulIcon } from '../../utils/assets';
 import { fetchItem, fetchItems } from '../../api/client';
 import { configState, onConfigChange } from '../../store/config-store';
 import { injectFonts } from '../../utils/fonts';
@@ -557,7 +557,7 @@ export class DlItemTooltip {
     const slot = item.item_slot_type;
     const slotColor = getSlotColor(slot);
     const headerBg = tooltipHeaderBg(slot);
-    const bodyBg = tooltipBodyBg(slot);
+    const backer = tooltipBacker(slot);
     const sections = item.tooltip_sections ?? [];
     const resolvedComponentItems = this.componentItemsData ?? this._componentItems;
     const resolvedParentItems = this.parentItemsData ?? this._parentItems;
@@ -571,7 +571,7 @@ export class DlItemTooltip {
           [`${slot}-mod`]: true,
           'has-components': hasComponents || hasParents,
         }}
-        style={{ '--slot-color': slotColor }}
+        style={{ '--slot-color': slotColor, '--tooltip-backer': `url("${backer}")` }}
       >
         <div class="tooltip-shadow">
           <div class="tooltip-main">
@@ -589,7 +589,7 @@ export class DlItemTooltip {
             </div>
 
             {/* ── Properties body ── */}
-            <div class="properties-container" style={{ backgroundImage: `url("${bodyBg}")` }}>
+            <div class="properties-container">
               {sections.map(section => (
                 section.section_type === 'innate'
                   ? this.renderInnateSection(section)
@@ -599,7 +599,7 @@ export class DlItemTooltip {
           </div>
 
           {(hasComponents || hasParents) && (
-            <div class="component-items-shell" style={{ backgroundImage: `url("${bodyBg}")` }}>
+            <div class="component-items-shell">
               {this.renderComponentGroup('Component:', resolvedComponentItems)}
               {this.renderComponentGroup('Component of:', resolvedParentItems)}
             </div>
