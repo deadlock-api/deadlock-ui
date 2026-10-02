@@ -313,9 +313,16 @@ export class DlItemCard {
     return this.getNameOverride(item) ?? item.name;
   }
 
-  private computeFloatingPosition(reference: Element | VirtualElement) {
+  private async computeFloatingPosition(reference: Element | VirtualElement) {
     const floating = this.floatingEl;
     if (!floating) return;
+
+    // The lazy-loaded tooltip has no size until its first render. Measuring before
+    // that places a zero-width box right next to the card, which then grows over
+    // the cursor and steals the hover (open/close loop on left/top placements).
+    const tooltip = floating.querySelector('dl-item-tooltip') as HTMLDlItemTooltipElement | null;
+    await tooltip?.componentOnReady?.();
+    if (!floating.isConnected) return;
 
     const placement = this.resolvedPlacement;
 
