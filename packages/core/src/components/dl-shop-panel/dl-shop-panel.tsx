@@ -283,7 +283,7 @@ export class DlShopPanel {
               <div class={{ 'tier-section': true, [`tier-${tier}`]: true }}>
                 {price != null && (
                   <div class={{ 'tier-price': true, [`tier-${tier}`]: true }}>
-                    {price.toLocaleString()}
+                    {String(price)}
                   </div>
                 )}
                 {items.length > 0 && (
