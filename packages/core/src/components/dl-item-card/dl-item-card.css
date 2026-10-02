@@ -463,7 +463,8 @@
     pointer-events: none;
 }
 
-.tooltip-wrapper.open {
+/* Stay hidden until the first position is computed (data-placement is set) */
+.tooltip-wrapper.open[data-placement] {
     visibility: visible;
     pointer-events: auto;
 }
