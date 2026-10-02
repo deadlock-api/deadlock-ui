@@ -407,7 +407,7 @@
 
 .prop_healing .important-stat-type,
 .prop_health .important-stat-type {
-  color: #7bba1d;
+  color: var(--tooltip-armor);
   font-weight: 600;
 }
 
@@ -433,6 +433,11 @@
   gap: 5px;
   padding: 0;
   background-color: transparent;
+}
+
+.ability-section .stats-block-no-important .stats-block-props {
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .stats-block-stacked .stats-block-props {
