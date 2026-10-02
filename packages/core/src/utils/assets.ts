@@ -12,8 +12,8 @@ export function tooltipHeaderBg(slot: string): string {
   return cdn(`images/shop/catalog/catalog_tooltip_header_${slot}.png`);
 }
 
-export function tooltipBodyBg(slot: string): string {
-  return cdn(`images/shop/catalog/catalog_tooltip_bg_${slot}.png`);
+export function tooltipBacker(slot: string): string {
+  return cdn(`images/tooltips/items/tooltip_backer_${slot}.png`);
 }
 
 export function shopBackground(slot: string): string {
