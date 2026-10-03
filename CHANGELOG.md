@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.6.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.5.0...deadlock-ui-v1.6.0) (2026-10-03)
+
+
+### Features
+
+* **dl-item-card:** remove the Active tag ([b3d37a3](https://github.com/deadlock-api/deadlock-ui/commit/b3d37a38116ade22c48e89924d90b6bfbec4a31c))
+* **dl-item-card:** render active item icons as circles ([8f218b2](https://github.com/deadlock-api/deadlock-ui/commit/8f218b2b52cd0b8cf74e42165f3046bc339010d5))
+* **dl-item-card:** shape active card top around the round icon ([0b13e7f](https://github.com/deadlock-api/deadlock-ui/commit/0b13e7fe37c95171c122929c2d5a17a756671396))
+* **dl-item-tooltip:** use the in-game backer art for the tooltip body ([45f0dca](https://github.com/deadlock-api/deadlock-ui/commit/45f0dcadd1af0efafdff3603d01b7e85a491f666))
+* **dl-shop-panel:** add a loading slot to replace the loading text ([7a78f1d](https://github.com/deadlock-api/deadlock-ui/commit/7a78f1db6499df89ad5df8ddeec7c114f933dbd3))
+* **dl-shop-panel:** center tier prices on the background plates ([e788c42](https://github.com/deadlock-api/deadlock-ui/commit/e788c42b5024acc76db0dc4201a6bd0518fb3052))
+* **dl-shop-panel:** drop the thousands separator from tier prices ([87b54ae](https://github.com/deadlock-api/deadlock-ui/commit/87b54ae4de3fea32cd070853d169ff10be6d1b9c))
+
+
+### Bug Fixes
+
+* **dl-item-card:** discard stale tooltip position results ([4b06988](https://github.com/deadlock-api/deadlock-ui/commit/4b0698859b7aa2f9063cfad44757b865fd06a64a))
+* **dl-item-card:** stop tooltip open/close loop on hover ([a639dc4](https://github.com/deadlock-api/deadlock-ui/commit/a639dc4d3e6aaa20993f54eeb3749895fa54a833))
+
 ## [1.5.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.4.1...deadlock-ui-v1.5.0) (2026-07-24)
 
 
