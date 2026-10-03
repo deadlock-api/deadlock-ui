@@ -76,6 +76,7 @@ export class DlItemCard {
   private _unsubLanguage?: () => void;
   private _tooltipItemsPromise?: Promise<void>;
   private _tooltipItemsResolved = false;
+  private _positionRequest = 0;
 
   private get item(): Item | undefined {
     return this.itemData ?? this._item;
@@ -316,13 +317,15 @@ export class DlItemCard {
   private async computeFloatingPosition(reference: Element | VirtualElement) {
     const floating = this.floatingEl;
     if (!floating) return;
+    // Positioning is async and calls can resolve out of order; only the latest one applies.
+    const request = ++this._positionRequest;
 
     // The lazy-loaded tooltip has no size until its first render. Measuring before
     // that places a zero-width box right next to the card, which then grows over
     // the cursor and steals the hover (open/close loop on left/top placements).
     const tooltip = floating.querySelector('dl-item-tooltip') as HTMLDlItemTooltipElement | null;
     await tooltip?.componentOnReady?.();
-    if (!floating.isConnected) return;
+    if (!floating.isConnected || request !== this._positionRequest) return;
 
     const placement = this.resolvedPlacement;
 
@@ -335,6 +338,7 @@ export class DlItemCard {
         shift({ padding: 8 }),
       ],
     }).then(({ x, y, placement: finalPlacement }) => {
+      if (request !== this._positionRequest) return;
       Object.assign(floating.style, {
         left: `${x}px`,
         top: `${y}px`,
@@ -389,6 +393,7 @@ export class DlItemCard {
   }
 
   private hideTooltip() {
+    this._positionRequest++;
     const wasOpen = this._open;
     this._open = false;
     clearTimeout(this._hoverTimeout);
