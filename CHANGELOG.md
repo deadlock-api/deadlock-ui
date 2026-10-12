@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.6.0...deadlock-ui-v1.7.0) (2026-10-12)
+
+
+### Features
+
+* **dl-item-card:** support corrupted items ([#36](https://github.com/deadlock-api/deadlock-ui/issues/36)) ([2b61543](https://github.com/deadlock-api/deadlock-ui/commit/2b615434958b5018c4f2e2e02c8368747ecc6681))
+
 ## [1.6.0](https://github.com/deadlock-api/deadlock-ui/compare/deadlock-ui-v1.5.0...deadlock-ui-v1.6.0) (2026-10-03)
 
 
