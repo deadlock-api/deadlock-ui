@@ -1,0 +1,156 @@
+---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CorruptionPreview from '@site/src/components/CorruptionPreview';
+
+# Corrupted Items
+
+The Broker trades a tier 3 or tier 4 item for its **corrupted** version: the same item with stronger stats and one random downside. The bonuses roll between 85% and 115% of their value in each match, so the same item can have different values in two matches.
+
+`dl-item-card` shows the corrupted version like the game does: the Broker frame around the icon and a red tooltip with every upgraded stat highlighted.
+
+<CorruptionPreview />
+
+## Show a corrupted item
+
+Add `corrupted` to the card. Without a match, the card rolls the item like a random match would: one downside and the per-match variance on every value. The roll is made once per page load, so every card of the same item on the page shows the same version, and a reload rolls a new one:
+
+```html
+<dl-item-card item-id="1955841979" corrupted></dl-item-card>
+```
+
+Items that cannot be corrupted ignore the attribute.
+
+### With a given downside
+
+`corrupted` also takes the name of a downside, to show the item with that one instead of a random one:
+
+```html
+<dl-item-card item-id="1955841979" corrupted="WeaponDamage"></dl-item-card>
+```
+
+| Name | Downside | Tier 3 | Tier 4 |
+|---|---|---|---|
+| `TechCooldown` | Ability Cooldown Reduction | -13% | -17% |
+| `TechRange` | Ability Range | -20% | -25% |
+| `Stamina` | Stamina, Stamina Regen | -1, -18% | -1, -24% |
+| `MoveSpeed` | Move Speed | -2m | -2.75m |
+| `FireRate` | Fire Rate | -25% | -30% |
+| `TechDuration` | Ability Duration | -15% | -20% |
+| `TechPower` | Spirit Power | -30 | -45 |
+| `WeaponDamage` | Weapon Damage | -40% | -55% |
+| `Health` | Max Health | -350 | -550 |
+| `BulletResist` | Bullet Resist | -14% | -18% |
+| `TechResist` | Spirit Resist | -14% | -18% |
+
+Values are before the ±15% per-match variance. TypeScript users get these names as the `CorruptedPenaltyName` type. Not every item can roll every downside: an item never rolls one it excludes or one that changes a stat it already gives (Spellbreaker, which gives bonus health, never rolls `Health`). For those, the card shows the item without a downside and logs a warning.
+
+## Show an item from a match
+
+A site that shows a match (a player's build, a match page) already has everything it needs in the [match metadata](https://api.deadlock-api.com/docs) of the Deadlock API. Copy these fields to the components as they come, without converting anything:
+
+```
+GET https://api.deadlock-api.com/v1/matches/{match_id}/metadata
+```
+
+```json
+{
+  "match_info": {
+    "corrupted_penalty_seed": 658605123,
+    "players": [
+      {
+        "items": [
+          { "item_id": 1955841979, "game_time_s": 847, "sold_time_s": 0, "upgrade_info": 8454144 }
+        ]
+      }
+    ]
+  }
+}
+```
+
+| Metadata field | Component property | What it tells the component |
+|---|---|---|
+| `players[].items[].item_id` | `item-id` | Which item it is |
+| `players[].items[].upgrade_info` | `upgrade-info` | Whether this purchase was corrupted |
+| `match_info.corrupted_penalty_seed` | `corrupted-penalty-seed` on `dl-provider` | The values the corrupted items rolled in this match |
+
+A corrupted item has the same `item_id` as the normal one, so the id alone cannot tell them apart. `upgrade_info` describes the purchase, and the card reads from it whether the item was corrupted. Pass it for every item: normal purchases render as usual.
+
+The game rolls every corrupted item once, at the start of the match, so every player who corrupts the same item gets the same values. That is why the seed goes once on `dl-provider`:
+
+<Tabs groupId="framework">
+  <TabItem value="html" label="HTML" default>
+    ```html
+    <dl-provider corrupted-penalty-seed="658605123">
+      <dl-item-card item-id="1955841979" upgrade-info="8454144"></dl-item-card>
+    </dl-provider>
+    ```
+  </TabItem>
+  <TabItem value="react" label="React">
+    ```tsx
+    import { DlProvider, DlItemCard } from '@deadlock-api/ui-react';
+
+    function PlayerItems({ match, player }) {
+      return (
+        <DlProvider corruptedPenaltySeed={match.match_info.corrupted_penalty_seed}>
+          {player.items.map((item) => (
+            <DlItemCard
+              key={`${item.item_id}-${item.game_time_s}`}
+              itemId={item.item_id}
+              upgradeInfo={item.upgrade_info}
+            />
+          ))}
+        </DlProvider>
+      );
+    }
+    ```
+  </TabItem>
+  <TabItem value="vue" label="Vue">
+    ```html
+    <script setup lang="ts">
+    import { DlProvider, DlItemCard } from '@deadlock-api/ui-vue';
+
+    defineProps<{ match: any; player: any }>();
+    </script>
+
+    <template>
+      <DlProvider :corrupted-penalty-seed="match.match_info.corrupted_penalty_seed">
+        <DlItemCard
+          v-for="item in player.items"
+          :key="`${item.item_id}-${item.game_time_s}`"
+          :item-id="item.item_id"
+          :upgrade-info="item.upgrade_info"
+        />
+      </DlProvider>
+    </template>
+    ```
+  </TabItem>
+</Tabs>
+
+The provider seed applies to the whole page. When a page lists items from several matches, such as a player's match history, set `corrupted-penalty-seed` on each card instead. A card's own value takes precedence over the provider's.
+
+### The Broker trade in the item list
+
+The metadata records the trade as two entries with the same `item_id`: the normal item, sold at the time of the trade, and the corrupted one, bought in the same second.
+
+| `item_id` | `game_time_s` | `sold_time_s` | `upgrade_info` |
+|---|---|---|---|
+| 1955841979 | 814 | 847 | 65536 (normal) |
+| 1955841979 | 847 | 0 | 8454144 (corrupted) |
+
+A site that lists sold items will show the normal one as sold. To show it as a trade instead, treat a normal item sold in the same second its corrupted version was bought as traded at the Broker, not sold.
+
+:::note
+The bonuses match the game. The rolled downside follows the algorithm described by the Deadlock API developers and has not been checked against a match yet. Published builds (`/v1/builds`) have no corrupted items.
+:::
+
+## Properties
+
+| Attribute | Component | Type | Description |
+|---|---|---|---|
+| `corrupted` | `dl-item-card` | `boolean` \| `CorruptedPenaltyName` | Show the corrupted version of the item. A downside name picks the downside shown; in a match, it replaces the rolled one |
+| `upgrade-info` | `dl-item-card` | `number` | `upgrade_info` of the purchase in the match metadata. Shows the corrupted version when the purchase was corrupted |
+| `corrupted-penalty-seed` | `dl-provider`, `dl-item-card` | `number` | `match_info.corrupted_penalty_seed` of the match. Corrupted items show the values they rolled in that match |

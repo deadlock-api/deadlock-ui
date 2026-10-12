@@ -29,6 +29,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'frameworks/vue', label: 'Vue' },
       ],
     },
+    { type: 'doc', id: 'corrupted-items', label: 'Corrupted Items', customProps: { icon: 'Skull' } },
     { type: 'doc', id: 'types', label: 'Types', customProps: { icon: 'FileType' } },
   ],
 };

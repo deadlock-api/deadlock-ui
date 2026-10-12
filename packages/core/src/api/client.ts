@@ -1,4 +1,15 @@
-import { Hero, HeroClassName, Item, ItemClassName, ItemSlotType, Language } from '../types';
+import {
+  CorruptedItemImages,
+  CorruptedPenalty,
+  CorruptionConfig,
+  Hero,
+  HeroClassName,
+  Item,
+  ItemClassName,
+  ItemSlotType,
+  Language,
+} from '../types';
+import { CORRUPTION_CONFIG } from '../utils/corruption';
 
 const API_BASE = 'https://api.deadlock-api.com/v1/assets';
 
@@ -10,6 +21,9 @@ let genericDataCache: Promise<GenericData> | null = null;
 
 export interface GenericData {
   item_price_per_tier: number[];
+  item_corruption_price_per_tier?: number[];
+  corrupted_penalties?: CorruptedPenalty[];
+  corrupted_item_images?: CorruptedItemImages;
 }
 
 export function fetchGenericData(): Promise<GenericData> {
@@ -26,6 +40,47 @@ export function fetchGenericData(): Promise<GenericData> {
     });
 
   return genericDataCache;
+}
+
+const CORRUPTION_CONVARS: Record<keyof CorruptionConfig, string> = {
+  bonusVarianceBetter: 'citadel_corrupted_item_bonus_variance_better',
+  bonusVarianceWorse: 'citadel_corrupted_item_bonus_variance_worse',
+  penaltyVariance: 'citadel_corrupted_penalty_variance',
+};
+
+let corruptionConfigCache: Promise<CorruptionConfig> | null = null;
+
+function fetchConvarDefault(name: string): Promise<number> {
+  return fetch(`${API_BASE}/convars/${name}`)
+    .then(res => {
+      if (!res.ok) throw new Error(`Failed to load convar ${name}: ${res.status}`);
+      return res.json();
+    })
+    .then((convar: { default?: unknown }) => {
+      if (typeof convar.default !== 'number') throw new Error(`Convar ${name} is not a number`);
+      return convar.default;
+    });
+}
+
+/**
+ * Per-match variance of corrupted items, read from the game's convars. A convar that fails to load keeps
+ * its value from `CORRUPTION_CONFIG`, and the next call tries to load it again.
+ */
+export function fetchCorruptionConfig(): Promise<CorruptionConfig> {
+  if (corruptionConfigCache) return corruptionConfigCache;
+
+  const keys = Object.keys(CORRUPTION_CONVARS) as (keyof CorruptionConfig)[];
+  corruptionConfigCache = Promise.allSettled(keys.map(key => fetchConvarDefault(CORRUPTION_CONVARS[key])))
+    .then(results => {
+      const config: CorruptionConfig = { ...CORRUPTION_CONFIG };
+      results.forEach((result, i) => {
+        if (result.status === 'fulfilled') config[keys[i]] = result.value;
+      });
+      if (results.some(result => result.status === 'rejected')) corruptionConfigCache = null;
+      return config;
+    });
+
+  return corruptionConfigCache;
 }
 
 function loadItems(language: Language): Promise<Item[]> {

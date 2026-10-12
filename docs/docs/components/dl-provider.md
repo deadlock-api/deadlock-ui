@@ -31,3 +31,4 @@ Global configuration wrapper. All child components inherit these settings.
 | `tooltip-follow-cursor` | `boolean` | `false` | When `true`, tooltip follows the cursor instead of anchoring to the card. Only applies when `tooltip-trigger` is `"hover"` |
 | `tooltip-delay` | `number` | `100` | Delay in ms before showing tooltip on hover |
 | `show-tier-badge` | `boolean` | `true` | Show tier badge on item cards globally |
+| `corrupted-penalty-seed` | `number` | — | `match_info.corrupted_penalty_seed` of the match on the page, used by corrupted item cards. See [Corrupted Items](/docs/corrupted-items#show-an-item-from-a-match) |

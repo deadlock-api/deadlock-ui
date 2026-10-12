@@ -1,9 +1,24 @@
 import { Component, Prop, State, Watch, h } from '@stencil/core';
 import type { VNode } from '@stencil/core';
-import { Item, ItemProperty, ItemClassName, Language, TooltipSection } from '../../types';
+import { CorruptedPenalty, CorruptedPenaltyName, Item, ItemProperty, ItemClassName, Language, TooltipSection } from '../../types';
 import { isPropertyVisible, getSlotColor } from '../../utils/format';
-import { tooltipHeaderBg, tooltipBacker, soulIcon } from '../../utils/assets';
-import { fetchItem, fetchItems } from '../../api/client';
+import {
+  tooltipHeaderBg,
+  tooltipBacker,
+  soulIcon,
+  corruptedTooltipBacker,
+} from '../../utils/assets';
+import { fetchCorruptionConfig, fetchGenericData, fetchItem, fetchItems } from '../../api/client';
+import {
+  CorruptedPenaltyRoll,
+  CorruptionRoll,
+  getCorruptedPenaltyPool,
+  getRolledPenalty,
+  parseCorrupted,
+  rollCorruption,
+  roundForDisplay,
+  toCorruptedItem,
+} from '../../utils/corruption';
 import { configState, onConfigChange } from '../../store/config-store';
 import { injectFonts } from '../../utils/fonts';
 
@@ -16,6 +31,9 @@ interface SectionTiming {
   key: string;
   prop: ItemProperty;
 }
+
+/** Seed for corrupted items shown without a match seed: one random match per page load. */
+const PAGE_SEED = (Math.random() * 0x100000000) | 0;
 
 @Component({
   tag: 'dl-item-tooltip',
@@ -48,6 +66,12 @@ export class DlItemTooltip {
   /** Fetch and display the item name in a different language than the global config. */
   @Prop({ attribute: 'item-name-language' }) itemNameLanguage?: Language;
 
+  /** Show the Broker's corrupted variant: `true` for a random penalty, or a penalty name. */
+  @Prop() corrupted?: boolean | CorruptedPenaltyName;
+
+  /** `match_info.corrupted_penalty_seed` of the item's match. Falls back to the `dl-provider` value. */
+  @Prop({ attribute: 'corrupted-penalty-seed' }) corruptedPenaltySeed?: number;
+
   // ─── Internal state ───────────────────────────────────────────────────────
 
   @State() private _item?: Item;
@@ -56,14 +80,56 @@ export class DlItemTooltip {
   @State() private _nameOverride?: string;
   @State() private _loading = false;
   @State() private _error?: string;
+  @State() private _penalties?: CorruptedPenalty[];
+  @State() private _roll?: CorruptionRoll;
 
   private _unsubLanguage?: () => void;
+  private _unsubSeed?: () => void;
+  private _corruptedCache?: { source: Item; roll?: CorruptionRoll; result: Item };
 
   // ─── Resolved item (prop takes precedence over fetched) ──────────────────
 
   private get item(): Item | undefined {
     return this.itemData ?? this._item;
   }
+
+  private get isCorrupted(): boolean {
+    return parseCorrupted(this.corrupted).corrupted && !!this.item?.corrupted_info;
+  }
+
+  /** Penalty named in `corrupted`, if any. */
+  private get chosenPenalty(): CorruptedPenaltyName | undefined {
+    return parseCorrupted(this.corrupted).penalty;
+  }
+
+  private get seed(): number {
+    return this.corruptedPenaltySeed ?? configState.corruptedPenaltySeed ?? PAGE_SEED;
+  }
+
+  /** Item whose values are rendered: the corrupted copy when corrupted. */
+  private get viewItem(): Item | undefined {
+    const item = this.item;
+    if (!item || !this.isCorrupted) return item;
+
+    const cache = this._corruptedCache;
+    if (cache?.source === item && cache.roll === this._roll) return cache.result;
+
+    const result = toCorruptedItem(item, this._roll);
+    this._corruptedCache = { source: item, roll: this._roll, result };
+    return result;
+  }
+
+  private isCorruptedKey(key: string): boolean {
+    if (!this.isCorrupted) return false;
+    return !!this.item?.corrupted_info?.property_upgrades.some(u => u.name === key);
+  }
+
+  private get rolledPenalty(): CorruptedPenaltyRoll | undefined {
+    const item = this.item;
+    if (!item || !this.isCorrupted || !this._roll?.penalty || !this._penalties) return undefined;
+    return getRolledPenalty(item, this._penalties, this._roll);
+  }
+
 
   private get itemKey(): ItemClassName | number | undefined {
     return this.itemId ?? this.itemClassName;
@@ -86,6 +152,7 @@ export class DlItemTooltip {
       this.resolveComponentItems();
       this.resolveParentItems();
       this.resolveNameOverride();
+      this.updateRoll();
     }
 
     this._unsubLanguage = onConfigChange('language', () => {
@@ -93,10 +160,12 @@ export class DlItemTooltip {
         this.fetchItemData();
       }
     });
+    this._unsubSeed = onConfigChange('corruptedPenaltySeed', () => this.updateRoll());
   }
 
   disconnectedCallback() {
     this._unsubLanguage?.();
+    this._unsubSeed?.();
   }
 
   @Watch('itemId')
@@ -110,6 +179,41 @@ export class DlItemTooltip {
   @Watch('itemNameLanguage')
   onItemNameLanguageChange() {
     this.resolveNameOverride();
+  }
+
+  @Watch('itemData')
+  @Watch('corrupted')
+  @Watch('corruptedPenaltySeed')
+  onCorruptionChange() {
+    this.updateRoll();
+  }
+
+  /**
+   * Resolves what the corrupted item shows: the values it rolled in the seed's
+   * match, or in a random match when there is no seed. A penalty named in
+   * `corrupted` replaces the rolled one.
+   */
+  private async updateRoll() {
+    const item = this.item;
+    const seed = this.seed;
+    const chosen = this.chosenPenalty;
+    if (!item || !this.isCorrupted) {
+      this._roll = undefined;
+      return;
+    }
+
+    const [config, penalties] = await Promise.all([
+      fetchCorruptionConfig(),
+      fetchGenericData().then(data => data.corrupted_penalties ?? [], () => []),
+    ]);
+    if (item !== this.item || seed !== this.seed || chosen !== this.chosenPenalty) return;
+
+    if (chosen && penalties.length && !getCorruptedPenaltyPool(item, penalties).some(p => p.name === chosen)) {
+      console.warn(`[dl-item-tooltip] ${item.class_name} cannot roll the "${chosen}" penalty; showing it without one.`);
+    }
+
+    this._penalties = penalties;
+    this._roll = rollCorruption(item, seed, penalties, config, chosen);
   }
 
   // ─── Data fetching ────────────────────────────────────────────────────────
@@ -126,6 +230,7 @@ export class DlItemTooltip {
       this.resolveComponentItems();
       this.resolveParentItems();
       this.resolveNameOverride();
+      this.updateRoll();
     } catch (e) {
       this._error = e instanceof Error ? e.message : 'Failed to load item';
     } finally {
@@ -293,8 +398,17 @@ export class DlItemTooltip {
       || key === 'AbilityCooldownBetweenCharge';
   }
 
+  private renderCorruptedArrow(direction: 'up' | 'down' = 'up'): VNode {
+    return (
+      <svg class={{ 'corrupted-arrow': true, [direction]: true }} viewBox="0 0 16 20" aria-hidden="true">
+        <path class="outline" d="M3 18 L8 12 L5 11 L10.5 5.5 M7.5 3 L14 1.5 L12.5 8 Z" />
+        <path class="fill" d="M3 18 L8 12 L5 11 L10.5 5.5 M7.5 3 L14 1.5 L12.5 8 Z" />
+      </svg>
+    );
+  }
+
   private renderImportantProp(key: string): VNode | null {
-    const item = this.item;
+    const item = this.viewItem;
     if (!item?.properties) return null;
 
     const prop = item.properties[key];
@@ -313,12 +427,23 @@ export class DlItemTooltip {
       );
     }
 
+    const corrupted = this.isCorruptedKey(key);
+
     return (
-      <div class={{ 'important-stat-box': true, [`prop_${prop.css_class ?? ''}`]: !!prop.css_class }}>
+      <div
+        class={{
+          'important-stat-box': true,
+          [`prop_${prop.css_class ?? ''}`]: !!prop.css_class,
+          'is-corrupted': corrupted,
+        }}
+      >
         <div class="important-stat-content">
           <div class={{ 'important-stat-icon-value': true, 'hide-important-stat-icon': !prop.icon }}>
             {prop.icon && <img class="important-stat-icon" src={prop.icon} alt="" />}
-            <div class="important-stat-value">{this.renderFormattedValue(prop, true)}</div>
+            <div class="important-stat-value">
+              {this.renderFormattedValue(prop, true)}
+              {corrupted && this.renderCorruptedArrow()}
+            </div>
           </div>
           <div class="important-stat-labels">
             <div class="important-stat-type">{prop.label ?? key}</div>
@@ -332,22 +457,27 @@ export class DlItemTooltip {
   }
 
   private renderBlockProperty(key: string, elevated: boolean): VNode | null {
-    const item = this.item;
+    const item = this.viewItem;
     if (!item?.properties) return null;
 
     const prop = item.properties[key];
     if (!prop || !isPropertyVisible(prop)) return null;
 
+    const corrupted = this.isCorruptedKey(key);
+
     return (
-      <div class="block-prop-item shrink-container">
-        <span class="attribute-value">{this.renderFormattedValue(prop)}</span>
+      <div class={{ 'block-prop-item': true, 'shrink-container': true, 'is-corrupted': corrupted }}>
+        <span class="attribute-value">
+          {this.renderFormattedValue(prop)}
+          {corrupted && this.renderCorruptedArrow()}
+        </span>
         <span class={{ 'attribute-name': true, 'elevated': elevated }}>{prop.label ?? key}</span>
       </div>
     );
   }
 
   private renderSectionContent(section: TooltipSection, excludedKeys = new Set<string>()) {
-    const itemProperties = this.item?.properties;
+    const itemProperties = this.viewItem?.properties;
 
     return section.section_attributes.map(attr => {
       const importantKeys = new Set(attr.important_properties ?? []);
@@ -418,7 +548,7 @@ export class DlItemTooltip {
   }
 
   private findSectionTimings(section: TooltipSection): { cooldown?: SectionTiming; chargeUp?: SectionTiming } {
-    const item = this.item;
+    const item = this.viewItem;
     if (!item?.properties) return {};
 
     const props = item.properties;
@@ -456,13 +586,17 @@ export class DlItemTooltip {
   }
 
   private renderTimingPill(timing: SectionTiming, kind: 'cooldown' | 'charge-up'): VNode {
-    const fallbackIcon = kind === 'cooldown' ? this.item?.properties?.['AbilityCooldown']?.icon : undefined;
+    const fallbackIcon = kind === 'cooldown' ? this.viewItem?.properties?.['AbilityCooldown']?.icon : undefined;
     const icon = timing.prop.icon || fallbackIcon;
+    const corrupted = this.isCorruptedKey(timing.key);
 
     return (
       <span class={{ 'ability-timing': true, [kind]: true }}>
         {icon && <img class="ability-timing-icon" src={icon} alt="" />}
-        <span class="ability-timing-value">{this.renderFormattedValue(timing.prop, true)}</span>
+        <span class={{ 'ability-timing-value': true, 'is-corrupted': corrupted }}>
+          {this.renderFormattedValue(timing.prop, true)}
+          {corrupted && this.renderCorruptedArrow()}
+        </span>
       </span>
     );
   }
@@ -495,6 +629,31 @@ export class DlItemTooltip {
           )}
         </div>
         {this.renderSectionContent(section, excludedKeys)}
+      </div>
+    );
+  }
+
+  private renderPenaltyEffect(effect: CorruptedPenaltyRoll['effects'][number]): VNode {
+    return (
+      <div class="corrupted-penalty-effect">
+        <span class="corrupted-penalty-value">
+          {`${roundForDisplay(effect.value)}${effect.postfix}`}
+          {this.renderCorruptedArrow('down')}
+        </span>
+        <span class="corrupted-penalty-label">{effect.label}</span>
+      </div>
+    );
+  }
+
+  private renderPenalty(penalty: CorruptedPenaltyRoll): VNode {
+    return (
+      <div class="section corrupted-penalty-section">
+        <div class="corrupted-penalty">
+          <div class="corrupted-penalty-effects">
+            {penalty.effects.filter(effect => effect.display).map(effect => this.renderPenaltyEffect(effect))}
+          </div>
+          <span class="corrupted-penalty-tag">Random!</span>
+        </div>
       </div>
     );
   }
@@ -555,9 +714,11 @@ export class DlItemTooltip {
     if (!item) return null;
 
     const slot = item.item_slot_type;
+    const corrupted = this.isCorrupted;
     const slotColor = getSlotColor(slot);
     const headerBg = tooltipHeaderBg(slot);
-    const backer = tooltipBacker(slot);
+    const backer = corrupted ? corruptedTooltipBacker(slot) : tooltipBacker(slot);
+    const penalty = this.rolledPenalty;
     const sections = item.tooltip_sections ?? [];
     const resolvedComponentItems = this.componentItemsData ?? this._componentItems;
     const resolvedParentItems = this.parentItemsData ?? this._parentItems;
@@ -569,6 +730,7 @@ export class DlItemTooltip {
         class={{
           'tooltip': true,
           [`${slot}-mod`]: true,
+          'corrupted': corrupted,
           'has-components': hasComponents || hasParents,
         }}
         style={{ '--slot-color': slotColor, '--tooltip-backer': `url("${backer}")` }}
@@ -586,10 +748,12 @@ export class DlItemTooltip {
                   </div>
                 )}
               </div>
+              {corrupted && <span class="corrupted-badge">Corrupted</span>}
             </div>
 
             {/* ── Properties body ── */}
             <div class="properties-container">
+              {penalty && this.renderPenalty(penalty)}
               {sections.map(section => (
                 section.section_type === 'innate'
                   ? this.renderInnateSection(section)

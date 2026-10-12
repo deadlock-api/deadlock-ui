@@ -9,6 +9,7 @@ interface ConfigState {
   tooltipDelay: number;
   showTierBadge: boolean;
   showScalingValues: boolean;
+  corruptedPenaltySeed?: number;
 }
 
 const { state, onChange } = createStore<ConfigState>({
@@ -19,6 +20,7 @@ const { state, onChange } = createStore<ConfigState>({
   tooltipDelay: 100,
   showTierBadge: true,
   showScalingValues: false,
+  corruptedPenaltySeed: undefined,
 });
 
 export { state as configState, onChange as onConfigChange };

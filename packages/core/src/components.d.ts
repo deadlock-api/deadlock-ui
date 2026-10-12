@@ -5,10 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Hero, HeroCardBackground, HeroCardPose, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
+import { CorruptedPenaltyName, Hero, HeroCardBackground, HeroCardPose, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
 import { ComponentItemInfo } from "./components/dl-item-tooltip/dl-item-tooltip";
 import { ComponentItemInfo as ComponentItemInfo1 } from "./components/dl-item-tooltip/dl-item-tooltip";
-export { Hero, HeroCardBackground, HeroCardPose, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
+export { CorruptedPenaltyName, Hero, HeroCardBackground, HeroCardPose, HeroClassName, Item, ItemCardVariant, ItemClassName, ItemSlotType, ItemTier, Language, TooltipPlacement, TooltipTrigger } from "./types";
 export { ComponentItemInfo } from "./components/dl-item-tooltip/dl-item-tooltip";
 export { ComponentItemInfo as ComponentItemInfo1 } from "./components/dl-item-tooltip/dl-item-tooltip";
 export namespace Components {
@@ -89,6 +89,14 @@ export namespace Components {
          */
         "componentItemsData"?: ComponentItemInfo[];
         /**
+          * Show the Broker's corrupted variant of the item (tier 3 and tier 4 only). `true` (or the bare attribute) leaves the penalty random; a penalty name such as `"WeaponDamage"` shows the item with that penalty.
+         */
+        "corrupted"?: boolean | CorruptedPenaltyName;
+        /**
+          * `match_info.corrupted_penalty_seed` of the match the item comes from. With `corrupted`, the tooltip shows the values the item rolled in that match. Falls back to the `dl-provider` value.
+         */
+        "corruptedPenaltySeed"?: number;
+        /**
           * Hover effect on the card. `"none"` does nothing, `"scale"` enlarges on hover.
           * @default 'none'
          */
@@ -122,6 +130,10 @@ export namespace Components {
          */
         "tooltipTrigger"?: TooltipTrigger;
         /**
+          * `upgrade_info` of the purchase in the match metadata. The card shows the corrupted variant when the purchase was corrupted at the Broker.
+         */
+        "upgradeInfo"?: number;
+        /**
           * Visual variant. `"card"` renders the full shop card; `"image"` renders only the square item image; inline variants render text/image triggers.
           * @default 'card'
          */
@@ -148,6 +160,14 @@ export namespace Components {
          */
         "componentItemsData"?: ComponentItemInfo1[];
         /**
+          * Show the Broker's corrupted variant: `true` for a random penalty, or a penalty name.
+         */
+        "corrupted"?: boolean | CorruptedPenaltyName;
+        /**
+          * `match_info.corrupted_penalty_seed` of the item's match. Falls back to the `dl-provider` value.
+         */
+        "corruptedPenaltySeed"?: number;
+        /**
           * Item class name (e.g. `"upgrade_capacitor"`). Alternative to `item-id`.
          */
         "itemClassName"?: ItemClassName;
@@ -173,6 +193,10 @@ export namespace Components {
         "parentItemsData"?: ComponentItemInfo1[];
     }
     interface DlProvider {
+        /**
+          * `match_info.corrupted_penalty_seed` of the match on the page, so corrupted item cards show what they rolled in it. Shared by every card on the page; cards from other matches set their own `corrupted-penalty-seed`.
+         */
+        "corruptedPenaltySeed"?: number;
         /**
           * Language for item data (e.g. `"english"`, `"brazilian"`, `"japanese"`).
           * @default Language.EN
@@ -215,6 +239,11 @@ export namespace Components {
           * @default 'weapon'
          */
         "activeTab": ItemSlotType;
+        /**
+          * Show the Broker's corrupted variant of every item that has one (tier 3 and tier 4), each with a random penalty.
+          * @default false
+         */
+        "corrupted": boolean;
         /**
           * When `true`, disables the highlight effect that dims unrelated items on hover.
           * @default false
@@ -436,6 +465,14 @@ declare namespace LocalJSX {
          */
         "componentItemsData"?: ComponentItemInfo[];
         /**
+          * Show the Broker's corrupted variant of the item (tier 3 and tier 4 only). `true` (or the bare attribute) leaves the penalty random; a penalty name such as `"WeaponDamage"` shows the item with that penalty.
+         */
+        "corrupted"?: boolean | CorruptedPenaltyName;
+        /**
+          * `match_info.corrupted_penalty_seed` of the match the item comes from. With `corrupted`, the tooltip shows the values the item rolled in that match. Falls back to the `dl-provider` value.
+         */
+        "corruptedPenaltySeed"?: number;
+        /**
           * Hover effect on the card. `"none"` does nothing, `"scale"` enlarges on hover.
           * @default 'none'
          */
@@ -477,6 +514,10 @@ declare namespace LocalJSX {
          */
         "tooltipTrigger"?: TooltipTrigger;
         /**
+          * `upgrade_info` of the purchase in the match metadata. The card shows the corrupted variant when the purchase was corrupted at the Broker.
+         */
+        "upgradeInfo"?: number;
+        /**
           * Visual variant. `"card"` renders the full shop card; `"image"` renders only the square item image; inline variants render text/image triggers.
           * @default 'card'
          */
@@ -503,6 +544,14 @@ declare namespace LocalJSX {
          */
         "componentItemsData"?: ComponentItemInfo1[];
         /**
+          * Show the Broker's corrupted variant: `true` for a random penalty, or a penalty name.
+         */
+        "corrupted"?: boolean | CorruptedPenaltyName;
+        /**
+          * `match_info.corrupted_penalty_seed` of the item's match. Falls back to the `dl-provider` value.
+         */
+        "corruptedPenaltySeed"?: number;
+        /**
           * Item class name (e.g. `"upgrade_capacitor"`). Alternative to `item-id`.
          */
         "itemClassName"?: ItemClassName;
@@ -528,6 +577,10 @@ declare namespace LocalJSX {
         "parentItemsData"?: ComponentItemInfo1[];
     }
     interface DlProvider {
+        /**
+          * `match_info.corrupted_penalty_seed` of the match on the page, so corrupted item cards show what they rolled in it. Shared by every card on the page; cards from other matches set their own `corrupted-penalty-seed`.
+         */
+        "corruptedPenaltySeed"?: number;
         /**
           * Language for item data (e.g. `"english"`, `"brazilian"`, `"japanese"`).
           * @default Language.EN
@@ -571,6 +624,11 @@ declare namespace LocalJSX {
          */
         "activeTab"?: ItemSlotType;
         /**
+          * Show the Broker's corrupted variant of every item that has one (tier 3 and tier 4), each with a random penalty.
+          * @default false
+         */
+        "corrupted"?: boolean;
+        /**
           * When `true`, disables the highlight effect that dims unrelated items on hover.
           * @default false
          */
@@ -611,6 +669,9 @@ declare namespace LocalJSX {
         "showTierBadge": boolean;
         "itemNameLanguage": Language;
         "tooltipTrigger": TooltipTrigger;
+        "corrupted": string;
+        "corruptedPenaltySeed": number;
+        "upgradeInfo": number;
     }
     interface DlItemGridAttributes {
         "slotType": ItemSlotType;
@@ -622,6 +683,8 @@ declare namespace LocalJSX {
         "itemClassName": ItemClassName;
         "nameOverride": string;
         "itemNameLanguage": Language;
+        "corrupted": string;
+        "corruptedPenaltySeed": number;
     }
     interface DlProviderAttributes {
         "language": Language;
@@ -631,12 +694,14 @@ declare namespace LocalJSX {
         "tooltipDelay": number;
         "showTierBadge": boolean;
         "showScalingValues": boolean;
+        "corruptedPenaltySeed": number;
     }
     interface DlShopPanelAttributes {
         "activeTab": ItemSlotType;
         "hoverEffect": 'none' | 'scale';
         "disableHighlight": boolean;
         "itemNameLanguage": Language;
+        "corrupted": boolean;
     }
 
     interface IntrinsicElements {

@@ -468,3 +468,19 @@
     visibility: visible;
     pointer-events: auto;
 }
+
+/* Corrupted items have no icon of their own: the normal image sits inside the Broker frame */
+.icon-image-container {
+    position: relative;
+}
+
+.corrupted-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}

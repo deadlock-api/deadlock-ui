@@ -39,6 +39,9 @@ export class DlShopPanel {
   /** Override language for item names only. Tooltip content uses the global language. */
   @Prop({ attribute: 'item-name-language' }) itemNameLanguage?: Language;
 
+  /** Show the Broker's corrupted variant of every item that has one (tier 3 and tier 4), each with a random penalty. */
+  @Prop({ reflect: true }) corrupted: boolean = false;
+
   @State() private _items: Item[] = [];
   @State() private _loading = false;
   @State() private _activeTab: ItemSlotType = 'weapon';
@@ -315,6 +318,7 @@ export class DlShopPanel {
                             itemData={item}
                             hoverEffect={this.hoverEffect}
                             itemNameLanguage={this.itemNameLanguage}
+                            corrupted={this.corrupted}
                             componentItemsData={this._componentItemsMap.get(item.class_name)}
                             parentItemsData={this._parentItemsMap.get(item.class_name)}
                             onTooltipOpen={this.handleTooltipOpen}

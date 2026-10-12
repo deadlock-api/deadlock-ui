@@ -1184,3 +1184,160 @@ svg {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* ─── Corrupted (Broker) variant ─── */
+/* Colors sampled from the in-game tooltip: the header shows the corrupted backer
+   through the slot's normal header art, and upgraded stats are olive rows with
+   yellow-green text outlined in dark. */
+.tooltip.corrupted {
+  --tooltip-header-color: transparent;
+  --tooltip-body-color: #3a4a3a;
+  --tooltip-corrupted-highlight: rgba(205, 222, 70, 0.42);
+  --tooltip-corrupted-text: #dce95c;
+  --tooltip-corrupted-text-dim: #b3c24f;
+  --tooltip-corrupted-outline: #2a1c22;
+  --tooltip-corrupted-penalty-bg: rgba(178, 44, 50, 0.5);
+  --tooltip-corrupted-penalty: #f04a48;
+  --tooltip-corrupted-penalty-label: #f7a9a6;
+}
+
+.tooltip.corrupted .header-container {
+  position: relative;
+}
+
+.corrupted-badge {
+  position: absolute;
+  right: 22px;
+  bottom: 16px;
+  color: #f2f7a0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  -webkit-text-stroke: 1.5px #2b1208;
+  paint-order: stroke fill;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.tooltip.corrupted .mod-name-container {
+  padding-right: 150px;
+}
+
+.corrupted-arrow {
+  display: inline-block;
+  width: 0.85em;
+  height: 1.05em;
+  margin-left: 4px;
+  overflow: visible;
+  vertical-align: -0.15em;
+}
+
+.corrupted-arrow path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.corrupted-arrow .outline {
+  fill: var(--tooltip-corrupted-outline);
+  stroke: var(--tooltip-corrupted-outline);
+  stroke-width: 4.5;
+}
+
+.corrupted-arrow .fill {
+  fill: var(--tooltip-corrupted-text);
+  stroke: var(--tooltip-corrupted-text);
+  stroke-width: 2.2;
+}
+
+.corrupted-arrow.down {
+  transform: scaleY(-1);
+}
+
+.corrupted-arrow.down .fill {
+  fill: var(--tooltip-corrupted-penalty);
+  stroke: var(--tooltip-corrupted-penalty);
+}
+
+.is-corrupted .full-property-value,
+.is-corrupted .full-property-value > span,
+.is-corrupted .important-stat-value {
+  color: var(--tooltip-corrupted-text);
+  -webkit-text-stroke: 3px var(--tooltip-corrupted-outline);
+  paint-order: stroke fill;
+}
+
+.is-corrupted .attribute-name,
+.is-corrupted .important-stat-type {
+  color: var(--tooltip-corrupted-text);
+}
+
+.is-corrupted .attribute-name:not(.elevated) {
+  color: var(--tooltip-corrupted-text-dim);
+  font-weight: 600;
+  opacity: 1;
+}
+
+.important-stat-box.is-corrupted {
+  background-color: var(--tooltip-corrupted-highlight);
+}
+
+.block-prop-item.is-corrupted {
+  width: fit-content;
+  padding: 0 6px;
+  background-color: var(--tooltip-corrupted-highlight);
+}
+
+.stats-block-stacked .block-prop-item.is-corrupted {
+  width: fit-content;
+  max-width: calc(50% - 2px);
+}
+
+.ability-timing-value.is-corrupted {
+  padding: 0 6px;
+  background-color: var(--tooltip-corrupted-highlight);
+  line-height: 26px;
+}
+
+.corrupted-penalty-section {
+  padding-bottom: 4px;
+}
+
+.corrupted-penalty {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 2px 8px;
+  background-color: var(--tooltip-corrupted-penalty-bg);
+}
+
+.corrupted-penalty-effect {
+  font-size: 18px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.corrupted-penalty-value {
+  color: var(--tooltip-corrupted-penalty);
+  font-weight: 700;
+  -webkit-text-stroke: 3px var(--tooltip-corrupted-outline);
+  paint-order: stroke fill;
+}
+
+.corrupted-penalty-label {
+  margin-left: 8px;
+  color: var(--tooltip-corrupted-penalty-label);
+  font-weight: 700;
+}
+
+.corrupted-penalty-tag {
+  flex-shrink: 0;
+  margin-top: 6px;
+  color: #ff2b1c;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  -webkit-text-stroke: 2.5px #1a0604;
+  paint-order: stroke fill;
+}

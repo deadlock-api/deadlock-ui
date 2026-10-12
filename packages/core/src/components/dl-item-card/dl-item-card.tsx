@@ -1,10 +1,11 @@
 import { Component, Prop, State, Watch, Element, Event, EventEmitter, h } from '@stencil/core';
 import { computePosition, flip, shift, offset, autoUpdate, Placement, VirtualElement } from '@floating-ui/dom';
-import { Item, ItemCardVariant, ItemClassName, Language, TooltipTrigger } from '../../types';
+import { CorruptedPenaltyName, Item, ItemCardVariant, ItemClassName, Language, TooltipTrigger } from '../../types';
 import { fetchItem, fetchItems } from '../../api/client';
 import { ComponentItemInfo } from '../dl-item-tooltip/dl-item-tooltip';
 import { configState, onConfigChange } from '../../store/config-store';
-import { cardBackground } from '../../utils/assets';
+import { cardBackground, corruptedItemFrame } from '../../utils/assets';
+import { isCorruptedUpgrade, parseCorrupted } from '../../utils/corruption';
 import { injectFonts } from '../../utils/fonts';
 
 const ROMAN_NUMERALS = ['I', 'II', 'III', 'IV', 'V'];
@@ -52,6 +53,26 @@ export class DlItemCard {
 
   /** Override the tooltip trigger for this card. When not set, falls back to the global provider value. */
   @Prop({ attribute: 'tooltip-trigger' }) tooltipTrigger?: TooltipTrigger;
+
+  /**
+   * Show the Broker's corrupted variant of the item (tier 3 and tier 4 only).
+   * `true` (or the bare attribute) leaves the penalty random; a penalty name such
+   * as `"WeaponDamage"` shows the item with that penalty.
+   */
+  @Prop({ reflect: true }) corrupted?: boolean | CorruptedPenaltyName;
+
+  /**
+   * `match_info.corrupted_penalty_seed` of the match the item comes from. With
+   * `corrupted`, the tooltip shows the values the item rolled in that match.
+   * Falls back to the `dl-provider` value.
+   */
+  @Prop({ attribute: 'corrupted-penalty-seed' }) corruptedPenaltySeed?: number;
+
+  /**
+   * `upgrade_info` of the purchase in the match metadata. The card shows the
+   * corrupted variant when the purchase was corrupted at the Broker.
+   */
+  @Prop({ attribute: 'upgrade-info' }) upgradeInfo?: number;
 
   /** Emitted when the tooltip opens. Detail contains the item's `class_name`. */
   @Event({ eventName: 'tooltipOpen' }) tooltipOpen!: EventEmitter<string>;
@@ -130,6 +151,22 @@ export class DlItemCard {
       return spaceRight >= spaceLeft ? 'right' : 'left';
     }
     return spaceBottom >= spaceTop ? 'bottom' : 'top';
+  }
+
+  /** `corrupted`, or `true` when `upgrade-info` marks a corrupted purchase. */
+  private get corruptedValue(): boolean | CorruptedPenaltyName | undefined {
+    if (parseCorrupted(this.corrupted).corrupted) return this.corrupted;
+    return isCorruptedUpgrade(this.upgradeInfo) || undefined;
+  }
+
+  private get isCorrupted(): boolean {
+    return parseCorrupted(this.corruptedValue).corrupted && !!this.item?.corrupted_info;
+  }
+
+  private renderCorruptedFrame(item: Item) {
+    if (!this.isCorrupted) return null;
+    const isActive = item.is_active_item || item.activation !== 'passive';
+    return <img class="corrupted-frame" src={corruptedItemFrame(isActive)} alt="" />;
   }
 
   private get itemKey(): ItemClassName | number | undefined {
@@ -492,6 +529,8 @@ export class DlItemCard {
             nameOverride={this.getNameOverride(item)}
             componentItemsData={this.componentItemsData ?? this._componentItems}
             parentItemsData={this.parentItemsData ?? this._parentItems}
+            corrupted={this.corruptedValue}
+            corruptedPenaltySeed={this.corruptedPenaltySeed}
           ></dl-item-tooltip>
         </div>
       ),
@@ -622,6 +661,7 @@ export class DlItemCard {
 
         <div class="icon-image-container">
           {imgSrc && <img class="icon-image" src={imgSrc} alt={this.displayName} loading="lazy" />}
+          {this.renderCorruptedFrame(item!)}
         </div>
 
         {hasImbue && <span class="imbue-tag">Imbue</span>}
@@ -686,6 +726,7 @@ export class DlItemCard {
 
         <div class="mod-icon-container">
           {imgSrc && <img class="mod-icon" src={imgSrc} alt={name} loading="lazy" />}
+          {this.renderCorruptedFrame(resolvedItem)}
         </div>
 
         {hasImbue && <span class="imbue-tag">Imbue</span>}

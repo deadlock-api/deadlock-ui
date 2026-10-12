@@ -29,6 +29,13 @@ export class DlProvider {
   /** Show numeric scaling multipliers in item tooltips. When false, only scaling icons and strength arrows are shown. */
   @Prop({ attribute: 'show-scaling-values' }) showScalingValues: boolean = false;
 
+  /**
+   * `match_info.corrupted_penalty_seed` of the match on the page, so corrupted item
+   * cards show what they rolled in it. Shared by every card on the page; cards from
+   * other matches set their own `corrupted-penalty-seed`.
+   */
+  @Prop({ attribute: 'corrupted-penalty-seed' }) corruptedPenaltySeed?: number;
+
   connectedCallback() {
     injectFonts();
     configState.language = this.language;
@@ -38,6 +45,7 @@ export class DlProvider {
     configState.tooltipDelay = this.tooltipDelay;
     configState.showTierBadge = this.showTierBadge;
     configState.showScalingValues = this.showScalingValues;
+    configState.corruptedPenaltySeed = this.corruptedPenaltySeed;
   }
 
   @Watch('language')
@@ -73,6 +81,11 @@ export class DlProvider {
   @Watch('showScalingValues')
   showScalingValuesChanged(newVal: boolean) {
     configState.showScalingValues = newVal;
+  }
+
+  @Watch('corruptedPenaltySeed')
+  corruptedPenaltySeedChanged(newVal?: number) {
+    configState.corruptedPenaltySeed = newVal;
   }
 
   render() {
