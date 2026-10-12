@@ -32,6 +32,7 @@ function Playground(): React.JSX.Element {
   const [activeTab, setActiveTab] = useState('weapon');
   const [hoverEffect, setHoverEffect] = useState('scale');
   const [itemNameLanguage, setItemNameLanguage] = useState('');
+  const [corrupted, setCorrupted] = useState(false);
 
   return (
     <Layout title="Playground" description="Test Deadlock UI components live">
@@ -125,6 +126,14 @@ function Playground(): React.JSX.Element {
               {LANGUAGES.map(l => <option key={l} value={l}>{l}</option>)}
             </select>
           </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <label style={labelStyle}>Corrupted:</label>
+            <input
+              type="checkbox"
+              checked={corrupted}
+              onChange={e => setCorrupted(e.target.checked)}
+            />
+          </div>
         </div>
 
         <h2>Shop Panel</h2>
@@ -139,7 +148,7 @@ function Playground(): React.JSX.Element {
             show-tier-badge={showTierBadge.toString()}
           >
             {/* @ts-ignore */}
-            <dl-shop-panel active-tab={activeTab} hover-effect={hoverEffect} item-name-language={itemNameLanguage || undefined}></dl-shop-panel>
+            <dl-shop-panel active-tab={activeTab} hover-effect={hoverEffect} item-name-language={itemNameLanguage || undefined} corrupted={corrupted || undefined}></dl-shop-panel>
           </dl-provider>
         </div>
 
@@ -152,7 +161,7 @@ function Playground(): React.JSX.Element {
   tooltip-delay="${tooltipDelay}"
   show-tier-badge="${showTierBadge}">
 
-  <dl-shop-panel${activeTab !== 'weapon' ? ` active-tab="${activeTab}"` : ''}${hoverEffect !== 'scale' ? ` hover-effect="${hoverEffect}"` : ''}${itemNameLanguage ? ` item-name-language="${itemNameLanguage}"` : ''}></dl-shop-panel>
+  <dl-shop-panel${activeTab !== 'weapon' ? ` active-tab="${activeTab}"` : ''}${hoverEffect !== 'scale' ? ` hover-effect="${hoverEffect}"` : ''}${itemNameLanguage ? ` item-name-language="${itemNameLanguage}"` : ''}${corrupted ? ' corrupted' : ''}></dl-shop-panel>
 
 </dl-provider>`}
         </CodeBlock>

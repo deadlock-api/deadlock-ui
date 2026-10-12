@@ -21,4 +21,13 @@ export type {
   ActivationType,
   ItemUpgrade,
   PropertyUpgrade,
+  CorruptedItemInfo,
 } from './item';
+export type {
+  CorruptedItemImages,
+  CorruptedPenalty,
+  CorruptedPenaltyEffect,
+  CorruptedPenaltyName,
+  CorruptionConfig,
+  ImagePair,
+} from './corruption';

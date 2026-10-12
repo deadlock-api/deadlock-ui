@@ -16,6 +16,15 @@ export function tooltipBacker(slot: string): string {
   return cdn(`images/tooltips/items/tooltip_backer_${slot}.png`);
 }
 
+export function corruptedTooltipBacker(slot: string): string {
+  return cdn(`images/tooltips/items/tooltip_backer_${slot}_corrupted.png`);
+}
+
+/** Frame drawn around the normal item image; corrupted items have no icon of their own. */
+export function corruptedItemFrame(active = false): string {
+  return cdn(`images/shop/corrupted_items/item_frame_corrupted${active ? '_active' : ''}.png`);
+}
+
 export function shopBackground(slot: string): string {
   const mapped = slot === 'tech' ? 'spirit' : slot;
   return cdn(`images/shop/catalog/catalog_shop_bg_${mapped}.webp`);

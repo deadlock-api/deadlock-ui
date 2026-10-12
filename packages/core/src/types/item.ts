@@ -52,10 +52,22 @@ export interface PropertyUpgrade {
   bonus: string | number;
   scale_stat_filter?: string | null;
   upgrade_type?: string | null;
+  /** Corrupted items only: the bonus ignores the per-match variance. */
+  fixed_corrupted_bonus?: boolean | null;
+  /** Corrupted items only: the rolled value is rounded to an integer. */
+  round_corrupted_bonus?: boolean | null;
 }
 
 export interface ItemUpgrade {
   property_upgrades: PropertyUpgrade[];
+}
+
+/** Broker corruption data of a tier 3 or tier 4 upgrade. */
+export interface CorruptedItemInfo {
+  /** Property bonuses the corrupted variant gains. */
+  property_upgrades: PropertyUpgrade[];
+  /** Names of corrupted penalties (see `GenericData.corrupted_penalties`) that never roll on this item. */
+  excluded_penalties: string[];
 }
 
 export interface Item {
@@ -81,6 +93,7 @@ export interface Item {
   properties?: Record<string, ItemProperty> | null;
   tooltip_sections?: TooltipSection[] | null;
   upgrades?: ItemUpgrade[] | null;
+  corrupted_info?: CorruptedItemInfo | null;
   component_items?: string[] | null;
   weapon_info?: Record<string, unknown> | null;
 }

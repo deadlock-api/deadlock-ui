@@ -25,6 +25,8 @@ export type {
   TooltipSectionAttribute,
   ItemUpgrade,
   PropertyUpgrade,
+  CorruptedItemInfo,
+  CorruptedPenaltyName,
   Hero,
   HeroCardBackground,
   HeroCardPose,
